@@ -17,6 +17,8 @@ const corporateLinks = [
 ];
 
 const RightSidebar = () => {
+  const currentYear = new Date().getFullYear();
+
   return (
     <section className="top-0 min-w-[360px] hidden lg:flex flex-col gap-4 p-8">
       {/* Search bar */}
@@ -83,7 +85,7 @@ const RightSidebar = () => {
             </Link>
           ))}
         </div>
-        <p className="mt-4">© 2023 TechCorp. All rights reserved.</p>
+        <p className="mt-4">© {currentYear} TechCorp. All rights reserved.</p>
       </div>
     </section>
   );

@@ -24,10 +24,14 @@ The following project implements a full-stack Twitter clone with modern web deve
   - TweetOptionsButton
   - Show parent tweet inside the tweet card if any
   - Tooltips for buttons
-- LeftSidebar functionalities (navigation to other pages, tweet button, user button)
+- LeftSidebar functionalities (navigation links, tweet button, user button)
+- Create the other pages (e.g., bookmarks, profile, explore, messages)
 - RightSidebar functionalities (search bar, trends for you, who to follow)
 - Handle not-found, loading, and error states
 - Consider using component libraries:
   - [Headless UI](https://headlessui.com/)
   - [ui.shadcn.com](https://ui.shadcn.com/)
 - Tweet feed improvements (infinite scrolling, back to top button, load more tweets button)
+- Consider using ORM instead of Supabase database API:
+  - [Prisma](https://www.prisma.io/)
+  - [Drizzle](https://orm.drizzle.team/)

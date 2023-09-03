@@ -4,6 +4,7 @@ import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { FcGoogle } from "react-icons/fc";
 import { BsGithub } from "react-icons/bs";
 import { Provider } from "@supabase/supabase-js";
+import { getURL } from "@/lib/utils/getURL";
 
 const providers = [
   { label: "Google", name: "google", icon: FcGoogle },
@@ -16,7 +17,7 @@ export default function SignIn() {
   const handleSignIn = async (provider: Provider) => {
     await supabase.auth.signInWithOAuth({
       provider: provider,
-      options: { redirectTo: `${location.origin}/auth/callback` },
+      options: { redirectTo: `${getURL()}auth/callback` },
     });
   };
 
