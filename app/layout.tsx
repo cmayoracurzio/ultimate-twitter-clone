@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import SupabaseProvider from "@/components/SupabaseProvider";
 import LeftSidebar from "@/components/LeftSidebar";
 import RightSidebar from "@/components/RightSidebar";
+import BottomBar from "@/components/BottomBar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,6 +28,7 @@ export default async function RootLayout({
               {children}
               <RightSidebar />
             </div>
+            <BottomBar />
           </SupabaseProvider>
         </div>
       </body>

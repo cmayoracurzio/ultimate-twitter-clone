@@ -13,7 +13,6 @@ The following project implements a full-stack Twitter clone with modern web deve
 
 ## TODO (ongoing):
 
-- Bottom bar in mobile mode
 - Authentication:
   - Force unique usernames
   - Improve auth screen

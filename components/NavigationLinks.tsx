@@ -18,10 +18,10 @@ const navigationLinks = [
 
 export default function NavigationLinks() {
   return (
-    <div className="w-full flex flex-col gap-2 items-center xl:items-start text-xl">
+    <div className="flex sm:flex-col items-start justify-evenly sm:gap-2 text-xl">
       <Link
         href="/"
-        className="hover:bg-gray-800 w-fit rounded-full p-3 xl:ml-2"
+        className="hover:bg-gray-800 w-fit rounded-full p-3 xl:ml-2 max-sm:hidden"
       >
         <BsTwitter />
       </Link>
