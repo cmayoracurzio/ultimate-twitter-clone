@@ -1,9 +1,6 @@
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-
-import LeftSidebar from "@/components/LeftSidebar";
-import RightSidebar from "@/components/RightSidebar";
 import TweetFeed from "@/components/TweetFeed";
 
 export const dynamic = "force-dynamic";
@@ -50,15 +47,11 @@ export default async function Home() {
     })) ?? [];
 
   return (
-    <main className="flex justify-center mx-auto lg:max-w-6xl">
-      <LeftSidebar profile={profile} />
-      <section className="w-full h-full border-x border-gray-600">
-        <h1 className="sticky top-0 text-2xl font-bold p-6 backdrop-blur border-b border-gray-600">
-          Home
-        </h1>
-        <TweetFeed initialTweets={tweets} profile={profile} />
-      </section>
-      <RightSidebar />
+    <main className="w-full min-h-screen">
+      <h1 className="sticky top-0 text-2xl font-bold p-6 backdrop-blur border-b border-gray-600">
+        Home
+      </h1>
+      <TweetFeed initialTweets={tweets} profile={profile} />
     </main>
   );
 }

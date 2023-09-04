@@ -38,7 +38,7 @@ export default function TweetFeed({
   return (
     <>
       <div className="p-4 flex gap-4 items-start">
-        <ProfilePhoto src={profile.avatar_url} />
+        <ProfilePhoto src={profile?.avatar_url} />
         <TweetComposer addTweetToFeed={addTweetToFeed} />
       </div>
       <div className="flex flex-col divide-y divide-gray-600 border-t border-gray-600">
@@ -49,7 +49,7 @@ export default function TweetFeed({
             updateTweetInFeed={updateTweetInFeed}
           />
         ))}
-        <div className="py-12 h-screen flex justify-center items-start">
+        <div className="h-full py-12 flex justify-center items-start">
           <button
             onClick={refreshFeed}
             className="rounded-full p-2 bg-primary hover:bg-opacity-70"

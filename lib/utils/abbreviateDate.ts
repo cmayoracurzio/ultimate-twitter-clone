@@ -5,8 +5,11 @@ import updateLocale from "dayjs/plugin/updateLocale";
 dayjs.extend(relativeTime);
 dayjs.extend(updateLocale);
 
+const localeList = dayjs.Ls;
+
 dayjs.updateLocale("en", {
   relativeTime: {
+    ...localeList["en"].relativeTime,
     s: "now",
     m: "1m",
     mm: "%dm",
@@ -19,10 +22,10 @@ dayjs.updateLocale("en", {
 export default function abbreviateDate(absoluteDate: string): string {
   const date = dayjs(absoluteDate);
   const now = dayjs();
-  const differenceInDays = now.diff(date, "day");
+  const differenceInHours = now.diff(date, "hour");
 
-  // If the date difference is more than 1 day, show the absolute date
-  if (differenceInDays > 1) {
+  // If the date difference is more than 24 hours, show the absolute date
+  if (differenceInHours > 1) {
     return date.format("MMM D, YYYY");
   }
 

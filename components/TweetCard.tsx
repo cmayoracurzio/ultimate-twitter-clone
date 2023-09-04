@@ -18,8 +18,8 @@ const TweetCard = ({
     <article className="p-4 flex gap-4 items-start hover:bg-gray-800 text-gray-400 text-sm">
       <ProfilePhoto src={tweet.author.avatar_url} />
       <div className="w-full flex flex-col gap-1 justify-start overflow-hidden">
-        <div className="flex items-center justify-between gap-4">
-          <div className="flex items-center gap-2 text-gray-500 overflow-hidden">
+        <div className="flex items-center justify-between gap-2">
+          <div className="flex-1 flex items-center gap-2 text-gray-500 overflow-hidden">
             <Link
               href={`/${tweet.author.username}`}
               className="text-white font-bold hover:underline truncate"
@@ -28,7 +28,9 @@ const TweetCard = ({
             </Link>
             <span className="truncate">@{tweet.author.username}</span>
             <span>·</span>
-            <span>{abbreviateDate(tweet.created_at)}</span>
+            <span className="whitespace-nowrap">
+              {abbreviateDate(tweet.created_at)}
+            </span>
           </div>
           <TweetOptionsButton />
         </div>

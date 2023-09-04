@@ -13,7 +13,7 @@ The following project implements a full-stack Twitter clone with modern web deve
 
 ## TODO (ongoing):
 
-- LeftSidebar responsiveness
+- Bottom bar in mobile mode
 - Authentication:
   - Force unique usernames
   - Improve auth screen
@@ -30,7 +30,7 @@ The following project implements a full-stack Twitter clone with modern web deve
 - Handle not-found, loading, and error states
 - Consider using component libraries:
   - [Headless UI](https://headlessui.com/)
-  - [ui.shadcn.com](https://ui.shadcn.com/)
+  - [shadcn/ui](https://ui.shadcn.com/)
 - Tweet feed improvements (infinite scrolling, back to top button, load more tweets button)
 - Consider using ORM instead of Supabase database API:
   - [Prisma](https://www.prisma.io/)
