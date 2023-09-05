@@ -19,7 +19,7 @@ dayjs.updateLocale("en", {
   },
 });
 
-export default function abbreviateDate(absoluteDate: string): string {
+export function abbreviateDate(absoluteDate: string): string {
   const date = dayjs(absoluteDate);
   const now = dayjs();
   const differenceInHours = now.diff(date, "hour");

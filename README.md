@@ -14,17 +14,12 @@ The following project implements a full-stack Twitter clone with modern web deve
 ## TODO (ongoing):
 
 - Authentication:
-  - Force unique usernames
-  - Improve auth screen
-  - Add email-password authentication
-- TweetCard improvements:
-  - "See more" if tweet is too long
-  - Add ReplyButton functionality
-  - TweetOptionsButton
-  - Show parent tweet inside the tweet card if any
-  - Tooltips for buttons
+  - Onboarding to create user profile (with unique username check)
+  - Add option to authenticate with email and password
+  - Improve authentication screen
 - LeftSidebar functionalities (navigation links, tweet button, user button)
-- Create the other pages (e.g., bookmarks, profile, explore, messages)
+- Create other pages (and refactor sidebars into layout.tsx)
+- TweetCard improvements (tooltips for buttons, TweetOptionsButton, show parent tweet inside tweet card if any)
 - RightSidebar functionalities (search bar, trends for you, who to follow)
 - Handle not-found, loading, and error states
 - Consider using component libraries:

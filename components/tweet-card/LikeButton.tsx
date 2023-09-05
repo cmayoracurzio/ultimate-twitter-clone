@@ -13,7 +13,7 @@ export default function LikeButton({
 }) {
   const supabase = createClientComponentClient<Database>();
 
-  const handleLikes = async () => {
+  const handleLike = async () => {
     const {
       data: { user },
     } = await supabase.auth.getUser();
@@ -42,16 +42,18 @@ export default function LikeButton({
   };
 
   return (
-    <button
-      onClick={handleLikes}
-      className={`flex items-center gap-1 group hover:text-red-400 ${
-        tweet.likedByUser && "text-red-400"
-      }`}
-    >
-      <div className="group-hover:bg-red-400/20 rounded-full p-2">
-        {tweet.likedByUser ? <FaHeart size={18} /> : <FaRegHeart size={18} />}
-      </div>
-      <p>{abbreviateNumber(tweet.likes)}</p>
-    </button>
+    <div className="flex-1">
+      <button
+        onClick={handleLike}
+        className={`flex items-center gap-1 group hover:text-red-400 ${
+          tweet.likedByUser && "text-red-400"
+        }`}
+      >
+        <div className="group-hover:bg-red-400/20 rounded-full p-2">
+          {tweet.likedByUser ? <FaHeart size={18} /> : <FaRegHeart size={18} />}
+        </div>
+        <p>{abbreviateNumber(tweet.likes)}</p>
+      </button>
+    </div>
   );
 }

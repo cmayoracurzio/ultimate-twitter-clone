@@ -4,7 +4,7 @@ import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useRouter } from "next/navigation";
 
 import { BsThreeDots } from "react-icons/bs";
-import ProfilePhoto from "./ProfilePhoto";
+import ProfilePhoto from "../shared/ProfilePhoto";
 
 export default function ProfileButton({
   profile,

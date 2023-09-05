@@ -28,7 +28,7 @@ export default function NavigationLinks() {
       {navigationLinks.map((link) => (
         <Link
           key={link.label}
-          className="hover:bg-gray-800 flex items-center justify-start w-fit gap-4 rounded-full p-3 xl:px-5"
+          className="sm:hover:bg-gray-800 flex items-center justify-start w-fit gap-4 rounded-full p-3 xl:px-5"
           href={link.url}
         >
           <link.icon size={24} />

@@ -3,9 +3,9 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-import TweetCard from "./TweetCard";
+import TweetCard from "./tweet-card/TweetCard";
 import TweetComposer from "./TweetComposer";
-import ProfilePhoto from "./ProfilePhoto";
+import ProfilePhoto from "./shared/ProfilePhoto";
 
 import { BiRefresh } from "react-icons/bi";
 

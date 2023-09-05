@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { BsSearch, BsThreeDots } from "react-icons/bs";
 import { abbreviateNumber } from "@/lib/utils/abbreviateNumber";
-import UserCard from "./UserCard";
+import UserCard from "../shared/UserCard";
 
 const exampleTrends = [
   { name: "Bitcoin", category: "Trending", posts: 1241 },

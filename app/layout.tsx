@@ -2,9 +2,6 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import SupabaseProvider from "@/components/SupabaseProvider";
-import LeftSidebar from "@/components/LeftSidebar";
-import RightSidebar from "@/components/RightSidebar";
-import BottomBar from "@/components/BottomBar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,14 +19,7 @@ export default async function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <div className="w-full bg-gray-900 text-white">
-          <SupabaseProvider>
-            <div className="flex justify-center mx-auto max-w-7xl divide-x-0 sm:divide-x divide-gray-600">
-              <LeftSidebar />
-              {children}
-              <RightSidebar />
-            </div>
-            <BottomBar />
-          </SupabaseProvider>
+          <SupabaseProvider>{children}</SupabaseProvider>
         </div>
       </body>
     </html>
