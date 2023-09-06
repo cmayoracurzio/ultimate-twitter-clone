@@ -2,7 +2,6 @@ import ProfileForm from "@/components/forms/ProfileForm";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { BsTwitter } from "react-icons/bs";
 
 export const dynamic = "force-dynamic";
 

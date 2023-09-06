@@ -13,11 +13,9 @@ The following project implements a full-stack Twitter clone with modern web deve
 
 ## TODO (ongoing):
 
-- Authentication:
-  - Add avatar upload to onboarding form
-  - Add option to authenticate with email and password
 - LeftSidebar functionalities (navigation links, tweet button, user button)
 - Create other pages (and refactor sidebars into layout.tsx)
+- Authentication improvements (allow changing avatar, allow authentication with email and password)
 - TweetCard improvements (tooltips for buttons, TweetOptionsButton, show parent tweet inside tweet card if any)
 - RightSidebar functionalities (search bar, trends for you, who to follow)
 - Handle not-found, loading, and error states
