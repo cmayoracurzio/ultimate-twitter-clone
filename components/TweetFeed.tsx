@@ -4,8 +4,8 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 import TweetCard from "./tweet-card/TweetCard";
-import TweetComposer from "./TweetComposer";
 import ProfilePhoto from "./shared/ProfilePhoto";
+import TweetForm from "./forms/TweetForm";
 
 import { BiRefresh } from "react-icons/bi";
 
@@ -39,7 +39,7 @@ export default function TweetFeed({
     <>
       <div className="p-4 flex gap-4 items-start">
         <ProfilePhoto src={profile?.avatar_url} />
-        <TweetComposer addTweetToFeed={addTweetToFeed} />
+        <TweetForm addTweetToFeed={addTweetToFeed} />
       </div>
       <div className="flex flex-col divide-y divide-gray-600 border-t border-gray-600">
         {tweets.map((tweet) => (

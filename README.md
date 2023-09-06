@@ -14,7 +14,7 @@ The following project implements a full-stack Twitter clone with modern web deve
 ## TODO (ongoing):
 
 - Authentication:
-  - Onboarding to create user profile (with unique username check)
+  - Style onboarding form and add avatar upload
   - Add option to authenticate with email and password
   - Improve authentication screen
 - LeftSidebar functionalities (navigation links, tweet button, user button)

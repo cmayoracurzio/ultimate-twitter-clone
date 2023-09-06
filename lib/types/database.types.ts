@@ -13,20 +13,20 @@ export interface Database {
         Row: {
           created_at: string
           id: string
-          profile_id: string | null
-          tweet_id: string | null
+          profile_id: string
+          tweet_id: string
         }
         Insert: {
           created_at?: string
           id?: string
-          profile_id?: string | null
-          tweet_id?: string | null
+          profile_id: string
+          tweet_id: string
         }
         Update: {
           created_at?: string
           id?: string
-          profile_id?: string | null
-          tweet_id?: string | null
+          profile_id?: string
+          tweet_id?: string
         }
         Relationships: [
           {
@@ -95,24 +95,24 @@ export interface Database {
       profiles: {
         Row: {
           avatar_url: string | null
-          full_name: string
+          full_name: string | null
           id: string
           updated_at: string
-          username: string
+          username: string | null
         }
         Insert: {
           avatar_url?: string | null
-          full_name: string
+          full_name?: string | null
           id: string
           updated_at?: string
-          username: string
+          username?: string | null
         }
         Update: {
           avatar_url?: string | null
-          full_name?: string
+          full_name?: string | null
           id?: string
           updated_at?: string
-          username?: string
+          username?: string | null
         }
         Relationships: [
           {
@@ -133,7 +133,7 @@ export interface Database {
         }
         Insert: {
           id?: string
-          profile_id?: string
+          profile_id: string
           reply_id?: string | null
           text: string
           tweet_id?: string | null

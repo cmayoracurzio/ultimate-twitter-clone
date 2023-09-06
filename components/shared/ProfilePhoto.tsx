@@ -7,7 +7,7 @@ const ProfilePhoto = ({ src }: { src?: string | null }) => {
       width={40}
       height={40}
       alt="Profile picture"
-      className="shrink-0 rounded-full"
+      className="object-contain rounded-full"
     />
   );
 };

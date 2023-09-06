@@ -17,7 +17,7 @@ export default function SignIn() {
   const handleSignIn = async (provider: Provider) => {
     await supabase.auth.signInWithOAuth({
       provider: provider,
-      options: { redirectTo: `${getURL()}auth/callback` },
+      options: { redirectTo: `${getURL()}login/callback` },
     });
   };
 

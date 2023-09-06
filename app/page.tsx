@@ -18,7 +18,7 @@ export default async function Home() {
   } = await supabase.auth.getUser();
 
   if (!user) {
-    redirect("/auth");
+    redirect("/login");
   }
 
   // Fetch profile information
@@ -27,7 +27,11 @@ export default async function Home() {
     .select("*")
     .eq("id", user.id);
 
-  const profile = profileData?.[0] ?? null;
+  if (!profileData || !profileData[0].username) {
+    redirect("/onboarding");
+  }
+
+  const profile = profileData[0];
 
   // Fetch tweets
   const { data: tweetData } = await supabase
@@ -44,15 +48,15 @@ export default async function Home() {
       author: Array.isArray(tweet.author) ? tweet.author[0] : tweet.author,
       replies: tweet.replies.length,
       likes: tweet.likes.length,
-      likedByUser: tweet.likes.some((like) => like.profile_id === user.id),
+      likedByUser: tweet.likes.some((like) => like.profile_id === profile.id),
       bookmarkedByUser: tweet.bookmarks.some(
-        (bookmark) => bookmark.profile_id === user.id
+        (bookmark) => bookmark.profile_id === profile.id
       ),
     })) ?? [];
 
   return (
     <>
-      <main className="flex justify-center mx-auto max-w-6xl divide-x-0 sm:divide-x divide-gray-600">
+      <main className="flex justify-center max-w-6xl mx-auto divide-x-0 sm:divide-x divide-gray-600">
         <LeftSidebar profile={profile} />
         <section className="w-full min-h-screen">
           <h1 className="sticky top-0 text-2xl font-bold p-6 backdrop-blur border-b border-gray-600">

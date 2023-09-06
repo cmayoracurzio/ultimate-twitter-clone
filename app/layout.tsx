@@ -18,7 +18,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className="w-full bg-gray-900 text-white">
+        <div className="w-full h-full bg-gray-900 text-white">
           <SupabaseProvider>{children}</SupabaseProvider>
         </div>
       </body>

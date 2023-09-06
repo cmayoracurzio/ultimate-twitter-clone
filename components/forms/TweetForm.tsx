@@ -1,14 +1,16 @@
+"use client";
+
 import { type FieldValues, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { formSchema, type TFormSchema } from "@/lib/types/form.types";
+import { tweetFormSchema, type TTweetFormSchema } from "@/lib/types/form.types";
 import { createTweet } from "@/lib/actions";
 import { useEffect, useRef } from "react";
 
-const TweetComposer = ({
+export default function TweetForm({
   addTweetToFeed,
 }: {
   addTweetToFeed: (newTweet: TweetwithMetadata) => void;
-}) => {
+}) {
   const {
     register,
     handleSubmit,
@@ -16,8 +18,8 @@ const TweetComposer = ({
     reset,
     watch,
     setError,
-  } = useForm<TFormSchema>({
-    resolver: zodResolver(formSchema),
+  } = useForm<TTweetFormSchema>({
+    resolver: zodResolver(tweetFormSchema),
   });
   const textAreaName = "text";
   const { ref, ...rest } = register(textAreaName);
@@ -44,8 +46,8 @@ const TweetComposer = ({
         setError(textAreaName, { message: result.error });
       } else if (result.data) {
         addTweetToFeed(result.data);
+        reset();
       }
-      reset();
     } catch (error) {
       console.error(error);
       setError(textAreaName, {
@@ -80,6 +82,4 @@ const TweetComposer = ({
       </div>
     </form>
   );
-};
-
-export default TweetComposer;
+}
