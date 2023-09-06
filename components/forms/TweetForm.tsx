@@ -2,7 +2,7 @@
 
 import { type FieldValues, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { tweetFormSchema, type TTweetFormSchema } from "@/lib/types/form.types";
+import { tweetValidator, type TweetFormSchema } from "@/lib/validations/tweet";
 import { createTweet } from "@/lib/actions";
 import { useEffect, useRef } from "react";
 
@@ -18,8 +18,8 @@ export default function TweetForm({
     reset,
     watch,
     setError,
-  } = useForm<TTweetFormSchema>({
-    resolver: zodResolver(tweetFormSchema),
+  } = useForm<TweetFormSchema>({
+    resolver: zodResolver(tweetValidator),
   });
   const textAreaName = "text";
   const { ref, ...rest } = register(textAreaName);
@@ -70,7 +70,7 @@ export default function TweetForm({
       />
       <div className="flex items-center justify-between gap-1">
         <div className="text-primary text-md">
-          {errors[textAreaName] && `${errors[textAreaName].message}`}
+          {errors[textAreaName] && errors[textAreaName].message}
         </div>
         <button
           type="submit"

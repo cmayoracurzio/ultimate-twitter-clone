@@ -1,8 +1,8 @@
 "use server";
 
 import { FieldValues } from "react-hook-form";
-import { tweetFormSchema, profileFormSchema } from "@/lib/types/form.types";
-
+import { tweetValidator } from "../validations/tweet";
+import { profileValidator } from "../validations/profile";
 import { createServerActionClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 
@@ -12,7 +12,7 @@ type ServerActionResponse = {
 };
 
 type CreateTweetResponse = ServerActionResponse & {
-  data?: TweetwithMetadata;
+  data?: TweetwithMetadata[];
 };
 
 export async function createTweet(
@@ -20,7 +20,7 @@ export async function createTweet(
 ): Promise<CreateTweetResponse> {
   try {
     // Validate form schema on the server
-    const result = tweetFormSchema.safeParse(formValues);
+    const result = tweetValidator.safeParse(formValues);
     if (!result.success) {
       throw new Error(result.error.issues[0].message);
     }
@@ -59,7 +59,7 @@ export async function updateProfile(
 ): Promise<ServerActionResponse> {
   try {
     // Validate form schema on the server
-    const result = profileFormSchema.safeParse(formValues);
+    const result = profileValidator.safeParse(formValues);
     if (!result.success) {
       throw new Error(result.error.issues[0].message);
     }

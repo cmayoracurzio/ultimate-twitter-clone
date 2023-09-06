@@ -16,7 +16,7 @@ export default function ProfileButton({
 
   const handleSignOut = async () => {
     await supabase.auth.signOut();
-    router.refresh();
+    router.push("/login");
   };
 
   return (

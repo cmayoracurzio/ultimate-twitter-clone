@@ -33,7 +33,7 @@ const TweetCard = ({
 
       {/* Tweet header */}
       <div className="w-full flex flex-col gap-1 justify-start overflow-hidden">
-        <div className="flex items-center justify-between gap-2">
+        <div className="flex items-center justify-between gap-8">
           <div className="flex-1 flex items-center gap-2 text-gray-500 overflow-hidden">
             <Link
               href={`/${tweet.author.username}`}

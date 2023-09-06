@@ -1,7 +1,8 @@
-import OnboardingForm from "@/components/forms/OnboardingForm";
+import ProfileForm from "@/components/forms/ProfileForm";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { BsTwitter } from "react-icons/bs";
 
 export const dynamic = "force-dynamic";
 
@@ -28,8 +29,15 @@ export default async function Home() {
   }
 
   return (
-    <section className="w-full h-screen flex flex-col justify-center items-center p-8">
-      <OnboardingForm profile={profileData?.[0] ?? null} />
-    </section>
+    <main className="w-full h-screen flex justify-center items-center p-6">
+      <div className="max-w-sm flex flex-col gap-4">
+        <h1 className="text-2xl font-bold">Welcome, {user.email}!</h1>
+        <p className="mb-2">
+          Complete your profile information below to start using the Ultimate
+          Twitter Clone.
+        </p>
+        <ProfileForm profile={profileData?.[0] ?? null} />
+      </div>
+    </main>
   );
 }

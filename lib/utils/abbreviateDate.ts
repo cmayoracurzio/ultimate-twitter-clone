@@ -25,7 +25,7 @@ export function abbreviateDate(absoluteDate: string): string {
   const differenceInHours = now.diff(date, "hour");
 
   // If the date difference is more than 24 hours, show the absolute date
-  if (differenceInHours > 1) {
+  if (differenceInHours > 24) {
     return date.format("MMM D, YYYY");
   }
 
