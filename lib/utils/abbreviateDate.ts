@@ -11,11 +11,11 @@ dayjs.updateLocale("en", {
   relativeTime: {
     ...localeList["en"].relativeTime,
     s: "now",
-    m: "1m",
-    mm: "%dm",
-    h: "1h",
-    hh: "%dh",
-    d: "1d",
+    m: "1m ago",
+    mm: "%dm ago",
+    h: "1h ago",
+    hh: "%dh ago",
+    d: "1d ago",
   },
 });
 

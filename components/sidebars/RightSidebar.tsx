@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { BsSearch, BsThreeDots } from "react-icons/bs";
 import { abbreviateNumber } from "@/lib/utils/abbreviateNumber";
-import UserCard from "../shared/UserCard";
+import UserCard from "../UserCard";
 
 const exampleTrends = [
   { name: "Bitcoin", category: "Trending", posts: 1241 },
@@ -20,15 +20,19 @@ const RightSidebar = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <section className="top-0 min-w-[360px] hidden lg:flex flex-col gap-4 p-8">
+    <section className="top-0 min-w-[360px] h-full hidden lg:flex flex-col gap-4 p-8">
       {/* Search bar */}
       <div className="h-12 relative">
         <input
+          id="search"
           type="text"
           placeholder="Search Twitter"
           className="w-full h-full pl-12 pr-4 rounded-full outline-none border border-gray-800 bg-gray-800 peer focus:border-primary placeholder:text-gray-500"
         />
-        <label className="absolute top-0 left-0 h-full pl-4 flex items-center justify-center text-gray-500 peer-focus:text-primary">
+        <label
+          htmlFor="search"
+          className="absolute top-0 left-0 h-full pl-4 flex items-center justify-center text-gray-500 peer-focus:text-primary"
+        >
           <BsSearch className="w-5 h-5" />
         </label>
       </div>

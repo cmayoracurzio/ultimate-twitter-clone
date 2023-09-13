@@ -1,7 +1,8 @@
-import "./globals.css";
+import "../../globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import SupabaseProvider from "@/components/SupabaseProvider";
+
+import AuthProvider from "@/components/AuthProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -10,7 +11,7 @@ export const metadata: Metadata = {
   description: "Ultimate Twitter clone bootstrapped with Next.js",
 };
 
-export default async function RootLayout({
+export default async function Layout({
   children,
 }: {
   children: React.ReactNode;
@@ -18,9 +19,9 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className="w-full h-full bg-gray-900 text-white">
-          <SupabaseProvider>{children}</SupabaseProvider>
-        </div>
+        <AuthProvider>
+          <div className="w-full h-full bg-gray-900 text-white">{children}</div>
+        </AuthProvider>
       </body>
     </html>
   );

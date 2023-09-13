@@ -1,4 +1,4 @@
-import ProfilePhoto from "./ProfilePhoto";
+import ProfileAvatar from "./ProfileAvatar";
 
 const UserCard = ({ className }: { className: string }) => {
   return (
@@ -6,7 +6,7 @@ const UserCard = ({ className }: { className: string }) => {
       className={`px-4 py-3 flex justify-between items-center text-sm ${className}`}
     >
       <div className="flex gap-2">
-        <ProfilePhoto />
+        <ProfileAvatar />
         <div>
           <p className="font-bold hover:underline">Full name</p>
           <p className="text-gray-400">@username</p>

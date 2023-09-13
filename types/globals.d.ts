@@ -1,20 +1,28 @@
 import type { Database as DB } from "@/types/database.types";
 
-type Tweet = DB["public"]["Tables"]["tweets"]["Row"];
-type Profile = DB["public"]["Tables"]["profiles"]["Row"];
-type Like = DB["public"]["Tables"]["likes"]["Row"];
-type Bookmark = DB["public"]["Tables"]["bookmarks"]["Row"];
+type TableRow<T> = T["public"]["Tables"];
 
 declare global {
   type Database = DB;
-  type Profile = Profile;
-  type Like = Like;
-  type Bookmark = Bookmark;
+  type Tweet = TableRow<DB>["tweets"]["Row"];
+  type Profile = TableRow<DB>["profiles"]["Row"];
+  type Like = TableRow<DB>["likes"]["Row"];
+  type Bookmark = TableRow<DB>["bookmarks"]["Row"];
+
   type TweetwithMetadata = Tweet & {
     author: Profile;
     replies: number;
     likes: number;
     likedByUser: boolean;
     bookmarkedByUser: boolean;
+  };
+
+  type FeedType = "home" | "bookmarks" | "profile";
+
+  type ProfileWithMetadata = Profile & {
+    tweets: number;
+    likes: number;
+    replies: number;
+    bookmarks: number;
   };
 }

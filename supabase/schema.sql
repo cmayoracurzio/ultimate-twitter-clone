@@ -26,19 +26,39 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp" WITH SCHEMA "extensions";
 
 CREATE OR REPLACE FUNCTION "public"."handle_new_user"() RETURNS "trigger"
     LANGUAGE "plpgsql" SECURITY DEFINER
-    AS $$begin
-  insert into public.profiles (id, full_name, avatar_url)
+    AS $$DECLARE
+    base_username TEXT;
+    temp_username TEXT;
+    counter INT := 1;
+BEGIN
+
+  -- Get base username from email before the '@' and keep only alphanumeric characters
+  base_username := REGEXP_REPLACE(split_part(new.email, '@', 1), '[^a-zA-Z0-9]', '', 'g');
+
+  -- Initialize with base username
+  temp_username := base_username;
+
+  -- Loop to find a unique username
+  WHILE EXISTS (SELECT 1 FROM public.profiles WHERE username = temp_username) LOOP
+    temp_username := base_username || counter::TEXT;
+    counter := counter + 1;
+  END LOOP;
+
+  insert into public.profiles (id, username, full_name, avatar_url)
   values (
     new.id,
+    temp_username,
     COALESCE(
       new.raw_user_meta_data->>'full_name',
       new.raw_user_meta_data->>'name',
-      new.raw_user_meta_data->>'preferred_username'
+      new.raw_user_meta_data->>'preferred_username',
+      temp_username
     ),
-    new.raw_user_meta_data->>'avatar_url'
-    );
+    COALESCE(new.raw_user_meta_data->>'avatar_url', NULL)
+  );
+  
   return new;
-end;$$;
+END;$$;
 
 ALTER FUNCTION "public"."handle_new_user"() OWNER TO "postgres";
 
@@ -86,6 +106,7 @@ CREATE TABLE IF NOT EXISTS "public"."profiles" (
     "username" "text",
     "full_name" "text",
     "avatar_url" "text",
+    "created_at" timestamp with time zone DEFAULT ("now"() AT TIME ZONE 'utc'::"text") NOT NULL,
     CONSTRAINT "username_length" CHECK (("char_length"("username") >= 3))
 );
 
@@ -135,6 +156,9 @@ ALTER TABLE ONLY "public"."likes"
 
 ALTER TABLE ONLY "public"."profiles"
     ADD CONSTRAINT "profiles_pkey" PRIMARY KEY ("id");
+
+ALTER TABLE ONLY "public"."profiles"
+    ADD CONSTRAINT "profiles_username_key" UNIQUE ("username");
 
 ALTER TABLE ONLY "public"."replies"
     ADD CONSTRAINT "replies_pkey" PRIMARY KEY ("id");

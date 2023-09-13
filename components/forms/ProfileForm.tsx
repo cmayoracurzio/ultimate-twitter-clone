@@ -1,16 +1,20 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { type FieldValues, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   profileValidator,
   type ProfileFormSchema,
 } from "@/lib/validations/profile";
-import { updateProfile } from "@/lib/actions";
 import { PiSpinnerBold } from "react-icons/pi";
+import { getURL } from "@/lib/utils/getURL";
 
-export default function ProfileForm({ profile }: { profile: Profile | null }) {
+export default function ProfileForm({
+  currentUserProfile,
+}: {
+  currentUserProfile: Profile | null;
+}) {
   const {
     register,
     handleSubmit,
@@ -19,24 +23,28 @@ export default function ProfileForm({ profile }: { profile: Profile | null }) {
   } = useForm<ProfileFormSchema>({
     resolver: zodResolver(profileValidator),
     defaultValues: {
-      username: profile?.username ?? "",
-      full_name: profile?.full_name ?? "",
+      username: currentUserProfile?.username ?? "",
+      full_name: currentUserProfile?.full_name ?? "",
     },
   });
 
   const router = useRouter();
 
-  const onSubmit = async (data: FieldValues) => {
-    try {
-      const result = await updateProfile(data);
-      if (!result.success) {
-        setError("username", { message: result.error });
+  const onSubmit = async (updatedProfile: ProfileFormSchema) => {
+    const response = await fetch(`${getURL()}/api/profiles`, {
+      method: "POST",
+      body: JSON.stringify(updatedProfile),
+      headers: { "Content-Type": "application/json" },
+    });
+    if (!response.ok) {
+      setError("username", { message: "Something unexpected happened" });
+    } else {
+      const { error } = await response.json();
+      if (error) {
+        setError("username", { message: error });
       } else {
         router.push("/");
       }
-    } catch (error) {
-      console.error(error);
-      setError("username", { message: "Something unexpected happened" });
     }
   };
 

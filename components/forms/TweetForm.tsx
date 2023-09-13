@@ -1,10 +1,10 @@
 "use client";
 
-import { type FieldValues, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { tweetValidator, type TweetFormSchema } from "@/lib/validations/tweet";
-import { createTweet } from "@/lib/actions";
 import { useEffect, useRef } from "react";
+import { getURL } from "@/lib/utils/getURL";
 
 export default function TweetForm({
   addTweetToFeed,
@@ -39,20 +39,22 @@ export default function TweetForm({
     }
   }, [textAreaRef, currentText]);
 
-  const onSubmit = async (data: FieldValues) => {
-    try {
-      const result = await createTweet(data);
-      if (!result.success) {
-        setError(textAreaName, { message: result.error });
-      } else if (result.data) {
-        addTweetToFeed(result.data);
+  const onSubmit = async (newTweet: TweetFormSchema) => {
+    const response = await fetch(`${getURL()}/api/tweets`, {
+      method: "POST",
+      body: JSON.stringify(newTweet),
+      headers: { "Content-Type": "application/json" },
+    });
+    if (!response.ok) {
+      setError(textAreaName, { message: "Something unexpected happened" });
+    } else {
+      const { data, error } = await response.json();
+      if (error) {
+        setError(textAreaName, { message: error });
+      } else if (data) {
+        addTweetToFeed(data);
         reset();
       }
-    } catch (error) {
-      console.error(error);
-      setError(textAreaName, {
-        message: "Something unexpected happened",
-      });
     }
   };
 

@@ -1,63 +1,63 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-
-import TweetCard from "./tweet-card/TweetCard";
-import ProfilePhoto from "./shared/ProfilePhoto";
+import { useProfile } from "./AuthProvider";
+import { useTweetFeed } from "@/hooks/useTweetFeed";
+import ProfileAvatar from "./ProfileAvatar";
 import TweetForm from "./forms/TweetForm";
-
+import TweetCard from "./tweet-card/TweetCard";
+import { CgSpinner } from "react-icons/cg";
 import { BiRefresh } from "react-icons/bi";
 
 export default function TweetFeed({
-  initialTweets,
-  profile,
+  feedType,
+  profileId = null,
 }: {
-  initialTweets: TweetwithMetadata[];
-  profile: Profile | null;
+  feedType: FeedType;
+  profileId?: string | null;
 }) {
-  const [tweets, setTweets] = useState(initialTweets);
-  const router = useRouter();
-
-  const addTweetToFeed = async (newTweet: TweetwithMetadata) => {
-    setTweets([newTweet, ...tweets]);
-  };
-
-  const updateTweetInFeed = async (newTweet: TweetwithMetadata) => {
-    const index = tweets.findIndex((tweet) => tweet.id === newTweet.id);
-    const newOptimisticTweets = [...tweets];
-    newOptimisticTweets[index] = newTweet;
-    setTweets(newOptimisticTweets);
-  };
-
-  const refreshFeed = async () => {
-    router.refresh();
-    window.scrollTo(0, 0);
-  };
+  const profile = useProfile();
+  const { tweets, isLoading, addTweetToFeed, updateTweetInFeed, refreshFeed } =
+    useTweetFeed({ feedType, profileId });
 
   return (
     <>
-      <div className="p-4 flex gap-4 items-start">
-        <ProfilePhoto src={profile?.avatar_url} />
-        <TweetForm addTweetToFeed={addTweetToFeed} />
-      </div>
-      <div className="flex flex-col divide-y divide-gray-600 border-t border-gray-600">
-        {tweets.map((tweet) => (
-          <TweetCard
-            key={tweet.id}
-            tweet={tweet}
-            updateTweetInFeed={updateTweetInFeed}
-          />
-        ))}
-        <div className="h-full py-12 flex justify-center items-start">
-          <button
-            onClick={refreshFeed}
-            className="rounded-full p-2 bg-primary hover:bg-opacity-70"
-          >
-            <BiRefresh size={40} />
-          </button>
+      {/* Tweet Form (only rendered in home page) */}
+      {feedType === "home" ? (
+        <div className="p-4 flex gap-4 items-start">
+          <ProfileAvatar src={profile.avatar_url} />
+          <TweetForm addTweetToFeed={addTweetToFeed} />
         </div>
-      </div>
+      ) : null}
+
+      {/* Tweets */}
+      {isLoading ? (
+        <div className="py-12 flex justify-center items-start">
+          <div className="text-primary animate-spin">
+            <CgSpinner size={40} />
+          </div>
+        </div>
+      ) : (
+        <>
+          {tweets.map((tweet) => (
+            <TweetCard
+              key={tweet.id}
+              tweet={tweet}
+              updateTweetInFeed={updateTweetInFeed}
+              showOptions={tweet.author.id === profile.id}
+            />
+          ))}
+
+          {/* Refresh button */}
+          <div className="max-sm:mb-20 py-12 flex justify-center items-start">
+            <button
+              onClick={refreshFeed}
+              className="rounded-full p-2 bg-primary hover:bg-opacity-70"
+            >
+              <BiRefresh size={40} />
+            </button>
+          </div>
+        </>
+      )}
     </>
   );
 }
