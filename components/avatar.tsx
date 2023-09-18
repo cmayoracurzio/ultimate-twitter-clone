@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-export default function ProfileAvatar({
+export default function Avatar({
   src,
   size = 40,
 }: {
@@ -12,7 +12,7 @@ export default function ProfileAvatar({
       src={src || "/profile.svg"}
       width={size}
       height={size}
-      alt="Profile picture"
+      alt="Profile avatar"
       className="shrink-0 rounded-full"
     />
   );

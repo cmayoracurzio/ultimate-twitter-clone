@@ -9,22 +9,21 @@ The following project implements a full-stack Twitter clone with modern web deve
 - **Supabase** for authentication and data persistence in PostgreSQL
 - **Node.js libraries:**
   - Forms with `react-hook-form` and `zod`
-  - Date utilities with `dayjs`
+  - Date formatting with `dayjs`
+  - Modals with `@headlessui/react`
 
 ## TODO (ongoing):
 
-- Account options (edit profile incl. avatar, sign out, delete account)
-- Authentication with email and password
-- Tweet options (edit, delete)
-- Handle not-found, loading, and error states
+- Finish delete-account-form
+- Authentication with email and password (and improve login page)
 - Finish LeftSidebar buttons (tweet button, user button)
-- Finish other pages (tweet, explore, notifications, messages)
-- RightSidebar functionalities (search bar, trends for you, who to follow)
+- Tweet page and tweet options (reply, edit, delete)
+- Handle not-found, loading/streaming, and error states
+- Add avatar to EditProfileForm
+- Finish other pages (explore, notifications, messages)
+- RightSidebar functionalities (corporate links, search bar, trends for you, who to follow)
 - TweetFeed with state management and infinite scrolling using [React Query](https://tanstack.com/query/latest/)
-- Consider using component libraries:
-  - [Headless UI](https://headlessui.com/)
-  - [shadcn/ui](https://ui.shadcn.com/)
-  - [NextUI](https://nextui.org/)
+- Consider using [shadcn/ui](https://ui.shadcn.com/) components
 - Consider using ORM instead of Supabase database API:
   - [Prisma](https://www.prisma.io/)
   - [Drizzle](https://orm.drizzle.team/)

@@ -6,12 +6,12 @@ import { useRouter } from "next/navigation";
 import { abbreviateDate } from "@/lib/utils/abbreviateDate";
 import { truncateText } from "@/lib/utils/truncateText";
 
-import LikeButton from "./LikeButton";
-import ProfileAvatar from "../ProfileAvatar";
-import TweetOptionsButton from "./TweetOptionsButton";
-import ReplyButton from "./ReplyButton";
-import BookmarkButton from "./BookmarkButton";
-import ShareButton from "./ShareButton";
+import LikeButton from "./like-button";
+import Avatar from "../../avatar";
+import TweetOptionsButton from "./tweet-options-button";
+import ReplyButton from "./reply-button";
+import BookmarkButton from "./bookmark-button";
+import ShareButton from "./share-button";
 
 const TweetCard = ({
   tweet,
@@ -35,7 +35,7 @@ const TweetCard = ({
   return (
     <article className="p-4 flex gap-4 items-start hover:bg-gray-800 text-gray-400 text-sm">
       {/* Tweet header */}
-      <ProfileAvatar src={tweet.author.avatar_url} />
+      <Avatar src={tweet.author.avatar_url} />
       <div className="w-full flex flex-col gap-1 justify-start overflow-hidden">
         <div className="flex items-center justify-start gap-4">
           <div className="flex-1 flex items-center gap-2 text-gray-500 overflow-hidden">

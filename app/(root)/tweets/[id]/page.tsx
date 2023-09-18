@@ -1,4 +1,4 @@
-import Header from "@/components/Header";
+import Header from "@/components/header";
 
 export default async function Page({ params }: { params: { id: string } }) {
   const tweetId = params.id;

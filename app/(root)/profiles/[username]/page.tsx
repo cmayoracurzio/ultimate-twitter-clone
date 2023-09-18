@@ -1,9 +1,9 @@
 import { cookies } from "next/headers";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 
-import Header from "@/components/Header";
-import ProfileCard from "@/components/profile-card/ProfileCard";
-import TweetFeed from "@/components/TweetFeed";
+import Header from "@/components/header";
+import ProfileCard from "@/components/profile/profile-card";
+import TweetFeed from "@/components/tweets/tweet-feed";
 
 export default async function Page({
   params,

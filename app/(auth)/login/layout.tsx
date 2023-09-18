@@ -2,7 +2,7 @@ import "../../globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
-import AuthProvider from "@/components/AuthProvider";
+import AuthProvider from "@/components/providers/auth-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,9 +19,9 @@ export default async function Layout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <AuthProvider>
-          <div className="w-full h-full bg-gray-900 text-white">{children}</div>
-        </AuthProvider>
+        <div className="w-full h-full bg-gray-900 text-white">
+          <AuthProvider>{children} </AuthProvider>
+        </div>
       </body>
     </html>
   );

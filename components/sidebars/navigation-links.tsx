@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useProfile } from "../AuthProvider";
+import { useProfile } from "../providers/profile-provider";
 
 import {
   BiHomeCircle,

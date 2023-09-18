@@ -1,8 +1,8 @@
 import { abbreviateDate } from "@/lib/utils/abbreviateDate";
 import { abbreviateNumber } from "@/lib/utils/abbreviateNumber";
-import ProfileAvatar from "../ProfileAvatar";
+import Avatar from "../avatar";
 import { BiCalendar } from "react-icons/bi";
-import ProfileOptionsButton from "./ProfileOptionsButton";
+import ProfileOptions from "./profile-options";
 
 export default async function ProfileCard({
   profile,
@@ -20,7 +20,7 @@ export default async function ProfileCard({
     <div className="p-4 flex flex-col gap-8">
       {/* Profile information */}
       <div className="flex gap-4 items-start justify-start">
-        <ProfileAvatar src={profile.avatar_url} size={90} />
+        <Avatar src={profile.avatar_url} size={90} />
         <div className="w-32 flex-1 flex flex-col gap-1.5 overflow-hidden">
           <p className="text-2xl font-bold truncate">{profile.full_name}</p>
           <p className="text-gray-500 truncate">@{profile.username}</p>
@@ -29,7 +29,7 @@ export default async function ProfileCard({
             <p>Joined {abbreviateDate(profile.created_at)}</p>
           </div>
         </div>
-        <ProfileOptionsButton profileId={profile.id} />
+        <ProfileOptions profileId={profile.id} />
       </div>
 
       {/* Profile stats */}

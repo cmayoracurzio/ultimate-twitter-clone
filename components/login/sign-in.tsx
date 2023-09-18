@@ -27,7 +27,7 @@ export default function SignIn() {
         <button
           key={provider.name}
           onClick={() => handleSignIn(provider.name)}
-          className="bg-white rounded-full px-8 py-3 border border-gray-400 text-black text-xl font-bold hover:bg-opacity-70"
+          className="rounded-full border border-gray-400 bg-white px-8 py-3 text-xl font-bold text-black hover:bg-opacity-70"
         >
           <div className="flex items-center justify-center gap-3">
             <provider.icon size={28} />

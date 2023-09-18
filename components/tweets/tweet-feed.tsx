@@ -1,10 +1,10 @@
 "use client";
 
-import { useProfile } from "./AuthProvider";
+import { useProfile } from "../providers/profile-provider";
 import { useTweetFeed } from "@/hooks/useTweetFeed";
-import ProfileAvatar from "./ProfileAvatar";
-import TweetForm from "./forms/TweetForm";
-import TweetCard from "./tweet-card/TweetCard";
+import Avatar from "../avatar";
+import TweetForm from "./tweet-form";
+import TweetCard from "./tweet-card/tweet-card";
 import { CgSpinner } from "react-icons/cg";
 import { BiRefresh } from "react-icons/bi";
 
@@ -24,7 +24,7 @@ export default function TweetFeed({
       {/* Tweet Form (only rendered in home page) */}
       {feedType === "home" ? (
         <div className="p-4 flex gap-4 items-start">
-          <ProfileAvatar src={profile.avatar_url} />
+          <Avatar src={profile.avatar_url} />
           <TweetForm addTweetToFeed={addTweetToFeed} />
         </div>
       ) : null}

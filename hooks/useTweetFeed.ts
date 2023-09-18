@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback, startTransition } from "react";
 import { getURL } from "@/lib/utils/getURL";
+import { useRouter } from "next/navigation";
 
 export function useTweetFeed({
   feedType,
@@ -12,6 +13,7 @@ export function useTweetFeed({
 }) {
   const [tweets, setTweets] = useState<TweetwithMetadata[]>([]);
   const [isLoading, setLoading] = useState(true);
+  const router = useRouter();
 
   const fetchTweets = useCallback(async () => {
     setLoading(true);
@@ -52,9 +54,11 @@ export function useTweetFeed({
     const updatedTweets = [...tweets];
     updatedTweets[index] = newTweet;
     setTweets(updatedTweets);
+    router.refresh();
   };
 
   const refreshFeed = () => {
+    router.refresh();
     window.scrollTo(0, 0);
     fetchTweets();
   };

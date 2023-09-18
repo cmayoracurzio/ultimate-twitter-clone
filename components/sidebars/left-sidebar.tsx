@@ -1,6 +1,6 @@
-import NavigationLinks from "./NavigationLinks";
-import ProfileButton from "./ProfileButton";
-import TweetButton from "./TweetButton";
+import NavigationLinks from "./navigation-links";
+import ProfileButton from "./profile-button";
+import TweetButton from "./tweet-button";
 
 export default async function LeftSidebar() {
   return (

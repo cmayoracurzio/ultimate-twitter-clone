@@ -1,4 +1,4 @@
-import NavigationLinks from "./NavigationLinks";
+import NavigationLinks from "./navigation-links";
 
 export default async function BottomBar() {
   return (
