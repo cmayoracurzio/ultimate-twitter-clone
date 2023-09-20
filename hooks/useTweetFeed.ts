@@ -17,6 +17,7 @@ export function useTweetFeed({
 
   const fetchTweets = useCallback(async () => {
     setLoading(true);
+    router.refresh();
     const url = new URL(`${getURL()}/api/tweets`);
     const params = new URLSearchParams({ feedType: feedType });
 
@@ -38,7 +39,7 @@ export function useTweetFeed({
       setTweets(freshTweets);
       setLoading(false);
     });
-  }, [feedType, profileId]);
+  }, [router, feedType, profileId]);
 
   useEffect(() => {
     fetchTweets();
@@ -56,7 +57,6 @@ export function useTweetFeed({
   };
 
   const refreshFeed = () => {
-    router.refresh();
     window.scrollTo(0, 0);
     fetchTweets();
   };

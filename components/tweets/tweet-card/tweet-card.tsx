@@ -33,15 +33,15 @@ const TweetCard = ({
   const truncatedText = truncateText(tweet.text, maxTextLength);
 
   return (
-    <article className="p-4 flex gap-4 items-start hover:bg-gray-800 text-gray-400 text-sm">
+    <article className="flex items-start gap-4 p-4 text-sm text-gray-400 hover:bg-gray-800">
       {/* Tweet header */}
       <Avatar src={tweet.author.avatar_url} />
-      <div className="w-full flex flex-col gap-1 justify-start overflow-hidden">
+      <div className="flex w-full flex-col justify-start gap-1 overflow-hidden">
         <div className="flex items-center justify-start gap-4">
-          <div className="flex-1 flex items-center gap-2 text-gray-500 overflow-hidden">
+          <div className="flex w-32 flex-1 items-center gap-2 overflow-hidden text-gray-500">
             <Link
               href={`/profiles/${tweet.author.username}`}
-              className="text-white font-bold hover:underline truncate"
+              className="truncate font-bold text-white hover:underline"
             >
               {tweet.author.full_name}
             </Link>
@@ -59,7 +59,7 @@ const TweetCard = ({
               <span>{truncatedText}</span>
               <span
                 onClick={handleShowMore}
-                className="text-primary hover:underline cursor-pointer"
+                className="cursor-pointer text-primary hover:underline"
               >
                 Show more
               </span>
@@ -70,7 +70,7 @@ const TweetCard = ({
         </div>
 
         {/* Tweet Buttons */}
-        <div className="flex justify-between items-center">
+        <div className="flex items-center justify-between">
           <LikeButton tweet={tweet} updateTweetInFeed={updateTweetInFeed} />
           <ReplyButton tweet={tweet} handleShowMore={handleShowMore} />
           <BookmarkButton tweet={tweet} updateTweetInFeed={updateTweetInFeed} />
