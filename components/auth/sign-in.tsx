@@ -12,7 +12,7 @@ const providers = [
 ] as const;
 
 export default function SignIn() {
-  const supabase = createClientComponentClient();
+  const supabase = createClientComponentClient<Database>();
 
   const handleSignIn = async (provider: Provider) => {
     await supabase.auth.signInWithOAuth({

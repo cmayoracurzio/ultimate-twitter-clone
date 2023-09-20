@@ -24,6 +24,15 @@ CREATE EXTENSION IF NOT EXISTS "supabase_vault" WITH SCHEMA "vault";
 
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp" WITH SCHEMA "extensions";
 
+CREATE OR REPLACE FUNCTION "public"."delete_user"() RETURNS "void"
+    LANGUAGE "plpgsql" SECURITY DEFINER
+    AS $$BEGIN
+    DELETE FROM auth.users
+    WHERE auth.users.id = auth.uid();
+END;$$;
+
+ALTER FUNCTION "public"."delete_user"() OWNER TO "postgres";
+
 CREATE OR REPLACE FUNCTION "public"."handle_new_user"() RETURNS "trigger"
     LANGUAGE "plpgsql" SECURITY DEFINER
     AS $$DECLARE
@@ -103,8 +112,8 @@ ALTER TABLE "public"."likes" OWNER TO "postgres";
 CREATE TABLE IF NOT EXISTS "public"."profiles" (
     "id" "uuid" NOT NULL,
     "updated_at" timestamp with time zone DEFAULT ("now"() AT TIME ZONE 'utc'::"text") NOT NULL,
-    "username" "text",
-    "full_name" "text",
+    "username" "text" NOT NULL,
+    "full_name" "text" NOT NULL,
     "avatar_url" "text",
     "created_at" timestamp with time zone DEFAULT ("now"() AT TIME ZONE 'utc'::"text") NOT NULL,
     CONSTRAINT "username_length" CHECK (("char_length"("username") >= 3))
@@ -208,6 +217,8 @@ CREATE POLICY "Authenticated users can delete their own bookmarks" ON "public"."
 
 CREATE POLICY "Authenticated users can delete their own likes" ON "public"."likes" FOR DELETE TO "authenticated" USING (("auth"."uid"() = "profile_id"));
 
+CREATE POLICY "Authenticated users can delete their own profile" ON "public"."profiles" FOR DELETE TO "authenticated" USING (("auth"."uid"() = "id"));
+
 CREATE POLICY "Authenticated users can insert a tweet" ON "public"."tweets" FOR INSERT TO "authenticated" WITH CHECK (("auth"."uid"() = "profile_id"));
 
 CREATE POLICY "Authenticated users can insert their own bookmarks" ON "public"."bookmarks" FOR INSERT TO "authenticated" WITH CHECK (("auth"."uid"() = "profile_id"));
@@ -244,6 +255,10 @@ GRANT USAGE ON SCHEMA "public" TO "postgres";
 GRANT USAGE ON SCHEMA "public" TO "anon";
 GRANT USAGE ON SCHEMA "public" TO "authenticated";
 GRANT USAGE ON SCHEMA "public" TO "service_role";
+
+GRANT ALL ON FUNCTION "public"."delete_user"() TO "anon";
+GRANT ALL ON FUNCTION "public"."delete_user"() TO "authenticated";
+GRANT ALL ON FUNCTION "public"."delete_user"() TO "service_role";
 
 GRANT ALL ON FUNCTION "public"."handle_new_user"() TO "anon";
 GRANT ALL ON FUNCTION "public"."handle_new_user"() TO "authenticated";

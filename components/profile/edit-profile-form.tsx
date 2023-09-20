@@ -4,35 +4,34 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
-  profileValidator,
-  type ProfileFormSchema,
+  editProfileValidator,
+  type EditProfileSchema,
 } from "@/lib/validations/profile";
 import { getURL } from "@/lib/utils/getURL";
 
 export default function EditProfileForm({
-  currentUserProfile,
+  username,
+  fullName,
 }: {
-  currentUserProfile: Profile;
+  username: string;
+  fullName: string;
 }) {
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting, isSubmitSuccessful },
     setError,
-  } = useForm<ProfileFormSchema>({
-    resolver: zodResolver(profileValidator),
-    defaultValues: {
-      username: currentUserProfile?.username ?? "",
-      full_name: currentUserProfile?.full_name ?? "",
-    },
+  } = useForm<EditProfileSchema>({
+    resolver: zodResolver(editProfileValidator),
+    defaultValues: { username, fullName },
   });
 
   const router = useRouter();
 
-  const onSubmit = async (updatedProfile: ProfileFormSchema) => {
+  const onSubmit = async (formValues: EditProfileSchema) => {
     const response = await fetch(`${getURL()}/api/profiles`, {
       method: "POST",
-      body: JSON.stringify(updatedProfile),
+      body: JSON.stringify(formValues),
       headers: { "Content-Type": "application/json" },
     });
     if (!response.ok) {
@@ -42,8 +41,7 @@ export default function EditProfileForm({
       if (error) {
         setError("username", { message: error });
       } else {
-        router.push(`/profiles/${updatedProfile.username}`);
-        router.refresh();
+        router.push(`/profiles/${formValues.username}`);
       }
     }
   };
@@ -51,18 +49,18 @@ export default function EditProfileForm({
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="w-full flex flex-col gap-2"
+      className="flex w-full flex-col gap-2"
     >
       {/* Username input */}
       <div className="flex items-center gap-2 rounded-full px-5 py-2 ring-1 ring-inset ring-gray-600 focus-within:ring-primary">
         <input
           {...register("username")}
           type="text"
-          className="outline-none bg-transparent w-full text-white placeholder:text-gray-400 peer order-last"
+          className="peer order-last w-full bg-transparent text-white outline-none placeholder:text-gray-400"
         />
         <label
           htmlFor="username"
-          className="w-24 text-sm text-gray-600 peer-focus-within:text-primary"
+          className="whitespace-nowrap text-sm text-gray-600 peer-focus-within:text-primary "
         >
           Username:
         </label>
@@ -71,13 +69,13 @@ export default function EditProfileForm({
       {/* Full name input */}
       <div className="flex items-center gap-2 rounded-full px-5 py-2 ring-1 ring-inset ring-gray-600 focus-within:ring-primary">
         <input
-          {...register("full_name")}
+          {...register("fullName")}
           type="text"
-          className="outline-none bg-transparent w-full text-white placeholder:text-gray-400 peer order-last"
+          className="peer order-last w-full bg-transparent text-white outline-none placeholder:text-gray-400"
         />
         <label
-          htmlFor="full_name"
-          className="w-24 text-sm text-gray-600 peer-focus-within:text-primary"
+          htmlFor="fullName"
+          className="whitespace-nowrap text-sm text-gray-600 peer-focus-within:text-primary"
         >
           Full name:
         </label>
@@ -86,15 +84,15 @@ export default function EditProfileForm({
       {/* Form submit button */}
       <button
         type="submit"
-        disabled={isSubmitting || isSubmitSuccessful}
-        className="w-full text-center rounded-full bg-primary px-5 py-2 font-semibold text-white hover:bg-opacity-70 disabled:bg-opacity-70 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+        disabled={isSubmitting}
+        className="w-full rounded-full bg-primary px-5 py-2 text-center font-semibold text-white hover:bg-opacity-70 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:bg-opacity-70"
       >
         Save changes
       </button>
 
       {/* Error messages */}
       <div className="h-8 text-primary">
-        {errors.username?.message || errors.full_name?.message}
+        {errors.username?.message || errors.fullName?.message}
       </div>
     </form>
   );

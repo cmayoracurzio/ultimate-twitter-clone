@@ -42,8 +42,7 @@ export function useTweetFeed({
 
   useEffect(() => {
     fetchTweets();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [fetchTweets]);
 
   const addTweetToFeed = (newTweet: TweetwithMetadata) => {
     setTweets([newTweet, ...tweets]);
@@ -54,7 +53,6 @@ export function useTweetFeed({
     const updatedTweets = [...tweets];
     updatedTweets[index] = newTweet;
     setTweets(updatedTweets);
-    router.refresh();
   };
 
   const refreshFeed = () => {

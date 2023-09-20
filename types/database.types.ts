@@ -96,26 +96,26 @@ export interface Database {
         Row: {
           avatar_url: string | null
           created_at: string
-          full_name: string | null
+          full_name: string
           id: string
           updated_at: string
-          username: string | null
+          username: string
         }
         Insert: {
           avatar_url?: string | null
           created_at?: string
-          full_name?: string | null
+          full_name: string
           id: string
           updated_at?: string
-          username?: string | null
+          username: string
         }
         Update: {
           avatar_url?: string | null
           created_at?: string
-          full_name?: string | null
+          full_name?: string
           id?: string
           updated_at?: string
-          username?: string | null
+          username?: string
         }
         Relationships: [
           {
@@ -233,7 +233,10 @@ export interface Database {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      delete_user: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
     }
     Enums: {
       [_ in never]: never
