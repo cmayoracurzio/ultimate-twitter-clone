@@ -2,10 +2,10 @@
 
 import { abbreviateDate } from "@/lib/utils/abbreviateDate";
 import { abbreviateNumber } from "@/lib/utils/abbreviateNumber";
-import { useProfile } from "../providers/profile-provider";
-import Avatar from "../avatar";
+import { useProfile } from "@/components/providers/profile-provider";
+import Avatar from "@/components/avatar";
 import { BiCalendar } from "react-icons/bi";
-import ProfileOptions from "./profile-options";
+import ProfileOptions from "@/components/modals/profile-options";
 
 export default function ProfileCard({
   profile,
@@ -36,10 +36,7 @@ export default function ProfileCard({
         </div>
         {/* Profile options */}
         {currentUserProfile.id === profile.id ? (
-          <ProfileOptions
-            username={profile.username}
-            fullName={profile.full_name}
-          />
+          <ProfileOptions buttonType="small" />
         ) : null}
       </div>
 

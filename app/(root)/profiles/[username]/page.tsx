@@ -2,8 +2,8 @@ import { cookies } from "next/headers";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 
 import Header from "@/components/header";
-import ProfileCard from "@/components/profile/profile-card";
-import TweetFeed from "@/components/tweets/tweet-feed";
+import ProfileCard from "@/components/cards/profile-card";
+import TweetFeed from "@/components/tweet-feed";
 
 export default async function Page({
   params,
@@ -15,7 +15,7 @@ export default async function Page({
   const { data } = await supabase
     .from("profiles")
     .select(
-      "*, tweets(profile_id), likes(profile_id), replies(profile_id), bookmarks(profile_id)"
+      "*, tweets(profile_id), likes(profile_id), replies(profile_id), bookmarks(profile_id)",
     )
     .eq("username", params.username);
 

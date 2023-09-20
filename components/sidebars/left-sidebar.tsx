@@ -1,14 +1,14 @@
-import NavigationLinks from "./navigation-links";
-import ProfileButton from "./profile-button";
-import TweetButton from "./tweet-button";
+import ProfileOptions from "@/components/modals/profile-options";
+import NavigationLinks from "@/components/buttons/navigation-links";
+import TweetButton from "@/components/buttons/tweet-button";
 
-export default async function LeftSidebar() {
+export default function LeftSidebar() {
   return (
-    <section className="max-sm:hidden sticky top-0 h-screen py-8 px-4 xl:px-8">
-      <nav className="h-full flex flex-col justify-between items-center xl:items-start">
+    <section className="sticky top-0 h-screen px-4 py-8 max-sm:hidden xl:px-8">
+      <nav className="flex h-full flex-col items-center justify-between xl:items-start">
         <NavigationLinks />
         <TweetButton />
-        <ProfileButton />
+        <ProfileOptions buttonType="large" />
       </nav>
     </section>
   );

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { BsSearch, BsThreeDots } from "react-icons/bs";
 import { abbreviateNumber } from "@/lib/utils/abbreviateNumber";
-import UserCard from "../user-card";
+import UserCard from "@/components/user-card";
 
 const exampleTrends = [
   { name: "Bitcoin", category: "Trending", posts: 1241 },
@@ -20,61 +20,61 @@ const RightSidebar = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <section className="top-0 min-w-[330px] h-full hidden lg:flex flex-col gap-4 p-8">
+    <section className="top-0 hidden h-full min-w-[330px] flex-col gap-4 p-8 lg:flex">
       {/* Search bar */}
-      <div className="h-12 relative">
+      <div className="relative h-12">
         <input
           id="search"
           type="text"
           placeholder="Search Twitter"
-          className="w-full h-full pl-12 pr-4 rounded-full outline-none border border-gray-800 bg-gray-800 peer focus:border-primary placeholder:text-gray-500"
+          className="peer h-full w-full rounded-full border border-gray-800 bg-gray-800 pl-12 pr-4 outline-none placeholder:text-gray-500 focus:border-primary"
         />
         <label
           htmlFor="search"
-          className="absolute top-0 left-0 h-full pl-4 flex items-center justify-center text-gray-500 peer-focus:text-primary"
+          className="absolute left-0 top-0 flex h-full items-center justify-center pl-4 text-gray-500 peer-focus:text-primary"
         >
-          <BsSearch className="w-5 h-5" />
+          <BsSearch className="h-5 w-5" />
         </label>
       </div>
 
       {/* Trends for you */}
-      <div className="flex flex-col rounded-2xl bg-gray-800 border border-gray-800">
-        <h3 className="font-semibold text-xl p-4">Trends for you</h3>
+      <div className="flex flex-col rounded-2xl border border-gray-800 bg-gray-800">
+        <h3 className="p-4 text-xl font-semibold">Trends for you</h3>
         {exampleTrends.map((trend) => (
           <Link
             key={trend.name}
             href="/"
-            className="hover:bg-gray-700 px-4 py-3 flex justify-between items-center"
+            className="flex items-center justify-between px-4 py-3 hover:bg-gray-700"
           >
             <div>
               <div className="text-xs text-gray-400">{trend.category}</div>
-              <div className="font-semibold text-lg">{trend.name}</div>
+              <div className="text-lg font-semibold">{trend.name}</div>
               <div className="text-xs text-gray-400">
                 {abbreviateNumber(trend.posts)} posts
               </div>
             </div>
-            <button className="hover:bg-primary/20 text-gray-400 hover:text-primary rounded-full p-2">
+            <button className="rounded-full p-2 text-gray-400 hover:bg-primary/20 hover:text-primary">
               <BsThreeDots />
             </button>
           </Link>
         ))}
         <Link
           href="/"
-          className="p-4 hover:bg-gray-700 rounded-b-xl text-sm text-primary"
+          className="rounded-b-xl p-4 text-sm text-primary hover:bg-gray-700"
         >
           Show more
         </Link>
       </div>
 
       {/* Who to follow */}
-      <div className="flex flex-col rounded-2xl bg-gray-800 border border-gray-800">
-        <h3 className="font-semibold text-xl p-4">Who to follow</h3>
+      <div className="flex flex-col rounded-2xl border border-gray-800 bg-gray-800">
+        <h3 className="p-4 text-xl font-semibold">Who to follow</h3>
         <UserCard className="hover:bg-gray-700" />
         <UserCard className="hover:bg-gray-700" />
         <UserCard className="hover:bg-gray-700" />
         <Link
           href="/"
-          className="p-4 hover:bg-gray-700 rounded-b-xl text-sm text-primary"
+          className="rounded-b-xl p-4 text-sm text-primary hover:bg-gray-700"
         >
           Show more
         </Link>

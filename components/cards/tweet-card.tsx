@@ -6,12 +6,12 @@ import { useRouter } from "next/navigation";
 import { abbreviateDate } from "@/lib/utils/abbreviateDate";
 import { truncateText } from "@/lib/utils/truncateText";
 
-import LikeButton from "./like-button";
-import Avatar from "../../avatar";
-import TweetOptionsButton from "./tweet-options-button";
-import ReplyButton from "./reply-button";
-import BookmarkButton from "./bookmark-button";
-import ShareButton from "./share-button";
+import LikeButton from "@/components/buttons/like-button";
+import Avatar from "@/components/avatar";
+import ReplyButton from "@/components/buttons/reply-button";
+import BookmarkButton from "@/components/buttons/bookmark-button";
+import ShareButton from "@/components/buttons/share-button";
+import OptionsButton from "@/components/buttons/options-button";
 
 const TweetCard = ({
   tweet,
@@ -49,7 +49,9 @@ const TweetCard = ({
             <span>·</span>
             <span className="whitespace-nowrap">{abbreviatedDated}</span>
           </div>
-          {showOptions ? <TweetOptionsButton /> : null}
+          {showOptions ? (
+            <OptionsButton onClick={() => console.log("button clicked")} />
+          ) : null}
         </div>
 
         {/* Tweet text */}

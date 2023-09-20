@@ -1,5 +1,5 @@
 import Header from "@/components/header";
-import TweetFeed from "@/components/tweets/tweet-feed";
+import TweetFeed from "@/components/tweet-feed";
 
 export default async function Page() {
   return (

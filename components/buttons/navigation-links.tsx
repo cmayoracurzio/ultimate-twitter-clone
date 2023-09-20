@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useProfile } from "../providers/profile-provider";
+import { useProfile } from "@/components/providers/profile-provider";
 
 import {
   BiHomeCircle,
@@ -62,10 +62,10 @@ export default function NavigationLinks() {
   const { username } = useProfile();
 
   return (
-    <div className="flex sm:flex-col items-start justify-evenly sm:gap-2 text-xl">
+    <div className="flex items-start justify-evenly text-xl sm:flex-col sm:gap-2">
       <Link
         href="/"
-        className="hover:bg-gray-800 w-fit rounded-full p-3 xl:ml-2 max-sm:hidden"
+        className="w-fit rounded-full p-3 hover:bg-gray-800 max-sm:hidden xl:ml-2"
       >
         <BsTwitter />
       </Link>
@@ -73,7 +73,7 @@ export default function NavigationLinks() {
         <Link
           key={link.label}
           href={link.label === "Profile" ? `${link.url}/${username}` : link.url}
-          className="sm:hover:bg-gray-800 flex items-center justify-start w-fit gap-4 rounded-full p-3 xl:px-5"
+          className="flex w-fit items-center justify-start gap-4 rounded-full p-3 sm:hover:bg-gray-800 xl:px-5"
         >
           {link.url === pathname || `${link.url}/${username}` === pathname ? (
             <link.currentPathIcon size={24} />

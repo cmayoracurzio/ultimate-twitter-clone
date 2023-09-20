@@ -19,7 +19,7 @@ export default async function Layout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className="w-full h-full bg-gray-900 text-white">
+        <div className="h-full w-full bg-gray-900 text-white">
           <AuthProvider>{children} </AuthProvider>
         </div>
       </body>

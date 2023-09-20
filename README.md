@@ -15,15 +15,13 @@ The following project implements a full-stack Twitter clone with modern web deve
 
 ## TODO (ongoing):
 
-- Finish LeftSidebar buttons (tweet button, user button)
-- Authentication with email and password (and improve login page)
-- Handle not-found, loading/streaming, and error states
-- Add avatar to edit-profile-form
+- Improve login page
+- Finish tweet-button in left-sidebar
+- Handle not-found and error pages
 - Tweet page and tweet options (reply, edit, delete)
-- Finish other pages (explore, notifications, messages)
-- RightSidebar functionalities (corporate links, search bar, trends/hashtags, who to follow)
-- TweetFeed with state management and infinite scrolling using [React Query](https://tanstack.com/query/latest/)
+- Allow changing profile avatar
+- Other features (followed/followers, email and password authentication, trends/hashtags)
+- right-sidebar (corporate links, search bar, trends for you, who to follow)
+- Other pages (explore, notifications, messages)
+- tweet-feed with state management and infinite scrolling using [React Query](https://tanstack.com/query/latest/)
 - Consider using [shadcn/ui](https://ui.shadcn.com/) components
-- Consider using ORM instead of Supabase database API:
-  - [Prisma](https://www.prisma.io/)
-  - [Drizzle](https://orm.drizzle.team/)

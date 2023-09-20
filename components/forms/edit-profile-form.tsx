@@ -12,9 +12,11 @@ import { getURL } from "@/lib/utils/getURL";
 export default function EditProfileForm({
   username,
   fullName,
+  closeModal,
 }: {
   username: string;
   fullName: string;
+  closeModal: () => void;
 }) {
   const {
     register,
@@ -42,6 +44,7 @@ export default function EditProfileForm({
         setError("username", { message: error });
       } else {
         router.push(`/profiles/${formValues.username}`);
+        closeModal();
       }
     }
   };

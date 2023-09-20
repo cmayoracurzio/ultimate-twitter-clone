@@ -1,21 +1,23 @@
 "use client";
 
-import { BsThreeDots, BsX } from "react-icons/bs";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
+import { useProfile } from "@/components/providers/profile-provider";
 
-import EditProfileForm from "./edit-profile-form";
-import DeleteAccountForm from "./delete-account-form";
-import SignOut from "./sign-out";
+import OptionsButton from "@/components/buttons/options-button";
+import { BsX } from "react-icons/bs";
+import SignOut from "@/components/auth/sign-out";
+import EditProfileForm from "@/components/forms/edit-profile-form";
+import DeleteAccountForm from "@/components/forms/delete-account-form";
+import ProfileButton from "@/components/buttons/profile-button";
 
 export default function ProfileOptions({
-  username,
-  fullName,
+  buttonType,
 }: {
-  username: string;
-  fullName: string;
+  buttonType: "small" | "large";
 }) {
   const [isOpen, setIsOpen] = useState(false);
+  const { username, full_name, avatar_url } = useProfile();
 
   function closeModal() {
     setIsOpen(false);
@@ -27,13 +29,16 @@ export default function ProfileOptions({
 
   return (
     <>
-      <button
-        onClick={openModal}
-        className="rounded-full p-2 hover:bg-primary/20 hover:text-primary"
-      >
-        <BsThreeDots size={18} />
-      </button>
-
+      {buttonType === "small" ? (
+        <OptionsButton onClick={openModal} />
+      ) : (
+        <ProfileButton
+          username={username}
+          fullName={full_name}
+          avatarUrl={avatar_url}
+          onClick={openModal}
+        />
+      )}
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog as="div" className="relative z-10" onClose={closeModal}>
           <Transition.Child
@@ -86,7 +91,11 @@ export default function ProfileOptions({
                 {/* Edit profile form */}
                 <div className="flex flex-col gap-4">
                   <h4 className="font-medium text-white">Edit profile:</h4>
-                  <EditProfileForm username={username} fullName={fullName} />
+                  <EditProfileForm
+                    username={username}
+                    fullName={full_name}
+                    closeModal={closeModal}
+                  />
                 </div>
                 {/* Delete account form */}
                 <div className="flex flex-col gap-4">

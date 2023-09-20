@@ -1,10 +1,10 @@
 "use client";
 
-import { useProfile } from "../providers/profile-provider";
+import { useProfile } from "@/components/providers/profile-provider";
 import { useTweetFeed } from "@/hooks/useTweetFeed";
-import Avatar from "../avatar";
-import TweetForm from "./tweet-form";
-import TweetCard from "./tweet-card/tweet-card";
+import Avatar from "@/components/avatar";
+import TweetForm from "@/components/forms/tweet-form";
+import TweetCard from "@/components/cards/tweet-card";
 import { CgSpinner } from "react-icons/cg";
 import { BiRefresh } from "react-icons/bi";
 
@@ -23,7 +23,7 @@ export default function TweetFeed({
     <>
       {/* Tweet Form (only rendered in home page) */}
       {feedType === "home" ? (
-        <div className="p-4 flex gap-4 items-start">
+        <div className="flex items-start gap-4 p-4">
           <Avatar src={profile.avatar_url} />
           <TweetForm addTweetToFeed={addTweetToFeed} />
         </div>
@@ -31,8 +31,8 @@ export default function TweetFeed({
 
       {/* Tweets */}
       {isLoading ? (
-        <div className="py-12 flex justify-center items-start">
-          <div className="text-primary animate-spin">
+        <div className="flex items-start justify-center py-12">
+          <div className="animate-spin text-primary">
             <CgSpinner size={40} />
           </div>
         </div>
@@ -48,10 +48,10 @@ export default function TweetFeed({
           ))}
 
           {/* Refresh button */}
-          <div className="max-sm:mb-20 py-12 flex justify-center items-start">
+          <div className="flex items-start justify-center py-12 max-sm:mb-20">
             <button
               onClick={refreshFeed}
-              className="rounded-full p-2 bg-primary hover:bg-opacity-70"
+              className="rounded-full bg-primary p-2 hover:bg-opacity-70"
             >
               <BiRefresh size={40} />
             </button>
