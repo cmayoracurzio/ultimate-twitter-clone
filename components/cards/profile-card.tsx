@@ -16,7 +16,7 @@ export default function ProfileCard({
       <div className="flex items-start justify-start gap-4 text-gray-400">
         <Avatar src={profile.avatar_url} size={90} priority={true} />
         <div className="flex flex-1 flex-col gap-1.5 overflow-hidden">
-          <p className="truncate text-2xl font-bold text-gray-50">
+          <p className="truncate text-2xl font-bold tracking-tight text-gray-50">
             {profile.full_name}
           </p>
           <p className="truncate">@{profile.username}</p>

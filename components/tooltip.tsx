@@ -31,13 +31,10 @@ export default function TooltipWrapper({
   classNames,
 }: {
   children: React.ReactNode;
-  tooltipText: string | undefined;
+  tooltipText: string;
   side: "top" | "right" | "bottom" | "left";
   classNames?: string;
 }) {
-  if (!tooltipText) {
-    return;
-  }
   return (
     <TooltipProvider>
       <Tooltip>

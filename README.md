@@ -17,9 +17,6 @@ The following project implements a full-stack Twitter clone with modern web deve
 
 ## TODO (ongoing):
 
-- Feed message and "try again" button when no tweets found
-- "Back to top" button in feed user has scrolled down a certain threshold
-
 - Make visible when a tweet is actually a reply
 - Allow changing profile avatar
 - Allow changing theme

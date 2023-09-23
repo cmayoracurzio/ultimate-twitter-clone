@@ -3,10 +3,11 @@
 import { type UseFeedReturnType } from "@/hooks/useFeed";
 import { CgSpinner } from "react-icons/cg";
 import TweetCard from "@/components/cards/tweet-card";
-import IconButton from "@/components/buttons/icon-button";
+import TextButton from "../buttons/text-button";
 
 export default function Feed({ feed }: { feed: UseFeedReturnType }) {
   const {
+    type,
     isLoading,
     tweets,
     updateTweetInFeed,
@@ -27,6 +28,28 @@ export default function Feed({ feed }: { feed: UseFeedReturnType }) {
       </div>
     );
   } else {
+    let bottomMessage;
+    let bottomButton;
+    if (tweets.length === 0) {
+      bottomMessage = `No ${
+        type === "bookmarks" || type === "replies" ? type : "tweets"
+      } found`;
+      bottomButton = (
+        <TextButton onClick={handleRefreshFeed} variant="primary">
+          Try again
+        </TextButton>
+      );
+    } else {
+      bottomMessage = `No more ${
+        type === "bookmarks" || type === "replies" ? type : "tweets"
+      }`;
+      bottomButton = (
+        <TextButton onClick={() => window.scrollTo(0, 0)} variant="primary">
+          Back to top
+        </TextButton>
+      );
+    }
+
     return (
       <>
         {tweets.map((tweet) => (
@@ -40,8 +63,9 @@ export default function Feed({ feed }: { feed: UseFeedReturnType }) {
             handleDelete={() => handleDelete(tweet)}
           />
         ))}
-        <div className="flex items-start justify-center py-12 max-sm:mb-20">
-          <IconButton onClick={handleRefreshFeed} variant="refresh" />
+        <div className="flex flex-col items-center gap-6 py-12 max-sm:mb-24">
+          <p className="text-xl font-bold tracking-tight">{bottomMessage}</p>
+          <div className="w-fit">{bottomButton}</div>
         </div>
       </>
     );

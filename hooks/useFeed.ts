@@ -5,7 +5,10 @@ import { usePathname, useRouter } from "next/navigation";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { getURL } from "@/lib/utils/getURL";
 
+type FeedType = "home" | "bookmarks" | "profile" | "replies";
+
 export type UseFeedReturnType = {
+  type: FeedType;
   tweets: TweetwithMetadata[];
   isLoading: boolean;
   fetchTweets: () => void;
@@ -30,7 +33,7 @@ export function useFeed({
   profileId,
   tweetId,
 }: {
-  type: "home" | "bookmarks" | "profile" | "replies";
+  type: FeedType;
   profileId?: string;
   tweetId?: string;
 }): UseFeedReturnType {
@@ -235,6 +238,7 @@ export function useFeed({
   }
 
   return {
+    type,
     tweets,
     isLoading,
     fetchTweets,

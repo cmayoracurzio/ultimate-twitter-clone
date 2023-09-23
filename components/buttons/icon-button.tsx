@@ -1,7 +1,6 @@
 "use client";
 
 import { ButtonHTMLAttributes } from "react";
-import { BiRefresh } from "react-icons/bi";
 import { BsXLg } from "react-icons/bs";
 import {
   FaFeatherAlt,
@@ -17,7 +16,6 @@ import TooltipWrapper from "@/components/tooltip";
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   variant:
     | "tweet"
-    | "refresh"
     | "back"
     | "destructive"
     | "like"
@@ -43,10 +41,6 @@ export default function IconButton({
     allClassNames = `${defaultClassNames} p-2 bg-primary hover:bg-opacity-70 text-gray-50 p-3`;
     icon = <FaFeatherAlt size={24} />;
     tooltipText = "Tweet";
-  } else if (variant === "refresh") {
-    allClassNames = `${defaultClassNames} p-2 bg-primary hover:bg-opacity-70 text-gray-50`;
-    icon = <BiRefresh size={40} />;
-    tooltipText = "Refresh feed";
   } else if (variant === "back") {
     allClassNames = `${defaultClassNames} p-2 hover:bg-gray-800 text-gray-50`;
     icon = <FiArrowLeft />;
@@ -90,14 +84,22 @@ export default function IconButton({
     tooltipText = "Copy URL";
   }
 
-  return (
-    <TooltipWrapper
-      tooltipText={tooltipText}
-      side={variant === "tweet" ? "right" : "bottom"}
-    >
-      <button {...props} className={allClassNames}>
-        {icon}
-      </button>
-    </TooltipWrapper>
+  const button = (
+    <button {...props} className={allClassNames}>
+      {icon}
+    </button>
   );
+
+  if (!tooltipText) {
+    return button;
+  } else {
+    return (
+      <TooltipWrapper
+        tooltipText={tooltipText}
+        side={variant === "tweet" ? "right" : "bottom"}
+      >
+        {button}
+      </TooltipWrapper>
+    );
+  }
 }
