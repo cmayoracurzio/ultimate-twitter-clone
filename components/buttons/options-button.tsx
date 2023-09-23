@@ -2,12 +2,7 @@
 
 import Avatar from "@/components/avatar";
 import { BsThreeDots } from "react-icons/bs";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/tooltip";
+import TooltipWrapper from "@/components/tooltip";
 
 export default function OptionsButton({
   username,
@@ -21,29 +16,26 @@ export default function OptionsButton({
   onClick: () => void;
 }) {
   return (
-    <TooltipProvider>
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <button
-            onClick={onClick}
-            className="flex items-center justify-between gap-3 rounded-full hover:bg-gray-800 xl:p-3"
-          >
-            <div className="flex gap-2">
-              <Avatar src={avatarUrl} />
-              <div className="overflow-hidden text-left text-sm max-xl:hidden">
-                <div className="truncate font-semibold">{fullName}</div>
-                <div className="truncate text-gray-400">@{username}</div>
-              </div>
-            </div>
-            <div className="text-gray-400 max-xl:hidden">
-              <BsThreeDots size={18} />
-            </div>
-          </button>
-        </TooltipTrigger>
-        <TooltipContent side="right">
-          <p className="text-xs font-normal">Profile options</p>
-        </TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
+    <TooltipWrapper
+      tooltipText="Profile options"
+      side="right"
+      classNames="xl:hidden"
+    >
+      <button
+        onClick={onClick}
+        className="flex items-center justify-between gap-3 rounded-full hover:bg-gray-800 xl:p-3"
+      >
+        <div className="flex gap-2">
+          <Avatar src={avatarUrl} />
+          <div className="overflow-hidden text-left text-sm max-xl:hidden">
+            <div className="truncate font-semibold">{fullName}</div>
+            <div className="truncate text-gray-400">@{username}</div>
+          </div>
+        </div>
+        <div className="text-gray-400 max-xl:hidden">
+          <BsThreeDots size={18} />
+        </div>
+      </button>
+    </TooltipWrapper>
   );
 }

@@ -12,12 +12,7 @@ import {
   FaRegComment,
 } from "react-icons/fa";
 import { FiLink, FiArrowLeft } from "react-icons/fi";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/tooltip";
+import TooltipWrapper from "@/components/tooltip";
 
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   variant:
@@ -96,19 +91,13 @@ export default function IconButton({
   }
 
   return (
-    <TooltipProvider>
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <button {...props} className={allClassNames}>
-            {icon}
-          </button>
-        </TooltipTrigger>
-        {tooltipText ? (
-          <TooltipContent side={variant === "tweet" ? "right" : "bottom"}>
-            <p className="text-xs font-normal">{tooltipText}</p>
-          </TooltipContent>
-        ) : null}
-      </Tooltip>
-    </TooltipProvider>
+    <TooltipWrapper
+      tooltipText={tooltipText}
+      side={variant === "tweet" ? "right" : "bottom"}
+    >
+      <button {...props} className={allClassNames}>
+        {icon}
+      </button>
+    </TooltipWrapper>
   );
 }

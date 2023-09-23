@@ -16,12 +16,7 @@ import {
 import { FaBookmark, FaRegBookmark } from "react-icons/fa";
 import { HiOutlineEnvelope, HiEnvelope } from "react-icons/hi2";
 import { BsTwitter } from "react-icons/bs";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/tooltip";
+import TooltipWrapper from "@/components/tooltip";
 
 export default function NavigationLinks({
   tooltipPosition,
@@ -82,22 +77,20 @@ export default function NavigationLinks({
         const IconComponent =
           link.url === pathname ? link.currentPathIcon : link.icon;
         return (
-          <TooltipProvider key={link.label}>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Link
-                  href={link.url}
-                  className="flex w-fit items-center justify-start gap-4 rounded-full p-3 sm:hover:bg-gray-800 xl:px-5"
-                >
-                  <IconComponent size={24} />
-                  <p className="hidden xl:block">{link.label}</p>
-                </Link>
-              </TooltipTrigger>
-              <TooltipContent side={tooltipPosition} className="xl:hidden">
-                <p className="text-xs font-normal">{link.label}</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
+          <TooltipWrapper
+            key={link.label}
+            tooltipText={link.label}
+            side={tooltipPosition}
+            classNames="xl:hidden"
+          >
+            <Link
+              href={link.url}
+              className="flex w-fit items-center justify-start gap-4 rounded-full p-3 sm:hover:bg-gray-800 xl:px-5"
+            >
+              <IconComponent size={24} />
+              <p className="hidden xl:block">{link.label}</p>
+            </Link>
+          </TooltipWrapper>
         );
       })}
     </div>
