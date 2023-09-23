@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import IconButton from "@/components/buttons/icon-button";
-import BaseModal from "@/components/modals/base-modal";
+import Modal from "@/components/modals/modal";
 import TextButton from "@/components/buttons/text-button";
 
 export default function DeleteTweet({
@@ -28,7 +28,7 @@ export default function DeleteTweet({
   return (
     <>
       <IconButton onClick={openModal} variant="destructive" />
-      <BaseModal title="Delete tweet" isOpen={isOpen} closeModal={closeModal}>
+      <Modal title="Delete tweet" isOpen={isOpen} closeModal={closeModal}>
         <p>
           Are you sure you want to delete this tweet and all of its replies?
           This action cannot be undone.
@@ -39,7 +39,7 @@ export default function DeleteTweet({
         <TextButton onClick={handleDeleteAndClose} variant="destructive">
           Delete tweet
         </TextButton>
-      </BaseModal>
+      </Modal>
     </>
   );
 }

@@ -2,7 +2,7 @@ import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import IconButton from "@/components/buttons/icon-button";
 
-export default function BaseModal({
+export default function Modal({
   isOpen,
   closeModal,
   title,

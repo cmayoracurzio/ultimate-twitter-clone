@@ -15,7 +15,7 @@ export default function TextButton({ variant, ...props }: ButtonProps) {
   } else if (variant === "destructive") {
     allClassNames = `${defaultClassNames} bg-red-500 hover:bg-red-600 disabled:bg-red-600`;
   } else if (variant === "light") {
-    allClassNames = `${defaultClassNames} bg-gray-50 hover:bg-gray-200 disabled:bg-gray-200 text-black text-lg`;
+    allClassNames = `${defaultClassNames} bg-gray-50 hover:bg-gray-200 disabled:bg-gray-200 text-gray-900 text-lg`;
   } else if (variant === "large") {
     allClassNames = `${defaultClassNames} bg-primary hover:bg-opacity-70 disabled:bg-opacity-70 text-xl py-3 px-3`;
   }

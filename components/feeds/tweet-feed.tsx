@@ -6,7 +6,7 @@ import { useFeed } from "@/hooks/useFeed";
 import MainTweetCard from "@/components/cards/main-tweet-card";
 import Avatar from "@/components/avatar";
 import TweetForm from "@/components/forms/tweet-form";
-import Feed from "@/components/feeds/base-feed";
+import Feed from "@/components/feeds/feed";
 
 export default function TweetFeed({
   initialTweet,

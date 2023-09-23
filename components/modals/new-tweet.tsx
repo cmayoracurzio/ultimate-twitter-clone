@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useProfile } from "@/components/providers/profile-provider";
 import { useRouter } from "next/navigation";
-import BaseModal from "@/components/modals/base-modal";
+import Modal from "@/components/modals/modal";
 import TextButton from "@/components/buttons/text-button";
 import IconButton from "@/components/buttons/icon-button";
 import Avatar from "@/components/avatar";
@@ -37,12 +37,12 @@ export default function NewTweet() {
       <div className="xl:hidden">
         <IconButton onClick={openModal} variant="tweet" />
       </div>
-      <BaseModal title="New tweet" isOpen={isOpen} closeModal={closeModal}>
+      <Modal title="New tweet" isOpen={isOpen} closeModal={closeModal}>
         <div className="flex items-start gap-4">
           <Avatar src={avatar_url} />
           <TweetForm addTweetToFeed={redirectToTweet} />
         </div>
-      </BaseModal>
+      </Modal>
     </>
   );
 }
