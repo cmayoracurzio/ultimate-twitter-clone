@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { BsSearch, BsThreeDots } from "react-icons/bs";
-import { abbreviateNumber } from "@/lib/utils/abbreviateNumber";
-import UserCard from "@/components/user-card";
+import { abbreviateNumber } from "@/lib/utils/numbers";
+import UserCard from "@/components/cards/user-card";
 
 const exampleTrends = [
   { name: "Bitcoin", category: "Trending", posts: 1241 },
@@ -16,7 +16,7 @@ const corporateLinks = [
   { label: "About Us", url: "/about" },
 ];
 
-const RightSidebar = () => {
+export default async function RightSidebar() {
   const currentYear = new Date().getFullYear();
 
   return (
@@ -93,6 +93,4 @@ const RightSidebar = () => {
       </div>
     </section>
   );
-};
-
-export default RightSidebar;
+}

@@ -18,48 +18,48 @@ import { FaBookmark, FaRegBookmark } from "react-icons/fa";
 import { HiOutlineEnvelope, HiEnvelope } from "react-icons/hi2";
 import { BsTwitter } from "react-icons/bs";
 
-const navigationLinks = [
-  {
-    label: "Home",
-    url: "/",
-    icon: BiHomeCircle,
-    currentPathIcon: BiSolidHomeCircle,
-  },
-  {
-    label: "Explore",
-    url: "/explore",
-    icon: BiSearch,
-    currentPathIcon: BiSolidSearch,
-  },
-  {
-    label: "Notifications",
-    url: "/notifications",
-    icon: BiBell,
-    currentPathIcon: BiSolidBell,
-  },
-  {
-    label: "Messages",
-    url: "/messages",
-    icon: HiOutlineEnvelope,
-    currentPathIcon: HiEnvelope,
-  },
-  {
-    label: "Bookmarks",
-    url: "/bookmarks",
-    icon: FaRegBookmark,
-    currentPathIcon: FaBookmark,
-  },
-  {
-    label: "Profile",
-    url: "/profiles",
-    icon: BiUser,
-    currentPathIcon: BiSolidUser,
-  },
-];
-
 export default function NavigationLinks() {
   const pathname = usePathname();
   const { username } = useProfile();
+
+  const navigationLinks = [
+    {
+      label: "Home",
+      url: "/",
+      icon: BiHomeCircle,
+      currentPathIcon: BiSolidHomeCircle,
+    },
+    {
+      label: "Explore",
+      url: "/explore",
+      icon: BiSearch,
+      currentPathIcon: BiSolidSearch,
+    },
+    {
+      label: "Notifications",
+      url: "/notifications",
+      icon: BiBell,
+      currentPathIcon: BiSolidBell,
+    },
+    {
+      label: "Messages",
+      url: "/messages",
+      icon: HiOutlineEnvelope,
+      currentPathIcon: HiEnvelope,
+    },
+    {
+      label: "Bookmarks",
+      url: "/bookmarks",
+      icon: FaRegBookmark,
+      currentPathIcon: FaBookmark,
+    },
+    {
+      label: "Profile",
+      url: `/explore/${username}`,
+      icon: BiUser,
+      currentPathIcon: BiSolidUser,
+    },
+  ];
 
   return (
     <div className="flex items-start justify-evenly text-xl sm:flex-col sm:gap-2">
@@ -69,20 +69,20 @@ export default function NavigationLinks() {
       >
         <BsTwitter />
       </Link>
-      {navigationLinks.map((link) => (
-        <Link
-          key={link.label}
-          href={link.label === "Profile" ? `${link.url}/${username}` : link.url}
-          className="flex w-fit items-center justify-start gap-4 rounded-full p-3 sm:hover:bg-gray-800 xl:px-5"
-        >
-          {link.url === pathname || `${link.url}/${username}` === pathname ? (
-            <link.currentPathIcon size={24} />
-          ) : (
-            <link.icon size={24} />
-          )}
-          <p className="hidden xl:block">{link.label}</p>
-        </Link>
-      ))}
+      {navigationLinks.map((link) => {
+        const IconComponent =
+          link.url === pathname ? link.currentPathIcon : link.icon;
+        return (
+          <Link
+            key={link.label}
+            href={link.url}
+            className="flex w-fit items-center justify-start gap-4 rounded-full p-3 sm:hover:bg-gray-800 xl:px-5"
+          >
+            <IconComponent size={24} />
+            <p className="hidden xl:block">{link.label}</p>
+          </Link>
+        );
+      })}
     </div>
   );
 }

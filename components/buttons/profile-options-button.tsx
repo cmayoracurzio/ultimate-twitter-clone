@@ -3,7 +3,7 @@
 import Avatar from "@/components/avatar";
 import { BsThreeDots } from "react-icons/bs";
 
-export default function ProfileButton({
+export default function ProfileOptionsButton({
   username,
   fullName,
   avatarUrl,

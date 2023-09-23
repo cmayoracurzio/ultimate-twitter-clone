@@ -1,11 +1,11 @@
 import Header from "@/components/header";
-import TweetFeed from "@/components/tweet-feed";
+import HomeFeed from "@/components/feeds/home-feed";
 
 export default async function Home() {
   return (
     <>
       <Header>Home</Header>
-      <TweetFeed feedType="home" />
+      <HomeFeed />
     </>
   );
 }

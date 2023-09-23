@@ -1,6 +1,6 @@
 "use client";
 
-import { abbreviateNumber } from "@/lib/utils/abbreviateNumber";
+import { abbreviateNumber } from "@/lib/utils/numbers";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { FaHeart, FaRegHeart } from "react-icons/fa6";
 
@@ -13,7 +13,7 @@ export default function LikeButton({
 }) {
   const supabase = createClientComponentClient<Database>();
 
-  const handleLike = async () => {
+  async function handleLike() {
     const {
       data: { user },
     } = await supabase.auth.getUser();
@@ -39,21 +39,19 @@ export default function LikeButton({
           .insert({ tweet_id: tweet.id, profile_id: user.id });
       }
     }
-  };
+  }
 
   return (
-    <div className="flex-1">
-      <button
-        onClick={handleLike}
-        className={`flex items-center gap-1 group hover:text-red-400 ${
-          tweet.likedByUser && "text-red-400"
-        }`}
-      >
-        <div className="group-hover:bg-red-400/20 rounded-full p-2">
-          {tweet.likedByUser ? <FaHeart size={18} /> : <FaRegHeart size={18} />}
-        </div>
-        <p>{abbreviateNumber(tweet.likes)}</p>
-      </button>
-    </div>
+    <button
+      onClick={handleLike}
+      className={`group flex items-center gap-1 hover:text-red-400 ${
+        tweet.likedByUser && "text-red-400"
+      }`}
+    >
+      <div className="rounded-full p-2 group-hover:bg-red-400/20">
+        {tweet.likedByUser ? <FaHeart size={18} /> : <FaRegHeart size={18} />}
+      </div>
+      <p>{abbreviateNumber(tweet.likes)}</p>
+    </button>
   );
 }

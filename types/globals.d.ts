@@ -17,12 +17,10 @@ declare global {
     bookmarkedByUser: boolean;
   };
 
-  type FeedType = "home" | "bookmarks" | "profile";
-
   type ProfileWithMetadata = Profile & {
-    tweets: number;
-    likes: number;
-    replies: number;
-    bookmarks: number;
+    stats: {
+      name: string;
+      count: number;
+    }[];
   };
 }

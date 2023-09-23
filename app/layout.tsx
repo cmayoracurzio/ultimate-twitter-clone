@@ -1,15 +1,10 @@
-import "../../globals.css";
-import type { Metadata } from "next";
+import "./globals.css";
 import { Inter } from "next/font/google";
-
+import { defaultMetadata } from "@/lib/constants";
 import AuthProvider from "@/components/providers/auth-provider";
 
 const inter = Inter({ subsets: ["latin"] });
-
-export const metadata: Metadata = {
-  title: "Ultimate Twitter Clone",
-  description: "Ultimate Twitter clone bootstrapped with Next.js",
-};
+export const metadata = defaultMetadata;
 
 export default async function Layout({
   children,
@@ -19,8 +14,8 @@ export default async function Layout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className="h-full w-full bg-gray-900 text-white">
-          <AuthProvider>{children} </AuthProvider>
+        <div className="h-full w-full bg-gray-900 text-gray-50">
+          <AuthProvider>{children}</AuthProvider>
         </div>
       </body>
     </html>

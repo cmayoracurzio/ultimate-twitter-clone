@@ -8,7 +8,7 @@ export default function LeftSidebar() {
       <nav className="flex h-full flex-col items-center justify-between xl:items-start">
         <NavigationLinks />
         <TweetButton />
-        <ProfileOptions buttonType="large" />
+        <ProfileOptions />
       </nav>
     </section>
   );

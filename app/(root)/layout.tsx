@@ -1,21 +1,11 @@
-import "../globals.css";
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-
 import { cookies } from "next/headers";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { redirect } from "next/navigation";
 
-import AuthProvider from "@/components/providers/auth-provider";
 import ProfileProvider from "@/components/providers/profile-provider";
-import SidebarProvider from "@/components/providers/sidebar-provider";
-
-const inter = Inter({ subsets: ["latin"] });
-
-export const metadata: Metadata = {
-  title: "Ultimate Twitter Clone",
-  description: "Ultimate Twitter clone bootstrapped with Next.js",
-};
+import LeftSidebar from "@/components/sidebars/left-sidebar";
+import RightSidebar from "@/components/sidebars/right-sidebar";
+import BottomBar from "@/components/sidebars/bottom-bar";
 
 export default async function RootLayout({
   children,
@@ -43,16 +33,15 @@ export default async function RootLayout({
   }
 
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <div className="w-full h-full bg-gray-900 text-white">
-          <AuthProvider>
-            <ProfileProvider profile={profileData[0]}>
-              <SidebarProvider>{children}</SidebarProvider>
-            </ProfileProvider>
-          </AuthProvider>
-        </div>
-      </body>
-    </html>
+    <ProfileProvider profile={profileData[0]}>
+      <div className="mx-auto flex w-full max-w-6xl justify-center">
+        <LeftSidebar />
+        <main className="min-h-screen w-full min-w-0 divide-y divide-gray-600 border-x-0 border-gray-600 sm:border-x">
+          {children}
+        </main>
+        <RightSidebar />
+      </div>
+      <BottomBar />
+    </ProfileProvider>
   );
 }

@@ -7,8 +7,10 @@ import { useEffect, useRef } from "react";
 import { getURL } from "@/lib/utils/getURL";
 
 export default function TweetForm({
+  replyToId = null,
   addTweetToFeed,
 }: {
+  replyToId?: string | null;
   addTweetToFeed: (newTweet: TweetwithMetadata) => void;
 }) {
   const {
@@ -26,10 +28,10 @@ export default function TweetForm({
   const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
   const currentText = watch(textAreaName);
 
-  const handleRef = async (element: HTMLTextAreaElement) => {
+  async function handleRef(element: HTMLTextAreaElement) {
     ref(element);
     textAreaRef.current = element;
-  };
+  }
 
   useEffect(() => {
     const currentTextAreaRef = textAreaRef.current;
@@ -39,10 +41,17 @@ export default function TweetForm({
     }
   }, [textAreaRef, currentText]);
 
-  const onSubmit = async (newTweet: TweetFormSchema) => {
+  async function onSubmit(newTweet: TweetFormSchema) {
+    const payload: any = {
+      newTweet,
+    };
+
+    if (replyToId) {
+      payload.replyToId = replyToId;
+    }
     const response = await fetch(`${getURL()}/api/tweets`, {
       method: "POST",
-      body: JSON.stringify(newTweet),
+      body: JSON.stringify(payload),
       headers: { "Content-Type": "application/json" },
     });
     if (!response.ok) {
@@ -56,30 +65,30 @@ export default function TweetForm({
         reset();
       }
     }
-  };
+  }
 
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="w-full flex flex-col gap-8"
+      className="flex w-full flex-col gap-8"
     >
       <textarea
         {...rest}
         ref={handleRef}
         rows={1}
-        placeholder="What's happening?!"
-        className="w-full resize-none mt-1.5 outline-none border-none bg-transparent text-lg"
+        placeholder={replyToId ? "Tweet your reply" : "What's happening?!"}
+        className="mt-1.5 w-full resize-none border-none bg-transparent text-lg outline-none"
       />
       <div className="flex items-center justify-between gap-1">
-        <div className="text-primary text-md">
+        <div className="text-md text-primary">
           {errors[textAreaName] && errors[textAreaName].message}
         </div>
         <button
           type="submit"
           disabled={isSubmitting}
-          className="rounded-full py-2 px-5 bg-primary font-semibold text-center hover:bg-opacity-70"
+          className="rounded-full bg-primary px-5 py-2 text-center font-semibold hover:bg-opacity-70"
         >
-          Tweet
+          {replyToId ? "Reply" : "Tweet"}
         </button>
       </div>
     </form>

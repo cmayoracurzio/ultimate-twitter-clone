@@ -1,11 +1,11 @@
 import Header from "@/components/header";
-import TweetFeed from "@/components/tweet-feed";
+import BookmarksFeed from "@/components/feeds/bookmarks-feed";
 
 export default async function Page() {
   return (
     <>
       <Header>Bookmarks</Header>
-      <TweetFeed feedType="bookmarks" />
+      <BookmarksFeed />
     </>
   );
 }

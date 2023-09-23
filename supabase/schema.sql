@@ -121,16 +121,6 @@ CREATE TABLE IF NOT EXISTS "public"."profiles" (
 
 ALTER TABLE "public"."profiles" OWNER TO "postgres";
 
-CREATE TABLE IF NOT EXISTS "public"."replies" (
-    "id" "uuid" DEFAULT "gen_random_uuid"() NOT NULL,
-    "reply_id" "uuid",
-    "profile_id" "uuid" NOT NULL,
-    "text" "text" NOT NULL,
-    "tweet_id" "uuid"
-);
-
-ALTER TABLE "public"."replies" OWNER TO "postgres";
-
 CREATE TABLE IF NOT EXISTS "public"."tweet_hashtag" (
     "tweet_id" "uuid" NOT NULL,
     "hashtag_id" "uuid" NOT NULL
@@ -143,7 +133,8 @@ CREATE TABLE IF NOT EXISTS "public"."tweets" (
     "text" "text" NOT NULL,
     "profile_id" "uuid" DEFAULT "auth"."uid"() NOT NULL,
     "created_at" timestamp with time zone DEFAULT "timezone"('utc'::"text", "now"()) NOT NULL,
-    "updated_at" timestamp with time zone DEFAULT "timezone"('utc'::"text", "now"()) NOT NULL
+    "updated_at" timestamp with time zone DEFAULT "timezone"('utc'::"text", "now"()) NOT NULL,
+    "reply_to_id" "uuid"
 );
 
 ALTER TABLE "public"."tweets" OWNER TO "postgres";
@@ -169,9 +160,6 @@ ALTER TABLE ONLY "public"."profiles"
 ALTER TABLE ONLY "public"."profiles"
     ADD CONSTRAINT "profiles_username_key" UNIQUE ("username");
 
-ALTER TABLE ONLY "public"."replies"
-    ADD CONSTRAINT "replies_pkey" PRIMARY KEY ("id");
-
 ALTER TABLE ONLY "public"."tweet_hashtag"
     ADD CONSTRAINT "tweet_hashtag_pkey" PRIMARY KEY ("tweet_id", "hashtag_id");
 
@@ -195,15 +183,6 @@ ALTER TABLE ONLY "public"."likes"
 ALTER TABLE ONLY "public"."profiles"
     ADD CONSTRAINT "profiles_id_fkey" FOREIGN KEY ("id") REFERENCES "auth"."users"("id") ON DELETE CASCADE;
 
-ALTER TABLE ONLY "public"."replies"
-    ADD CONSTRAINT "replies_profile_id_fkey" FOREIGN KEY ("profile_id") REFERENCES "public"."profiles"("id") ON DELETE CASCADE;
-
-ALTER TABLE ONLY "public"."replies"
-    ADD CONSTRAINT "replies_reply_id_fkey" FOREIGN KEY ("reply_id") REFERENCES "public"."replies"("id") ON DELETE CASCADE;
-
-ALTER TABLE ONLY "public"."replies"
-    ADD CONSTRAINT "replies_tweet_id_fkey" FOREIGN KEY ("tweet_id") REFERENCES "public"."tweets"("id") ON DELETE CASCADE;
-
 ALTER TABLE ONLY "public"."tweet_hashtag"
     ADD CONSTRAINT "tweet_hashtag_hashtag_id_fkey" FOREIGN KEY ("hashtag_id") REFERENCES "public"."hashtags"("id") ON DELETE CASCADE;
 
@@ -212,6 +191,9 @@ ALTER TABLE ONLY "public"."tweet_hashtag"
 
 ALTER TABLE ONLY "public"."tweets"
     ADD CONSTRAINT "tweets_profile_id_fkey" FOREIGN KEY ("profile_id") REFERENCES "public"."profiles"("id") ON DELETE CASCADE;
+
+ALTER TABLE ONLY "public"."tweets"
+    ADD CONSTRAINT "tweets_reply_to_id_fkey" FOREIGN KEY ("reply_to_id") REFERENCES "public"."tweets"("id") ON DELETE CASCADE;
 
 CREATE POLICY "Authenticated users can delete their own bookmarks" ON "public"."bookmarks" FOR DELETE TO "authenticated" USING (("auth"."uid"() = "profile_id"));
 
@@ -244,8 +226,6 @@ ALTER TABLE "public"."hashtags" ENABLE ROW LEVEL SECURITY;
 ALTER TABLE "public"."likes" ENABLE ROW LEVEL SECURITY;
 
 ALTER TABLE "public"."profiles" ENABLE ROW LEVEL SECURITY;
-
-ALTER TABLE "public"."replies" ENABLE ROW LEVEL SECURITY;
 
 ALTER TABLE "public"."tweet_hashtag" ENABLE ROW LEVEL SECURITY;
 
@@ -283,10 +263,6 @@ GRANT ALL ON TABLE "public"."likes" TO "service_role";
 GRANT ALL ON TABLE "public"."profiles" TO "anon";
 GRANT ALL ON TABLE "public"."profiles" TO "authenticated";
 GRANT ALL ON TABLE "public"."profiles" TO "service_role";
-
-GRANT ALL ON TABLE "public"."replies" TO "anon";
-GRANT ALL ON TABLE "public"."replies" TO "authenticated";
-GRANT ALL ON TABLE "public"."replies" TO "service_role";
 
 GRANT ALL ON TABLE "public"."tweet_hashtag" TO "anon";
 GRANT ALL ON TABLE "public"."tweet_hashtag" TO "authenticated";

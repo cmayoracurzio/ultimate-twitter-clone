@@ -126,49 +126,6 @@ export interface Database {
           }
         ]
       }
-      replies: {
-        Row: {
-          id: string
-          profile_id: string
-          reply_id: string | null
-          text: string
-          tweet_id: string | null
-        }
-        Insert: {
-          id?: string
-          profile_id: string
-          reply_id?: string | null
-          text: string
-          tweet_id?: string | null
-        }
-        Update: {
-          id?: string
-          profile_id?: string
-          reply_id?: string | null
-          text?: string
-          tweet_id?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "replies_profile_id_fkey"
-            columns: ["profile_id"]
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "replies_reply_id_fkey"
-            columns: ["reply_id"]
-            referencedRelation: "replies"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "replies_tweet_id_fkey"
-            columns: ["tweet_id"]
-            referencedRelation: "tweets"
-            referencedColumns: ["id"]
-          }
-        ]
-      }
       tweet_hashtag: {
         Row: {
           hashtag_id: string
@@ -202,6 +159,7 @@ export interface Database {
           created_at: string
           id: string
           profile_id: string
+          reply_to_id: string | null
           text: string
           updated_at: string
         }
@@ -209,6 +167,7 @@ export interface Database {
           created_at?: string
           id?: string
           profile_id?: string
+          reply_to_id?: string | null
           text: string
           updated_at?: string
         }
@@ -216,6 +175,7 @@ export interface Database {
           created_at?: string
           id?: string
           profile_id?: string
+          reply_to_id?: string | null
           text?: string
           updated_at?: string
         }
@@ -224,6 +184,12 @@ export interface Database {
             foreignKeyName: "tweets_profile_id_fkey"
             columns: ["profile_id"]
             referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "tweets_reply_to_id_fkey"
+            columns: ["reply_to_id"]
+            referencedRelation: "tweets"
             referencedColumns: ["id"]
           }
         ]

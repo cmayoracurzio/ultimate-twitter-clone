@@ -14,7 +14,7 @@ export default function ProfileProvider({
   return <Context.Provider value={profile}>{children}</Context.Provider>;
 }
 
-export const useProfile = () => {
+export function useProfile() {
   let context = useContext(Context);
 
   if (context === undefined) {
@@ -22,4 +22,4 @@ export const useProfile = () => {
   }
 
   return context as Profile;
-};
+}

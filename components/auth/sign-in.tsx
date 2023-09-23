@@ -14,12 +14,12 @@ const providers = [
 export default function SignIn() {
   const supabase = createClientComponentClient<Database>();
 
-  const handleSignIn = async (provider: Provider) => {
+  async function handleSignIn(provider: Provider) {
     await supabase.auth.signInWithOAuth({
       provider: provider,
       options: { redirectTo: `${getURL()}login/callback` },
     });
-  };
+  }
 
   return (
     <div className="flex flex-col gap-4">
@@ -27,10 +27,10 @@ export default function SignIn() {
         <button
           key={provider.name}
           onClick={() => handleSignIn(provider.name)}
-          className="rounded-full border border-gray-400 bg-white px-8 py-3 text-xl font-bold text-black hover:bg-opacity-70"
+          className="rounded-full bg-white px-6 py-3 text-xl font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-200"
         >
           <div className="flex items-center justify-center gap-3">
-            <provider.icon size={28} />
+            <provider.icon size={24} />
             <p>Sign in with {provider.label}</p>
           </div>
         </button>

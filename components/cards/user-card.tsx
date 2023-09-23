@@ -1,6 +1,6 @@
-import Avatar from "./avatar";
+import Avatar from "../avatar";
 
-const UserCard = ({ className }: { className: string }) => {
+export default async function UserCard({ className }: { className: string }) {
   return (
     <div
       className={`flex items-center justify-between px-4 py-3 text-sm ${className}`}
@@ -17,6 +17,4 @@ const UserCard = ({ className }: { className: string }) => {
       </button>
     </div>
   );
-};
-
-export default UserCard;
+}

@@ -30,7 +30,7 @@ export default function EditProfileForm({
 
   const router = useRouter();
 
-  const onSubmit = async (formValues: EditProfileSchema) => {
+  async function onSubmit(formValues: EditProfileSchema) {
     const response = await fetch(`${getURL()}/api/profiles`, {
       method: "POST",
       body: JSON.stringify(formValues),
@@ -43,11 +43,11 @@ export default function EditProfileForm({
       if (error) {
         setError("username", { message: error });
       } else {
-        router.push(`/profiles/${formValues.username}`);
+        router.push(`/explore/${formValues.username}`);
         closeModal();
       }
     }
-  };
+  }
 
   return (
     <form
@@ -59,7 +59,7 @@ export default function EditProfileForm({
         <input
           {...register("username")}
           type="text"
-          className="peer order-last w-full bg-transparent text-white outline-none placeholder:text-gray-400"
+          className="peer order-last w-full bg-transparent outline-none placeholder:text-gray-400"
         />
         <label
           htmlFor="username"
@@ -74,7 +74,7 @@ export default function EditProfileForm({
         <input
           {...register("fullName")}
           type="text"
-          className="peer order-last w-full bg-transparent text-white outline-none placeholder:text-gray-400"
+          className="peer order-last w-full bg-transparent outline-none placeholder:text-gray-400"
         />
         <label
           htmlFor="fullName"
@@ -88,7 +88,7 @@ export default function EditProfileForm({
       <button
         type="submit"
         disabled={isSubmitting}
-        className="w-full rounded-full bg-primary px-5 py-2 text-center font-semibold text-white hover:bg-opacity-70 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:bg-opacity-70"
+        className="w-full rounded-full bg-primary px-5 py-2 text-center font-semibold hover:bg-opacity-70 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:bg-opacity-70"
       >
         Save changes
       </button>

@@ -52,7 +52,7 @@ export default function AccountForm({ username }: { username: string }) {
             },
           })}
           type="text"
-          className="peer order-last w-full bg-transparent text-white outline-none placeholder:text-gray-400"
+          className="peer order-last w-full bg-transparent outline-none placeholder:text-gray-400"
         />
         <label
           htmlFor="username"
@@ -66,7 +66,7 @@ export default function AccountForm({ username }: { username: string }) {
       <button
         type="submit"
         disabled={isSubmitting}
-        className="w-full rounded-full bg-red-500 px-5 py-2 text-center font-semibold text-white hover:bg-red-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2"
+        className="w-full rounded-full bg-red-500 px-5 py-2 text-center font-semibold hover:bg-red-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2"
       >
         Delete account
       </button>

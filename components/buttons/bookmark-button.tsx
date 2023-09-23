@@ -12,7 +12,7 @@ export default function BookmarkButton({
 }) {
   const supabase = createClientComponentClient<Database>();
 
-  const handleBookmark = async () => {
+  async function handleBookmark() {
     const {
       data: { user },
     } = await supabase.auth.getUser();
@@ -36,24 +36,22 @@ export default function BookmarkButton({
           .insert({ tweet_id: tweet.id, profile_id: user.id });
       }
     }
-  };
+  }
 
   return (
-    <div className="flex-1">
-      <button
-        onClick={handleBookmark}
-        className={`flex items-center gap-1 group hover:text-primary ${
-          tweet.bookmarkedByUser && "text-primary"
-        }`}
-      >
-        <div className="group-hover:bg-primary/20 rounded-full p-2">
-          {tweet.bookmarkedByUser ? (
-            <FaBookmark size={18} />
-          ) : (
-            <FaRegBookmark size={18} />
-          )}
-        </div>
-      </button>
-    </div>
+    <button
+      onClick={handleBookmark}
+      className={`group flex items-center gap-1 hover:text-primary ${
+        tweet.bookmarkedByUser && "text-primary"
+      }`}
+    >
+      <div className="rounded-full p-2 group-hover:bg-primary/20">
+        {tweet.bookmarkedByUser ? (
+          <FaBookmark size={18} />
+        ) : (
+          <FaRegBookmark size={18} />
+        )}
+      </div>
+    </button>
   );
 }
