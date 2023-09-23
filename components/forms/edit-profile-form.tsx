@@ -8,6 +8,7 @@ import {
   type EditProfileSchema,
 } from "@/lib/validations/profile";
 import { getURL } from "@/lib/utils/getURL";
+import TextButton from "@/components/buttons/text-button";
 
 export default function EditProfileForm({
   username,
@@ -85,13 +86,9 @@ export default function EditProfileForm({
       </div>
 
       {/* Form submit button */}
-      <button
-        type="submit"
-        disabled={isSubmitting}
-        className="w-full rounded-full bg-primary px-5 py-2 text-center font-semibold hover:bg-opacity-70 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:bg-opacity-70"
-      >
+      <TextButton type="submit" disabled={isSubmitting} variant="primary">
         Save changes
-      </button>
+      </TextButton>
 
       {/* Error messages */}
       <div className="h-8 text-primary">

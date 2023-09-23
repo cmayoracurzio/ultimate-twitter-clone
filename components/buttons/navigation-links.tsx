@@ -62,7 +62,7 @@ export default function NavigationLinks() {
   ];
 
   return (
-    <div className="flex items-start justify-evenly text-xl sm:flex-col sm:gap-2">
+    <div className="flex items-center justify-evenly text-xl sm:flex-col sm:gap-2 xl:items-start">
       <Link
         href="/"
         className="w-fit rounded-full p-3 hover:bg-gray-800 max-sm:hidden xl:ml-2"

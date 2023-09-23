@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useProfile } from "@/components/providers/profile-provider";
 
-import ProfileOptionsButton from "@/components/buttons/profile-options-button";
+import OptionsButton from "@/components/buttons/options-button";
 import BaseModal from "@/components/modals/base-modal";
 import SignOut from "@/components/auth/sign-out";
 import EditProfileForm from "@/components/forms/edit-profile-form";
@@ -23,7 +23,7 @@ export default function ProfileOptions() {
 
   return (
     <>
-      <ProfileOptionsButton
+      <OptionsButton
         username={username}
         fullName={full_name}
         avatarUrl={avatar_url}

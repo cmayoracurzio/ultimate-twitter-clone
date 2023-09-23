@@ -1,9 +1,9 @@
 "use client";
 
-import { CgSpinner } from "react-icons/cg";
-import { BiRefresh } from "react-icons/bi";
-import TweetCard from "@/components/cards/tweet-card";
 import { type UseFeedReturnType } from "@/hooks/useFeed";
+import { CgSpinner } from "react-icons/cg";
+import TweetCard from "@/components/cards/tweet-card";
+import IconButton from "@/components/buttons/icon-button";
 
 export default function Feed({ feed }: { feed: UseFeedReturnType }) {
   const {
@@ -14,6 +14,7 @@ export default function Feed({ feed }: { feed: UseFeedReturnType }) {
     handleLike,
     handleShowMore,
     handleCopyLink,
+    handleDelete,
     handleRefreshFeed,
   } = feed;
 
@@ -36,15 +37,11 @@ export default function Feed({ feed }: { feed: UseFeedReturnType }) {
             handleBookmark={() => handleBookmark(tweet, updateTweetInFeed)}
             handleShowMore={() => handleShowMore(tweet)}
             handleCopyLink={() => handleCopyLink(tweet)}
+            handleDelete={() => handleDelete(tweet)}
           />
         ))}
         <div className="flex items-start justify-center py-12 max-sm:mb-20">
-          <button
-            onClick={handleRefreshFeed}
-            className="rounded-full bg-primary p-2 hover:bg-opacity-70"
-          >
-            <BiRefresh size={40} />
-          </button>
+          <IconButton onClick={handleRefreshFeed} variant="refresh" />
         </div>
       </>
     );

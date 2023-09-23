@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { DeleteAccountSchema } from "@/lib/validations/profile";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { getURL } from "@/lib/utils/getURL";
+import TextButton from "@/components/buttons/text-button";
 
 export default function AccountForm({ username }: { username: string }) {
   const {
@@ -63,13 +64,9 @@ export default function AccountForm({ username }: { username: string }) {
       </div>
 
       {/* Form submit button */}
-      <button
-        type="submit"
-        disabled={isSubmitting}
-        className="w-full rounded-full bg-red-500 px-5 py-2 text-center font-semibold hover:bg-red-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2"
-      >
+      <TextButton type="submit" disabled={isSubmitting} variant="destructive">
         Delete account
-      </button>
+      </TextButton>
 
       {/* Error messages */}
       <div className="h-8 text-primary">{errors.username?.message}</div>

@@ -4,7 +4,7 @@ import { useProfile } from "@/components/providers/profile-provider";
 import { useFeed } from "@/hooks/useFeed";
 import Avatar from "@/components/avatar";
 import TweetForm from "@/components/forms/tweet-form";
-import Feed from "@/components/feeds/feed";
+import Feed from "@/components/feeds/base-feed";
 
 export default function HomeFeed() {
   const { avatar_url } = useProfile();

@@ -1,21 +1,14 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { FiArrowLeft } from "react-icons/fi";
+import IconButton from "@/components/buttons/icon-button";
 
 export default function BackButton() {
   const router = useRouter();
 
-  async function handleClick() {
+  function handleClick() {
     router.back();
   }
 
-  return (
-    <button
-      onClick={handleClick}
-      className="rounded-full p-2 hover:bg-gray-800"
-    >
-      <FiArrowLeft />
-    </button>
-  );
+  return <IconButton onClick={handleClick} variant="back" />;
 }

@@ -201,13 +201,15 @@ CREATE POLICY "Authenticated users can delete their own likes" ON "public"."like
 
 CREATE POLICY "Authenticated users can delete their own profile" ON "public"."profiles" FOR DELETE TO "authenticated" USING (("auth"."uid"() = "id"));
 
-CREATE POLICY "Authenticated users can insert a tweet" ON "public"."tweets" FOR INSERT TO "authenticated" WITH CHECK (("auth"."uid"() = "profile_id"));
+CREATE POLICY "Authenticated users can delete their own tweets" ON "public"."tweets" FOR DELETE TO "authenticated" USING (("auth"."uid"() = "profile_id"));
 
 CREATE POLICY "Authenticated users can insert their own bookmarks" ON "public"."bookmarks" FOR INSERT TO "authenticated" WITH CHECK (("auth"."uid"() = "profile_id"));
 
 CREATE POLICY "Authenticated users can insert their own likes" ON "public"."likes" FOR INSERT TO "authenticated" WITH CHECK (("auth"."uid"() = "profile_id"));
 
 CREATE POLICY "Authenticated users can insert their own profile" ON "public"."profiles" FOR INSERT TO "authenticated" WITH CHECK (("auth"."uid"() = "id"));
+
+CREATE POLICY "Authenticated users can insert their own tweets" ON "public"."tweets" FOR INSERT TO "authenticated" WITH CHECK (("auth"."uid"() = "profile_id"));
 
 CREATE POLICY "Authenticated users can see all likes" ON "public"."likes" FOR SELECT TO "authenticated" USING (true);
 

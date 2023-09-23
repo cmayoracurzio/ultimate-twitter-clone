@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { tweetValidator, type TweetFormSchema } from "@/lib/validations/tweet";
 import { useEffect, useRef } from "react";
 import { getURL } from "@/lib/utils/getURL";
+import TextButton from "@/components/buttons/text-button";
 
 export default function TweetForm({
   replyToId = null,
@@ -84,13 +85,11 @@ export default function TweetForm({
         <div className="text-md text-primary">
           {errors[textAreaName] && errors[textAreaName].message}
         </div>
-        <button
-          type="submit"
-          disabled={isSubmitting}
-          className="rounded-full bg-primary px-5 py-2 text-center font-semibold hover:bg-opacity-70"
-        >
-          {replyToId ? "Reply" : "Tweet"}
-        </button>
+        <div className="w-fit">
+          <TextButton type="submit" disabled={isSubmitting} variant="primary">
+            {replyToId ? "Reply" : "Tweet"}
+          </TextButton>
+        </div>
       </div>
     </form>
   );

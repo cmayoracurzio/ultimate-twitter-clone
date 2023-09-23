@@ -1,6 +1,6 @@
 import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { BsX } from "react-icons/bs";
+import IconButton from "@/components/buttons/icon-button";
 
 export default function BaseModal({
   isOpen,
@@ -48,12 +48,7 @@ export default function BaseModal({
                 <Dialog.Title as="h3" className="text-xl font-semibold">
                   {title}
                 </Dialog.Title>
-                <button
-                  onClick={closeModal}
-                  className="rounded-full bg-gray-700 p-1 hover:bg-gray-600"
-                >
-                  <BsX size={24} />
-                </button>
+                <IconButton onClick={closeModal} variant="destructive" />
               </div>
               {/* Modal content */}
               {children}

@@ -1,13 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { formatAbsoluteDateTime } from "@/lib/utils/dates";
-import LikeButton from "@/components/buttons/like-button";
+import { useProfile } from "@/components/providers/profile-provider";
 import Avatar from "@/components/avatar";
-import ReplyButton from "@/components/buttons/reply-button";
-import BookmarkButton from "@/components/buttons/bookmark-button";
-import ShareButton from "@/components/buttons/share-button";
-import OptionsButton from "@/components/buttons/options-button";
+import { abbreviateNumber } from "@/lib/utils/numbers";
+import { formatAbsoluteDateTime } from "@/lib/utils/dates";
+import DeleteTweet from "@/components/modals/delete-tweet";
+import IconButton from "@/components/buttons/icon-button";
 
 export default function MainTweetCard({
   tweet,
@@ -15,29 +14,38 @@ export default function MainTweetCard({
   handleBookmark,
   handleShowMore,
   handleCopyLink,
+  handleDelete,
 }: {
   tweet: TweetwithMetadata;
   handleLike: () => void;
   handleBookmark: () => void;
   handleShowMore: () => void;
   handleCopyLink: () => void;
+  handleDelete: () => void;
 }) {
+  const profile = useProfile();
+
   return (
     <article className="flex w-full flex-col justify-start gap-4 overflow-hidden p-4">
       {/* Tweet header */}
-      <div className="flex items-center justify-start gap-4">
-        <Avatar src={tweet.author.avatar_url} />
-
-        <div className="flex flex-1 flex-col overflow-hidden text-gray-400">
-          <Link
-            href={`/explore/${tweet.author.username}`}
-            className="truncate font-bold text-gray-50 hover:underline"
-          >
-            {tweet.author.full_name}
-          </Link>
-          <span className="truncate">@{tweet.author.username}</span>
+      <div className="flex items-center justify-between gap-4">
+        <div className="-m-1 flex items-center justify-start gap-4 overflow-hidden p-1">
+          <Avatar src={tweet.author.avatar_url} />
+          <div className="-m-1 flex flex-col overflow-hidden p-1 text-gray-400">
+            <Link
+              href={`/explore/${tweet.author.username}`}
+              className="truncate font-bold text-gray-50 hover:underline"
+            >
+              {tweet.author.full_name}
+            </Link>
+            <span className="truncate">@{tweet.author.username}</span>
+          </div>
         </div>
-        <OptionsButton onClick={() => console.log("button clicked")} />
+        {profile.id === tweet.author.id ? (
+          <div className="self-start">
+            <DeleteTweet handleDelete={handleDelete} />
+          </div>
+        ) : null}
       </div>
 
       {/* Tweet text */}
@@ -51,18 +59,28 @@ export default function MainTweetCard({
       {/* Tweet Buttons */}
       <div className="flex items-center justify-between text-gray-400">
         <div className="flex-1">
-          <LikeButton tweet={tweet} handleLike={handleLike} />
-        </div>
-        <div className="flex-1">
-          <ReplyButton
-            replies={tweet.replies}
-            handleShowMore={handleShowMore}
+          <IconButton
+            variant="like"
+            onClick={handleLike}
+            active={tweet.likedByUser}
+            count={abbreviateNumber(tweet.likes)}
           />
         </div>
         <div className="flex-1">
-          <BookmarkButton tweet={tweet} handleBookmark={handleBookmark} />
+          <IconButton
+            variant="reply"
+            onClick={handleShowMore}
+            count={abbreviateNumber(tweet.replies)}
+          />
         </div>
-        <ShareButton handleCopyLink={handleCopyLink} />
+        <div className="flex-1">
+          <IconButton
+            variant="bookmark"
+            active={tweet.bookmarkedByUser}
+            onClick={handleBookmark}
+          />
+        </div>
+        <IconButton onClick={handleCopyLink} variant="share" />
       </div>
     </article>
   );

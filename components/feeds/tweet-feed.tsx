@@ -6,7 +6,7 @@ import { useFeed } from "@/hooks/useFeed";
 import MainTweetCard from "@/components/cards/main-tweet-card";
 import Avatar from "@/components/avatar";
 import TweetForm from "@/components/forms/tweet-form";
-import Feed from "@/components/feeds/feed";
+import Feed from "@/components/feeds/base-feed";
 
 export default function TweetFeed({
   initialTweet,
@@ -35,6 +35,7 @@ export default function TweetFeed({
         handleBookmark={() => feed.handleBookmark(mainTweet, setMainTweet)}
         handleShowMore={() => feed.handleShowMore(mainTweet)}
         handleCopyLink={() => feed.handleCopyLink(mainTweet)}
+        handleDelete={() => feed.handleDelete(mainTweet)}
       />
       <div className="flex items-start gap-4 p-4">
         <Avatar src={avatar_url} />

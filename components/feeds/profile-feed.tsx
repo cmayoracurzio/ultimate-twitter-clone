@@ -2,7 +2,7 @@
 
 import { useFeed } from "@/hooks/useFeed";
 import ProfileCard from "@/components/cards/profile-card";
-import Feed from "@/components/feeds/feed";
+import Feed from "@/components/feeds/base-feed";
 
 export default function ProfileFeed({
   profile,

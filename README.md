@@ -16,15 +16,17 @@ The following project implements a full-stack Twitter clone with modern web deve
 
 ## TODO (ongoing):
 
-- delete-tweet button with confirmation modal
+- Tooltips for icon-buttons, left-sidebar when collapsed, bottom-bar
+- Feed message and "try again" button when no tweets found
+- "Back to top" button in feed user has scrolled down a certain threshold
+
 - Make visible when a tweet is actually a reply
-- Tooltips for buttons
+- Allow changing profile avatar
 - Allow changing theme
 - Implement followed/followers
-- Allow changing profile avatar
 - Add local development instructions
 - Add email and password authentication
-- Feed state management and infinite scrolling using [React Query](https://tanstack.com/query/latest/)
+- Advanced feed (infinite scrolling, listen for updates, personalized based on user activity, etc.)
 - Finish other pages (explore, notifications, messages, bookmarks search and filtering)
-- Advanced tweet-form options (hashtags, tag users, add media, schedule tweet, etc.)
+- Advanced tweet-form options (hashtags/trends, tag users, add media, schedule tweet, add poll, etc.)
 - Finish right-sidebar (search bar, trends for you, who to follow)

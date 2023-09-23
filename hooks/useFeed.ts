@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback, startTransition } from "react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { getURL } from "@/lib/utils/getURL";
 
@@ -21,6 +21,7 @@ export type UseFeedReturnType = {
   ) => Promise<void>;
   handleShowMore: (tweet: TweetwithMetadata) => void;
   handleCopyLink: (tweet: TweetwithMetadata) => Promise<void>;
+  handleDelete: (tweet: TweetwithMetadata) => void;
   handleRefreshFeed: () => void;
 };
 
@@ -36,6 +37,7 @@ export function useFeed({
   const [tweets, setTweets] = useState<TweetwithMetadata[]>([]);
   const [isLoading, setLoading] = useState(true);
   const router = useRouter();
+  const pathname = usePathname();
   const supabase = createClientComponentClient<Database>();
 
   const fetchTweets = useCallback(async () => {
@@ -112,15 +114,27 @@ export function useFeed({
     fetchTweets();
   }, [fetchTweets]);
 
-  function addTweetToFeed(newTweet: TweetwithMetadata) {
-    setTweets([newTweet, ...tweets]);
+  function addTweetToFeed(tweetToAdd: TweetwithMetadata) {
+    setTweets([tweetToAdd, ...tweets]);
   }
 
-  function updateTweetInFeed(newTweet: TweetwithMetadata) {
-    const index = tweets.findIndex((tweet) => tweet.id === newTweet.id);
+  function updateTweetInFeed(tweetToUpdate: TweetwithMetadata) {
+    const index = tweets.findIndex((tweet) => tweet.id === tweetToUpdate.id);
     const updatedTweets = [...tweets];
-    updatedTweets[index] = newTweet;
+    updatedTweets[index] = tweetToUpdate;
     setTweets(updatedTweets);
+  }
+
+  function removeTweetFromFeed(tweetToRemove: TweetwithMetadata) {
+    const index = tweets.findIndex((tweet) => tweet.id === tweetToRemove.id);
+
+    if (index !== -1) {
+      const updatedTweets = [
+        ...tweets.slice(0, index),
+        ...tweets.slice(index + 1),
+      ];
+      setTweets(updatedTweets);
+    }
   }
 
   // Function for refresh feed button
@@ -202,6 +216,24 @@ export function useFeed({
     }
   }
 
+  // Function for delete tweet button
+  async function handleDelete(tweet: TweetwithMetadata) {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    if (user) {
+      await supabase
+        .from("tweets")
+        .delete()
+        .match({ profile_id: user.id, id: tweet.id });
+      if (pathname === `/explore/${tweet.author.username}/${tweet.id}`) {
+        router.push("/");
+      } else {
+        removeTweetFromFeed(tweet);
+      }
+    }
+  }
+
   return {
     tweets,
     isLoading,
@@ -212,6 +244,7 @@ export function useFeed({
     handleBookmark,
     handleShowMore,
     handleCopyLink,
+    handleDelete,
     handleRefreshFeed,
   };
 }
