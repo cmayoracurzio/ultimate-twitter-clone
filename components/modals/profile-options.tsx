@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { useProfile } from "@/components/providers/profile-provider";
-
 import OptionsButton from "@/components/buttons/options-button";
 import BaseModal from "@/components/modals/base-modal";
 import SignOut from "@/components/auth/sign-out";

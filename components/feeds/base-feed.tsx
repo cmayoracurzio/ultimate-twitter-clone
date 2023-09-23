@@ -13,7 +13,7 @@ export default function Feed({ feed }: { feed: UseFeedReturnType }) {
     handleBookmark,
     handleLike,
     handleShowMore,
-    handleCopyLink,
+    handleCopyUrl,
     handleDelete,
     handleRefreshFeed,
   } = feed;
@@ -36,7 +36,7 @@ export default function Feed({ feed }: { feed: UseFeedReturnType }) {
             handleLike={() => handleLike(tweet, updateTweetInFeed)}
             handleBookmark={() => handleBookmark(tweet, updateTweetInFeed)}
             handleShowMore={() => handleShowMore(tweet)}
-            handleCopyLink={() => handleCopyLink(tweet)}
+            handleCopyUrl={() => handleCopyUrl(tweet)}
             handleDelete={() => handleDelete(tweet)}
           />
         ))}

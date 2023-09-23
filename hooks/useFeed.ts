@@ -20,7 +20,7 @@ export type UseFeedReturnType = {
     updateTweetInFeed: (newTweet: TweetwithMetadata) => void,
   ) => Promise<void>;
   handleShowMore: (tweet: TweetwithMetadata) => void;
-  handleCopyLink: (tweet: TweetwithMetadata) => Promise<void>;
+  handleCopyUrl: (tweet: TweetwithMetadata) => Promise<void>;
   handleDelete: (tweet: TweetwithMetadata) => void;
   handleRefreshFeed: () => void;
 };
@@ -149,7 +149,7 @@ export function useFeed({
   }
 
   // Function for copy link button
-  async function handleCopyLink(tweet: TweetwithMetadata) {
+  async function handleCopyUrl(tweet: TweetwithMetadata) {
     const tweetUrl = `${getURL()}explore/${tweet.author.username}/${tweet.id}`;
     await navigator.clipboard.writeText(tweetUrl);
   }
@@ -243,7 +243,7 @@ export function useFeed({
     handleLike,
     handleBookmark,
     handleShowMore,
-    handleCopyLink,
+    handleCopyUrl,
     handleDelete,
     handleRefreshFeed,
   };

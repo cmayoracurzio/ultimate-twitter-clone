@@ -15,14 +15,14 @@ export default function TweetCard({
   handleLike,
   handleBookmark,
   handleShowMore,
-  handleCopyLink,
+  handleCopyUrl,
   handleDelete,
 }: {
   tweet: TweetwithMetadata;
   handleLike: () => void;
   handleBookmark: () => void;
   handleShowMore: () => void;
-  handleCopyLink: () => void;
+  handleCopyUrl: () => void;
   handleDelete: () => void;
 }) {
   const profile = useProfile();
@@ -92,7 +92,7 @@ export default function TweetCard({
               active={tweet.bookmarkedByUser}
             />
           </div>
-          <IconButton variant="share" onClick={handleCopyLink} />
+          <IconButton variant="share" onClick={handleCopyUrl} />
         </div>
       </div>
     </article>

@@ -34,7 +34,7 @@ export default function TweetFeed({
         handleLike={() => feed.handleLike(mainTweet, setMainTweet)}
         handleBookmark={() => feed.handleBookmark(mainTweet, setMainTweet)}
         handleShowMore={() => feed.handleShowMore(mainTweet)}
-        handleCopyLink={() => feed.handleCopyLink(mainTweet)}
+        handleCopyUrl={() => feed.handleCopyUrl(mainTweet)}
         handleDelete={() => feed.handleDelete(mainTweet)}
       />
       <div className="flex items-start gap-4 p-4">

@@ -12,11 +12,11 @@ The following project implements a full-stack Twitter clone with modern web deve
   - Date formatting with `dayjs`
   - Icons with `react-icons`
   - Modals with `@headlessui/react`
+  - Tooltips with `shadcn/ui`
   - Tailwind CSS formatting with `prettier-plugin-tailwindcss`
 
 ## TODO (ongoing):
 
-- Tooltips for icon-buttons, left-sidebar when collapsed, bottom-bar
 - Feed message and "try again" button when no tweets found
 - "Back to top" button in feed user has scrolled down a certain threshold
 

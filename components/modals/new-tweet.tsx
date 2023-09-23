@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { useProfile } from "@/components/providers/profile-provider";
 import { useRouter } from "next/navigation";
-
 import BaseModal from "@/components/modals/base-modal";
 import TextButton from "@/components/buttons/text-button";
 import IconButton from "@/components/buttons/icon-button";

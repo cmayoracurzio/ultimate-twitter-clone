@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useProfile } from "@/components/providers/profile-provider";
-
 import {
   BiHomeCircle,
   BiSolidHomeCircle,
@@ -17,8 +16,18 @@ import {
 import { FaBookmark, FaRegBookmark } from "react-icons/fa";
 import { HiOutlineEnvelope, HiEnvelope } from "react-icons/hi2";
 import { BsTwitter } from "react-icons/bs";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/tooltip";
 
-export default function NavigationLinks() {
+export default function NavigationLinks({
+  tooltipPosition,
+}: {
+  tooltipPosition: "top" | "right";
+}) {
   const pathname = usePathname();
   const { username } = useProfile();
 
@@ -73,14 +82,22 @@ export default function NavigationLinks() {
         const IconComponent =
           link.url === pathname ? link.currentPathIcon : link.icon;
         return (
-          <Link
-            key={link.label}
-            href={link.url}
-            className="flex w-fit items-center justify-start gap-4 rounded-full p-3 sm:hover:bg-gray-800 xl:px-5"
-          >
-            <IconComponent size={24} />
-            <p className="hidden xl:block">{link.label}</p>
-          </Link>
+          <TooltipProvider key={link.label}>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Link
+                  href={link.url}
+                  className="flex w-fit items-center justify-start gap-4 rounded-full p-3 sm:hover:bg-gray-800 xl:px-5"
+                >
+                  <IconComponent size={24} />
+                  <p className="hidden xl:block">{link.label}</p>
+                </Link>
+              </TooltipTrigger>
+              <TooltipContent side={tooltipPosition} className="xl:hidden">
+                <p className="text-xs font-normal">{link.label}</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         );
       })}
     </div>
