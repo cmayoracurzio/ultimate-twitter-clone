@@ -37,7 +37,8 @@ export default function TweetForm({
     const currentTextAreaRef = textAreaRef.current;
     if (currentTextAreaRef) {
       currentTextAreaRef.style.height = "auto";
-      currentTextAreaRef.style.height = currentTextAreaRef.scrollHeight + "px";
+      const maxHeight = Math.min(currentTextAreaRef.scrollHeight, 300);
+      currentTextAreaRef.style.height = maxHeight + "px";
     }
   }, [textAreaRef, currentText]);
 
@@ -61,8 +62,8 @@ export default function TweetForm({
       if (error) {
         setError(textAreaName, { message: error });
       } else if (data) {
-        addTweetToFeed(data);
         reset();
+        addTweetToFeed(data);
       }
     }
   }
