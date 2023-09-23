@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { DeleteAccountSchema } from "@/lib/validations/profile";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { getURL } from "@/lib/utils/getURL";
-import TextButton from "@/components/buttons/text-button";
+import BaseButton from "@/components/buttons/text-button";
 
 export default function AccountForm({ username }: { username: string }) {
   const {
@@ -32,6 +32,7 @@ export default function AccountForm({ username }: { username: string }) {
         setError("username", { message: error });
       } else {
         await supabase.auth.signOut();
+        router.push("/login");
       }
     }
   }
@@ -64,9 +65,9 @@ export default function AccountForm({ username }: { username: string }) {
       </div>
 
       {/* Form submit button */}
-      <TextButton type="submit" disabled={isSubmitting} variant="destructive">
+      <BaseButton type="submit" disabled={isSubmitting} variant="destructive">
         Delete account
-      </TextButton>
+      </BaseButton>
 
       {/* Error messages */}
       <div className="h-8 text-primary">{errors.username?.message}</div>

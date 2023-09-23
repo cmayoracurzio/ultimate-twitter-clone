@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useProfile } from "@/components/providers/profile-provider";
 import OptionsButton from "@/components/buttons/options-button";
 import Modal from "@/components/modals/modal";
-import SignOut from "@/components/auth/sign-out";
+import SignOut from "@/components/buttons/sign-out-button";
 import EditProfileForm from "@/components/forms/edit-profile-form";
 import DeleteAccountForm from "@/components/forms/delete-account-form";
 

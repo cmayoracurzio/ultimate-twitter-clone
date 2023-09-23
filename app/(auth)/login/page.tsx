@@ -2,7 +2,9 @@ import { cookies } from "next/headers";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { redirect } from "next/navigation";
 import { BsTwitter } from "react-icons/bs";
-import SignIn from "@/components/auth/sign-in";
+import SignIn from "@/components/buttons/sign-in-button";
+import { FcGoogle } from "react-icons/fc";
+import { BsGithub } from "react-icons/bs";
 import { GITHUB_REPO_URL } from "@/lib/constants";
 
 export default async function Page() {
@@ -21,7 +23,14 @@ export default async function Page() {
         <BsTwitter size={64} />
       </div>
       <h1 className="text-2xl font-bold sm:text-4xl">Ultimate Twitter Clone</h1>
-      <SignIn />
+      <div className="flex flex-col gap-4">
+        <SignIn provider="google" label="Google">
+          <FcGoogle size={24} />
+        </SignIn>
+        <SignIn provider="github" label="GitHub">
+          <BsGithub size={24} />
+        </SignIn>
+      </div>
       <a
         href={GITHUB_REPO_URL}
         target="_blank"
