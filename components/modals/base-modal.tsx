@@ -42,7 +42,7 @@ export default function BaseModal({
             leaveFrom="opacity-100 scale-100"
             leaveTo="opacity-0 scale-95"
           >
-            <Dialog.Panel className="flex w-full max-w-md flex-col gap-4 rounded-2xl border border-gray-600 bg-gray-800 p-6 text-gray-100 shadow-lg shadow-gray-600/50">
+            <Dialog.Panel className="flex w-full max-w-md flex-col gap-4 rounded-2xl border border-gray-600 bg-gray-800 p-6 text-gray-50 shadow-lg shadow-gray-600/50">
               {/* Modal header and close button */}
               <div className="flex items-center justify-between">
                 <Dialog.Title as="h3" className="text-xl font-semibold">

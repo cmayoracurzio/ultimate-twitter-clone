@@ -82,9 +82,13 @@ export default async function RightSidebar() {
 
       {/* Corporate links */}
       <div className="p-2 pt-4 text-xs text-gray-400">
-        <div className="grid grid-cols-2 gap-x-1 gap-y-2">
+        <div className="grid grid-cols-2 gap-2">
           {corporateLinks.map((link) => (
-            <Link key={link.label} href={link.url} className="hover:underline">
+            <Link
+              key={link.label}
+              href={link.url}
+              className="w-fit hover:underline"
+            >
               {link.label}
             </Link>
           ))}

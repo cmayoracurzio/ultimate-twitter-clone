@@ -1,8 +1,28 @@
 "use client";
 
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useState, useEffect, useCallback, startTransition } from "react";
 import { useRouter } from "next/navigation";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { getURL } from "@/lib/utils/getURL";
+
+export type UseFeedReturnType = {
+  tweets: TweetwithMetadata[];
+  isLoading: boolean;
+  fetchTweets: () => void;
+  addTweetToFeed: (newTweet: TweetwithMetadata) => void;
+  updateTweetInFeed: (newTweet: TweetwithMetadata) => void;
+  handleLike: (
+    tweet: TweetwithMetadata,
+    updateTweetInFeed: (newTweet: TweetwithMetadata) => void,
+  ) => Promise<void>;
+  handleBookmark: (
+    tweet: TweetwithMetadata,
+    updateTweetInFeed: (newTweet: TweetwithMetadata) => void,
+  ) => Promise<void>;
+  handleShowMore: (tweet: TweetwithMetadata) => void;
+  handleCopyLink: (tweet: TweetwithMetadata) => Promise<void>;
+  handleRefreshFeed: () => void;
+};
 
 export function useFeed({
   type,
@@ -12,7 +32,7 @@ export function useFeed({
   type: "home" | "bookmarks" | "profile" | "replies";
   profileId?: string;
   tweetId?: string;
-}) {
+}): UseFeedReturnType {
   const [tweets, setTweets] = useState<TweetwithMetadata[]>([]);
   const [isLoading, setLoading] = useState(true);
   const router = useRouter();
@@ -103,9 +123,83 @@ export function useFeed({
     setTweets(updatedTweets);
   }
 
-  function refreshFeed() {
+  // Function for refresh feed button
+  function handleRefreshFeed() {
     window.scrollTo(0, 0);
     fetchTweets();
+  }
+
+  // Function for reply button and show more button
+  function handleShowMore(tweet: TweetwithMetadata) {
+    router.push(`/explore/${tweet.author.username}/${tweet.id}`);
+  }
+
+  // Function for copy link button
+  async function handleCopyLink(tweet: TweetwithMetadata) {
+    const tweetUrl = `${getURL()}explore/${tweet.author.username}/${tweet.id}`;
+    await navigator.clipboard.writeText(tweetUrl);
+  }
+
+  // Function for like button
+  async function handleLike(
+    tweet: TweetwithMetadata,
+    updateTweetInFeed: (newTweet: TweetwithMetadata) => void,
+  ) {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    if (user) {
+      if (tweet.likedByUser) {
+        updateTweetInFeed({
+          ...tweet,
+          likes: tweet.likes - 1,
+          likedByUser: !tweet.likedByUser,
+        });
+        await supabase
+          .from("likes")
+          .delete()
+          .match({ profile_id: user.id, tweet_id: tweet.id });
+      } else {
+        updateTweetInFeed({
+          ...tweet,
+          likes: tweet.likes + 1,
+          likedByUser: !tweet.likedByUser,
+        });
+        await supabase
+          .from("likes")
+          .insert({ tweet_id: tweet.id, profile_id: user.id });
+      }
+    }
+  }
+
+  // Function for bookmark button
+  async function handleBookmark(
+    tweet: TweetwithMetadata,
+    updateTweetInFeed: (newTweet: TweetwithMetadata) => void,
+  ) {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    if (user !== null) {
+      if (tweet.bookmarkedByUser) {
+        updateTweetInFeed({
+          ...tweet,
+          bookmarkedByUser: !tweet.bookmarkedByUser,
+        });
+        await supabase
+          .from("bookmarks")
+          .delete()
+          .match({ profile_id: user.id, tweet_id: tweet.id });
+      } else {
+        updateTweetInFeed({
+          ...tweet,
+          bookmarkedByUser: !tweet.bookmarkedByUser,
+        });
+        await supabase
+          .from("bookmarks")
+          .insert({ tweet_id: tweet.id, profile_id: user.id });
+      }
+    }
   }
 
   return {
@@ -114,6 +208,10 @@ export function useFeed({
     fetchTweets,
     addTweetToFeed,
     updateTweetInFeed,
-    refreshFeed,
+    handleLike,
+    handleBookmark,
+    handleShowMore,
+    handleCopyLink,
+    handleRefreshFeed,
   };
 }

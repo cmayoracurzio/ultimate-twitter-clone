@@ -1,19 +1,9 @@
 "use client";
 
 import { useFeed } from "@/hooks/useFeed";
-import Tweets from "@/components/tweets";
+import Feed from "@/components/feeds/feed";
 
 export default function BookmarksFeed() {
-  const { tweets, isLoading, updateTweetInFeed, refreshFeed } = useFeed({
-    type: "bookmarks",
-  });
-
-  return (
-    <Tweets
-      isLoading={isLoading}
-      tweets={tweets}
-      updateTweetInFeed={updateTweetInFeed}
-      refreshFeed={refreshFeed}
-    />
-  );
+  const feed = useFeed({ type: "bookmarks" });
+  return <Feed feed={feed} />;
 }

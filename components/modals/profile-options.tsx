@@ -3,11 +3,11 @@
 import { useState } from "react";
 import { useProfile } from "@/components/providers/profile-provider";
 
+import ProfileOptionsButton from "@/components/buttons/profile-options-button";
+import BaseModal from "@/components/modals/base-modal";
 import SignOut from "@/components/auth/sign-out";
 import EditProfileForm from "@/components/forms/edit-profile-form";
 import DeleteAccountForm from "@/components/forms/delete-account-form";
-import ProfileOptionsButton from "@/components/buttons/profile-options-button";
-import BaseModal from "@/components/modals/base-modal";
 
 export default function ProfileOptions() {
   const [isOpen, setIsOpen] = useState(false);

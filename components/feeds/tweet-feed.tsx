@@ -6,46 +6,41 @@ import { useFeed } from "@/hooks/useFeed";
 import MainTweetCard from "@/components/cards/main-tweet-card";
 import Avatar from "@/components/avatar";
 import TweetForm from "@/components/forms/tweet-form";
-import Tweets from "@/components/tweets";
+import Feed from "@/components/feeds/feed";
 
 export default function TweetFeed({
   initialTweet,
 }: {
   initialTweet: TweetwithMetadata;
 }) {
-  const [tweet, setTweet] = useState<TweetwithMetadata>(initialTweet);
+  const [mainTweet, setMainTweet] = useState<TweetwithMetadata>(initialTweet);
   const { avatar_url } = useProfile();
-  const {
-    tweets: replies,
-    isLoading,
-    addTweetToFeed,
-    updateTweetInFeed,
-    refreshFeed,
-  } = useFeed({ type: "replies", tweetId: tweet.id });
+  const feed = useFeed({ type: "replies", tweetId: mainTweet.id });
 
   // Add reply to feed and update reply count in MainTweetCard
   function addReplyToFeed(newTweet: TweetwithMetadata) {
-    addTweetToFeed(newTweet);
+    feed.addTweetToFeed(newTweet);
     const newMainTweet: TweetwithMetadata = {
-      ...tweet,
-      replies: tweet.replies + 1,
+      ...mainTweet,
+      replies: mainTweet.replies + 1,
     };
-    setTweet(newMainTweet);
+    setMainTweet(newMainTweet);
   }
 
   return (
     <>
-      <MainTweetCard tweet={tweet} updateMainTweet={setTweet} />
+      <MainTweetCard
+        tweet={mainTweet}
+        handleLike={() => feed.handleLike(mainTweet, setMainTweet)}
+        handleBookmark={() => feed.handleBookmark(mainTweet, setMainTweet)}
+        handleShowMore={() => feed.handleShowMore(mainTweet)}
+        handleCopyLink={() => feed.handleCopyLink(mainTweet)}
+      />
       <div className="flex items-start gap-4 p-4">
         <Avatar src={avatar_url} />
-        <TweetForm replyToId={tweet.id} addTweetToFeed={addReplyToFeed} />
+        <TweetForm replyToId={mainTweet.id} addTweetToFeed={addReplyToFeed} />
       </div>
-      <Tweets
-        isLoading={isLoading}
-        tweets={replies}
-        updateTweetInFeed={updateTweetInFeed}
-        refreshFeed={refreshFeed}
-      />
+      <Feed feed={feed} />
     </>
   );
 }

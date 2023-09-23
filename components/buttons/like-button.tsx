@@ -1,46 +1,15 @@
 "use client";
 
 import { abbreviateNumber } from "@/lib/utils/numbers";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { FaHeart, FaRegHeart } from "react-icons/fa6";
 
 export default function LikeButton({
   tweet,
-  updateTweetInFeed,
+  handleLike,
 }: {
   tweet: TweetwithMetadata;
-  updateTweetInFeed: (newTweet: TweetwithMetadata) => void;
+  handleLike: () => void;
 }) {
-  const supabase = createClientComponentClient<Database>();
-
-  async function handleLike() {
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-    if (user) {
-      if (tweet.likedByUser) {
-        updateTweetInFeed({
-          ...tweet,
-          likes: tweet.likes - 1,
-          likedByUser: !tweet.likedByUser,
-        });
-        await supabase
-          .from("likes")
-          .delete()
-          .match({ profile_id: user.id, tweet_id: tweet.id });
-      } else {
-        updateTweetInFeed({
-          ...tweet,
-          likes: tweet.likes + 1,
-          likedByUser: !tweet.likedByUser,
-        });
-        await supabase
-          .from("likes")
-          .insert({ tweet_id: tweet.id, profile_id: user.id });
-      }
-    }
-  }
-
   return (
     <button
       onClick={handleLike}

@@ -26,7 +26,7 @@ export default function ProfileOptionsButton({
           <div className="truncate text-gray-400">@{username}</div>
         </div>
       </div>
-      <div className="max-xl:hidden">
+      <div className="text-gray-400 max-xl:hidden">
         <BsThreeDots size={18} />
       </div>
     </button>

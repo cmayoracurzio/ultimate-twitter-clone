@@ -2,19 +2,21 @@
 
 import { CgSpinner } from "react-icons/cg";
 import { BiRefresh } from "react-icons/bi";
-import TweetCard from "./cards/tweet-card";
+import TweetCard from "@/components/cards/tweet-card";
+import { type UseFeedReturnType } from "@/hooks/useFeed";
 
-export default function Tweets({
-  isLoading,
-  tweets,
-  updateTweetInFeed,
-  refreshFeed,
-}: {
-  isLoading: boolean;
-  tweets: TweetwithMetadata[];
-  updateTweetInFeed: (newTweet: TweetwithMetadata) => void;
-  refreshFeed: () => void;
-}) {
+export default function Feed({ feed }: { feed: UseFeedReturnType }) {
+  const {
+    isLoading,
+    tweets,
+    updateTweetInFeed,
+    handleBookmark,
+    handleLike,
+    handleShowMore,
+    handleCopyLink,
+    handleRefreshFeed,
+  } = feed;
+
   if (isLoading) {
     return (
       <div className="flex items-start justify-center py-12">
@@ -30,12 +32,15 @@ export default function Tweets({
           <TweetCard
             key={tweet.id}
             tweet={tweet}
-            updateTweetInFeed={updateTweetInFeed}
+            handleLike={() => handleLike(tweet, updateTweetInFeed)}
+            handleBookmark={() => handleBookmark(tweet, updateTweetInFeed)}
+            handleShowMore={() => handleShowMore(tweet)}
+            handleCopyLink={() => handleCopyLink(tweet)}
           />
         ))}
         <div className="flex items-start justify-center py-12 max-sm:mb-20">
           <button
-            onClick={refreshFeed}
+            onClick={handleRefreshFeed}
             className="rounded-full bg-primary p-2 hover:bg-opacity-70"
           >
             <BiRefresh size={40} />

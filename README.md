@@ -16,15 +16,15 @@ The following project implements a full-stack Twitter clone with modern web deve
 
 ## TODO (ongoing):
 
+- delete-tweet button with confirmation modal
 - Make visible when a tweet is actually a reply
-- Tweet options (edit, delete, etc.)
-- Allow changing profile avatar
+- Tooltips for buttons
 - Allow changing theme
 - Implement followed/followers
+- Allow changing profile avatar
 - Add local development instructions
 - Add email and password authentication
 - Feed state management and infinite scrolling using [React Query](https://tanstack.com/query/latest/)
 - Finish other pages (explore, notifications, messages, bookmarks search and filtering)
 - Advanced tweet-form options (hashtags, tag users, add media, schedule tweet, etc.)
-- Finish right-sidebar (corporate links, search bar, trends for you, who to follow)
-- Consider using [shadcn/ui](https://ui.shadcn.com/) components
+- Finish right-sidebar (search bar, trends for you, who to follow)

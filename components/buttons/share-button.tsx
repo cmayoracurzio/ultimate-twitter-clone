@@ -1,14 +1,12 @@
 "use client";
 
-import { getURL } from "@/lib/utils/getURL";
 import { FiLink } from "react-icons/fi";
 
-export default function ShareButton({ tweet }: { tweet: TweetwithMetadata }) {
-  async function handleCopyLink() {
-    const tweetUrl = `${getURL()}explore/${tweet.author.username}/${tweet.id}`;
-    await navigator.clipboard.writeText(tweetUrl);
-  }
-
+export default function ShareButton({
+  handleCopyLink,
+}: {
+  handleCopyLink: () => void;
+}) {
   return (
     <button
       onClick={handleCopyLink}

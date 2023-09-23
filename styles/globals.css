@@ -9,9 +9,9 @@ textarea::-webkit-scrollbar {
 }
 
 textarea::-webkit-scrollbar-track {
-  @apply rounded-full bg-gray-800;
+  @apply rounded-full bg-gray-700/50;
 }
 
 textarea::-webkit-scrollbar-thumb {
-  @apply rounded-full bg-gray-700;
+  @apply rounded-full bg-gray-600/50;
 }

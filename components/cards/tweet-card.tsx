@@ -1,8 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-
 import { maxTweetCardTextLength } from "@/lib/constants";
 import { formatRelativeDateTime } from "@/lib/utils/dates";
 import { truncateText } from "@/lib/utils/text";
@@ -16,27 +14,27 @@ import OptionsButton from "@/components/buttons/options-button";
 
 export default function TweetCard({
   tweet,
-  updateTweetInFeed,
+  handleLike,
+  handleBookmark,
+  handleShowMore,
+  handleCopyLink,
 }: {
   tweet: TweetwithMetadata;
-  updateTweetInFeed: (newTweet: TweetwithMetadata) => void;
+  handleLike: () => void;
+  handleBookmark: () => void;
+  handleShowMore: () => void;
+  handleCopyLink: () => void;
 }) {
-  const router = useRouter();
-
-  function handleShowMore() {
-    router.push(`/explore/${tweet.author.username}/${tweet.id}`);
-  }
-
   return (
     <article className="flex items-start gap-4 p-4 text-sm hover:bg-gray-800">
       {/* Tweet header */}
       <Avatar src={tweet.author.avatar_url} />
       <div className="flex w-full flex-col justify-start gap-1 overflow-hidden">
         <div className="flex items-center justify-start gap-4">
-          <div className="flex flex-1 items-center gap-2 overflow-hidden text-gray-500">
+          <div className="flex flex-1 items-center gap-2 overflow-hidden text-gray-400">
             <Link
               href={`/explore/${tweet.author.username}`}
-              className="truncate font-bold text-gray-100 hover:underline"
+              className="truncate font-bold text-gray-50 hover:underline"
             >
               {tweet.author.full_name}
             </Link>
@@ -69,18 +67,18 @@ export default function TweetCard({
         {/* Tweet Buttons */}
         <div className="flex items-center justify-between text-gray-400">
           <div className="flex-1">
-            <LikeButton tweet={tweet} updateTweetInFeed={updateTweetInFeed} />
+            <LikeButton tweet={tweet} handleLike={handleLike} />
           </div>
           <div className="flex-1">
-            <ReplyButton tweet={tweet} handleShowMore={handleShowMore} />
-          </div>
-          <div className="flex-1">
-            <BookmarkButton
-              tweet={tweet}
-              updateTweetInFeed={updateTweetInFeed}
+            <ReplyButton
+              replies={tweet.replies}
+              handleShowMore={handleShowMore}
             />
           </div>
-          <ShareButton tweet={tweet} />
+          <div className="flex-1">
+            <BookmarkButton tweet={tweet} handleBookmark={handleBookmark} />
+          </div>
+          <ShareButton handleCopyLink={handleCopyLink} />
         </div>
       </div>
     </article>

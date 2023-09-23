@@ -1,4 +1,4 @@
-import Avatar from "../avatar";
+import Avatar from "@/components/avatar";
 
 export default async function UserCard({ className }: { className: string }) {
   return (

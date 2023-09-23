@@ -4,10 +4,10 @@ import { FaRegComment } from "react-icons/fa6";
 import { abbreviateNumber } from "@/lib/utils/numbers";
 
 export default function ReplyButton({
-  tweet,
+  replies,
   handleShowMore,
 }: {
-  tweet: TweetwithMetadata;
+  replies: number;
   handleShowMore: () => void;
 }) {
   return (
@@ -18,7 +18,7 @@ export default function ReplyButton({
       <div className="rounded-full p-2 group-hover:bg-green-400/20">
         <FaRegComment size={18} />
       </div>
-      <p>{abbreviateNumber(tweet.replies)}</p>
+      <p>{abbreviateNumber(replies)}</p>
     </button>
   );
 }

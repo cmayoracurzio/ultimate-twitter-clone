@@ -1,4 +1,4 @@
-import "./globals.css";
+import "@/styles/globals.css";
 import { Inter } from "next/font/google";
 import { defaultMetadata } from "@/lib/constants";
 import AuthProvider from "@/components/providers/auth-provider";
