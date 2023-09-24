@@ -4,8 +4,12 @@ import { useState } from "react";
 import { useProfile } from "@/components/providers/profile-provider";
 import { useRouter } from "next/navigation";
 import Modal from "@/components/modals/modal";
-import TextButton from "@/components/buttons/text-button";
-import IconButton from "@/components/buttons/icon-button";
+import TextButton, {
+  TextButtonVariant,
+} from "@/components/buttons/text-button";
+import IconButton, {
+  IconButtonVariant,
+} from "@/components/buttons/icon-button";
 import Avatar from "@/components/avatar";
 import TweetForm from "@/components/forms/tweet-form";
 
@@ -30,12 +34,12 @@ export default function NewTweet() {
   return (
     <>
       <div className="hidden w-full xl:block">
-        <TextButton onClick={openModal} variant="large">
+        <TextButton onClick={openModal} variant={TextButtonVariant.Large}>
           Tweet
         </TextButton>
       </div>
       <div className="xl:hidden">
-        <IconButton onClick={openModal} variant="tweet" />
+        <IconButton onClick={openModal} variant={IconButtonVariant.Tweet} />
       </div>
       <Modal title="New tweet" isOpen={isOpen} closeModal={closeModal}>
         <div className="flex items-start gap-4">

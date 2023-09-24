@@ -8,7 +8,9 @@ import { formatRelativeDateTime } from "@/lib/utils/dates";
 import { truncateText } from "@/lib/utils/text";
 import { abbreviateNumber } from "@/lib/utils/numbers";
 import DeleteTweet from "@/components/modals/delete-tweet";
-import IconButton from "@/components/buttons/icon-button";
+import IconButton, {
+  IconButtonVariant,
+} from "@/components/buttons/icon-button";
 
 export default function TweetCard({
   tweet,
@@ -68,11 +70,10 @@ export default function TweetCard({
           )}
         </div>
 
-        {/* Tweet Buttons */}
         <div className="flex items-center justify-between text-gray-400">
           <div className="flex-1">
             <IconButton
-              variant="like"
+              variant={IconButtonVariant.Like}
               onClick={handleLike}
               active={tweet.likedByUser}
               count={abbreviateNumber(tweet.likes)}
@@ -80,19 +81,22 @@ export default function TweetCard({
           </div>
           <div className="flex-1">
             <IconButton
-              variant="reply"
+              variant={IconButtonVariant.Reply}
               onClick={handleShowMore}
               count={abbreviateNumber(tweet.replies)}
             />
           </div>
           <div className="flex-1">
             <IconButton
-              variant="bookmark"
-              onClick={handleBookmark}
+              variant={IconButtonVariant.Bookmark}
               active={tweet.bookmarkedByUser}
+              onClick={handleBookmark}
             />
           </div>
-          <IconButton variant="share" onClick={handleCopyUrl} />
+          <IconButton
+            onClick={handleCopyUrl}
+            variant={IconButtonVariant.Share}
+          />
         </div>
       </div>
     </article>

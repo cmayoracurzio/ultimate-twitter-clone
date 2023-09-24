@@ -24,6 +24,8 @@ const TooltipContent = React.forwardRef<
 ));
 TooltipContent.displayName = TooltipPrimitive.Content.displayName;
 
+export type TooltipSide = React.ComponentProps<typeof TooltipContent>["side"];
+
 export default function TooltipWrapper({
   children,
   side,
@@ -32,7 +34,7 @@ export default function TooltipWrapper({
 }: {
   children: React.ReactNode;
   tooltipText: string;
-  side: "top" | "right" | "bottom" | "left";
+  side: TooltipSide;
   classNames?: string;
 }) {
   return (

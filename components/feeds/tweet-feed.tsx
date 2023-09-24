@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useProfile } from "@/components/providers/profile-provider";
-import { useFeed } from "@/hooks/useFeed";
+import { useFeed, FeedType } from "@/hooks/useFeed";
 import MainTweetCard from "@/components/cards/main-tweet-card";
 import Avatar from "@/components/avatar";
 import TweetForm from "@/components/forms/tweet-form";
@@ -15,7 +15,7 @@ export default function TweetFeed({
 }) {
   const [mainTweet, setMainTweet] = useState<TweetwithMetadata>(initialTweet);
   const { avatar_url } = useProfile();
-  const feed = useFeed({ type: "replies", tweetId: mainTweet.id });
+  const feed = useFeed({ type: FeedType.Replies, tweetId: mainTweet.id });
 
   // Add reply to feed and update reply count in MainTweetCard
   function addReplyToFeed(newTweet: TweetwithMetadata) {

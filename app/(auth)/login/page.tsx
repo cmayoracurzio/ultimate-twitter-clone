@@ -3,8 +3,7 @@ import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { redirect } from "next/navigation";
 import { BsTwitter } from "react-icons/bs";
 import SignIn from "@/components/buttons/sign-in-button";
-import { FcGoogle } from "react-icons/fc";
-import { BsGithub } from "react-icons/bs";
+
 import { GITHUB_REPO_URL } from "@/lib/constants";
 
 export default async function Page() {
@@ -18,7 +17,7 @@ export default async function Page() {
   }
 
   return (
-    <div className="flex h-screen flex-col items-center justify-center gap-8 p-4 text-center">
+    <main className="flex h-screen flex-col items-center justify-center gap-8 p-4 text-center">
       <div className="text-primary">
         <BsTwitter size={64} />
       </div>
@@ -26,12 +25,8 @@ export default async function Page() {
         Ultimate Twitter Clone
       </h1>
       <div className="flex flex-col gap-4">
-        <SignIn provider="google" label="Google">
-          <FcGoogle size={24} />
-        </SignIn>
-        <SignIn provider="github" label="GitHub">
-          <BsGithub size={24} />
-        </SignIn>
+        <SignIn provider="google" />
+        <SignIn provider="github" />
       </div>
       <a
         href={GITHUB_REPO_URL}
@@ -41,6 +36,6 @@ export default async function Page() {
       >
         See the code on GitHub
       </a>
-    </div>
+    </main>
   );
 }

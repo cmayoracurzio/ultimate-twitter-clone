@@ -2,7 +2,9 @@
 
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useRouter } from "next/navigation";
-import TextButton from "@/components/buttons/text-button";
+import TextButton, {
+  TextButtonVariant,
+} from "@/components/buttons/text-button";
 
 export default function SignOut() {
   const supabase = createClientComponentClient<Database>();
@@ -14,7 +16,7 @@ export default function SignOut() {
   }
 
   return (
-    <TextButton variant="primary" onClick={handleSignOut}>
+    <TextButton variant={TextButtonVariant.Primary} onClick={handleSignOut}>
       Sign out
     </TextButton>
   );

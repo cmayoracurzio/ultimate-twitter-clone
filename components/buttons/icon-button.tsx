@@ -1,6 +1,6 @@
 "use client";
 
-import { ButtonHTMLAttributes } from "react";
+import { ButtonHTMLAttributes, useMemo } from "react";
 import { BsXLg } from "react-icons/bs";
 import {
   FaFeatherAlt,
@@ -13,18 +13,22 @@ import {
 import { FiLink, FiArrowLeft } from "react-icons/fi";
 import TooltipWrapper from "@/components/tooltip";
 
-type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
-  variant:
-    | "tweet"
-    | "back"
-    | "destructive"
-    | "like"
-    | "reply"
-    | "bookmark"
-    | "share";
+export enum IconButtonVariant {
+  Tweet = "Tweet",
+  Back = "Go back",
+  Close = "Close",
+  Delete = "Delete",
+  Like = "Like",
+  Reply = "Reply",
+  Bookmark = "Bookmark",
+  Share = "Copy URL",
+}
+
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  variant: IconButtonVariant;
   active?: boolean;
   count?: string;
-};
+}
 
 export default function IconButton({
   variant,
@@ -32,71 +36,85 @@ export default function IconButton({
   count,
   ...props
 }: ButtonProps) {
-  const defaultClassNames = "rounded-full text-gray-400";
-  let allClassNames;
-  let icon;
-  let tooltipText;
+  const { allClassNames, icon } = useMemo(() => {
+    const defaultClassNames = "rounded-full text-gray-400";
+    let variantClassNames = "";
+    let icon;
 
-  if (variant === "tweet") {
-    allClassNames = `${defaultClassNames} p-2 bg-primary hover:bg-opacity-70 text-gray-50 p-3`;
-    icon = <FaFeatherAlt size={24} />;
-    tooltipText = "Tweet";
-  } else if (variant === "back") {
-    allClassNames = `${defaultClassNames} p-2 hover:bg-gray-800 text-gray-50`;
-    icon = <FiArrowLeft />;
-    tooltipText = "Go back";
-  } else if (variant === "destructive") {
-    allClassNames = `${defaultClassNames} p-2 hover:bg-gray-700 hover:text-gray-100`;
-    icon = <BsXLg size={18} />;
-  } else if (variant === "like") {
-    allClassNames = `${defaultClassNames} group flex items-center gap-1 hover:text-red-400 ${
-      active ? "text-red-400" : null
-    }`;
-    icon = (
-      <>
-        <div className="rounded-full p-2 group-hover:bg-red-400/20">
-          {active ? <FaHeart size={18} /> : <FaRegHeart size={18} />}
-        </div>
-        <p>{count}</p>
-      </>
-    );
-    tooltipText = "Like";
-  } else if (variant === "reply") {
-    allClassNames = `${defaultClassNames} p-0 group flex items-center gap-1 hover:text-green-400`;
-    icon = (
-      <>
-        <div className="rounded-full p-2 group-hover:bg-green-400/20">
-          <FaRegComment size={18} />
-        </div>
-        <p>{count}</p>
-      </>
-    );
-    tooltipText = "Reply";
-  } else if (variant === "bookmark") {
-    allClassNames = `${defaultClassNames} p-2 hover:text-primary hover:bg-primary/20 ${
-      active && "text-primary"
-    }`;
-    icon = active ? <FaBookmark size={18} /> : <FaRegBookmark size={18} />;
-    tooltipText = "Bookmark";
-  } else if (variant === "share") {
-    allClassNames = `${defaultClassNames} p-2 hover:bg-yellow-400/20 hover:text-yellow-400`;
-    icon = <FiLink size={18} />;
-    tooltipText = "Copy URL";
-  }
+    switch (variant) {
+      case IconButtonVariant.Tweet:
+        variantClassNames =
+          "p-2 bg-primary hover:bg-opacity-70 text-gray-50 p-3";
+        icon = <FaFeatherAlt size={24} />;
+        break;
+      case IconButtonVariant.Back:
+        variantClassNames = "p-2 hover:bg-gray-800 text-gray-50";
+        icon = <FiArrowLeft />;
+        break;
+      case IconButtonVariant.Close:
+        variantClassNames = "p-2 hover:bg-gray-700 hover:text-gray-100";
+        icon = <BsXLg size={18} />;
+        break;
+      case IconButtonVariant.Delete:
+        variantClassNames = "p-2 hover:bg-gray-700 hover:text-gray-100";
+        icon = <BsXLg size={18} />;
+        break;
+      case IconButtonVariant.Like:
+        variantClassNames = `group flex items-center gap-1 hover:text-red-400 ${
+          active ? "text-red-400" : ""
+        }`;
+        icon = (
+          <>
+            <div className="rounded-full p-2 group-hover:bg-red-400/20">
+              {active ? <FaHeart size={18} /> : <FaRegHeart size={18} />}
+            </div>
+            <p>{count}</p>
+          </>
+        );
+        break;
+      case IconButtonVariant.Reply:
+        variantClassNames =
+          "p-0 group flex items-center gap-1 hover:text-green-400";
+        icon = (
+          <>
+            <div className="rounded-full p-2 group-hover:bg-green-400/20">
+              <FaRegComment size={18} />
+            </div>
+            <p>{count}</p>
+          </>
+        );
+        break;
+      case IconButtonVariant.Bookmark:
+        variantClassNames = `p-2 hover:text-primary hover:bg-primary/20 ${
+          active ? "text-primary" : ""
+        }`;
+        icon = active ? <FaBookmark size={18} /> : <FaRegBookmark size={18} />;
+        break;
+      case IconButtonVariant.Share:
+        variantClassNames = "p-2 hover:bg-yellow-400/20 hover:text-yellow-400";
+        icon = <FiLink size={18} />;
+        break;
+    }
+
+    return {
+      allClassNames: `${defaultClassNames} ${variantClassNames}`,
+      icon,
+    };
+  }, [variant, active, count]);
 
   const button = (
-    <button {...props} className={allClassNames}>
+    <button {...props} className={allClassNames} aria-label={variant}>
       {icon}
     </button>
   );
 
-  if (!tooltipText) {
+  if (variant === IconButtonVariant.Close) {
     return button;
   } else {
     return (
       <TooltipWrapper
-        tooltipText={tooltipText}
-        side={variant === "tweet" ? "right" : "bottom"}
+        tooltipText={variant}
+        side={variant === IconButtonVariant.Tweet ? "right" : "bottom"}
       >
         {button}
       </TooltipWrapper>

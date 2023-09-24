@@ -5,7 +5,12 @@ import { usePathname, useRouter } from "next/navigation";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { getURL } from "@/lib/utils/getURL";
 
-type FeedType = "home" | "bookmarks" | "profile" | "replies";
+export enum FeedType {
+  Home = "home",
+  Bookmarks = "bookmarks",
+  Profile = "profile",
+  Replies = "replies",
+}
 
 export type UseFeedReturnType = {
   type: FeedType;

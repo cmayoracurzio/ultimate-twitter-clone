@@ -29,7 +29,7 @@ export default function ProfileOptions() {
         onClick={openModal}
       />
       <Modal title="Account options" isOpen={isOpen} closeModal={closeModal}>
-        {/* Edit profile form */}
+        {/* Sign out */}
         <div className="flex flex-col gap-4">
           <h4 className="font-medium">Sign out:</h4>
           <SignOut />

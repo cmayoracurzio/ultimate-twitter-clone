@@ -8,7 +8,9 @@ import {
   type EditProfileSchema,
 } from "@/lib/validations/profile";
 import { getURL } from "@/lib/utils/getURL";
-import TextButton from "@/components/buttons/text-button";
+import TextButton, {
+  TextButtonVariant,
+} from "@/components/buttons/text-button";
 
 export default function EditProfileForm({
   username,
@@ -86,7 +88,11 @@ export default function EditProfileForm({
       </div>
 
       {/* Form submit button */}
-      <TextButton type="submit" disabled={isSubmitting} variant="primary">
+      <TextButton
+        type="submit"
+        disabled={isSubmitting}
+        variant={TextButtonVariant.Primary}
+      >
         Save changes
       </TextButton>
 

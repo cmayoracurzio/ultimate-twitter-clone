@@ -3,7 +3,9 @@
 import { type UseFeedReturnType } from "@/hooks/useFeed";
 import { CgSpinner } from "react-icons/cg";
 import TweetCard from "@/components/cards/tweet-card";
-import TextButton from "../buttons/text-button";
+import TextButton, {
+  TextButtonVariant,
+} from "@/components/buttons/text-button";
 
 export default function Feed({ feed }: { feed: UseFeedReturnType }) {
   const {
@@ -35,7 +37,10 @@ export default function Feed({ feed }: { feed: UseFeedReturnType }) {
         type === "bookmarks" || type === "replies" ? type : "tweets"
       } found`;
       bottomButton = (
-        <TextButton onClick={handleRefreshFeed} variant="primary">
+        <TextButton
+          onClick={handleRefreshFeed}
+          variant={TextButtonVariant.Primary}
+        >
           Try again
         </TextButton>
       );
@@ -44,7 +49,10 @@ export default function Feed({ feed }: { feed: UseFeedReturnType }) {
         type === "bookmarks" || type === "replies" ? type : "tweets"
       }`;
       bottomButton = (
-        <TextButton onClick={() => window.scrollTo(0, 0)} variant="primary">
+        <TextButton
+          onClick={() => window.scrollTo(0, 0)}
+          variant={TextButtonVariant.Primary}
+        >
           Back to top
         </TextButton>
       );

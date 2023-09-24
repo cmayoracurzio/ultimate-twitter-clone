@@ -1,6 +1,8 @@
 import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import IconButton from "@/components/buttons/icon-button";
+import IconButton, {
+  IconButtonVariant,
+} from "@/components/buttons/icon-button";
 
 export default function Modal({
   isOpen,
@@ -48,7 +50,10 @@ export default function Modal({
                 <Dialog.Title as="h3" className="text-xl font-semibold">
                   {title}
                 </Dialog.Title>
-                <IconButton onClick={closeModal} variant="destructive" />
+                <IconButton
+                  onClick={closeModal}
+                  variant={IconButtonVariant.Close}
+                />
               </div>
               {/* Modal content */}
               {children}

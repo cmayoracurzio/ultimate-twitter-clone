@@ -1,32 +1,33 @@
 "use client";
 
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import { Provider } from "@supabase/supabase-js";
+import type { Provider } from "@supabase/supabase-js";
+import { useCallback } from "react";
 import { getURL } from "@/lib/utils/getURL";
-import TextButton from "@/components/buttons/text-button";
+import TextButton, {
+  TextButtonVariant,
+} from "@/components/buttons/text-button";
+import { FcGoogle } from "react-icons/fc";
+import { BsGithub } from "react-icons/bs";
 
-export default function SignIn({
-  provider,
-  label,
-  children,
-}: {
-  provider: "google" | "github";
-  label: string;
-  children: React.ReactNode;
-}) {
+export default function SignIn({ provider }: { provider: Provider }) {
   const supabase = createClientComponentClient<Database>();
 
-  async function handleSignIn(provider: Provider) {
+  const handleSignIn = useCallback(async () => {
     await supabase.auth.signInWithOAuth({
-      provider: provider,
+      provider,
       options: { redirectTo: `${getURL()}login/callback` },
     });
-  }
+  }, [provider, supabase]);
+
+  const icon =
+    provider === "google" ? <FcGoogle size={24} /> : <BsGithub size={24} />;
+  const label = provider === "google" ? "Google" : "GitHub";
 
   return (
-    <TextButton onClick={() => handleSignIn(provider)} variant="light">
+    <TextButton onClick={handleSignIn} variant={TextButtonVariant.Light}>
       <div className="flex items-center justify-center gap-2">
-        {children}
+        {icon}
         <p>Sign in with {label}</p>
       </div>
     </TextButton>

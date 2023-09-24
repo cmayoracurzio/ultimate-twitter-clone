@@ -1,14 +1,14 @@
 "use client";
 
 import { useProfile } from "@/components/providers/profile-provider";
-import { useFeed } from "@/hooks/useFeed";
+import { useFeed, FeedType } from "@/hooks/useFeed";
 import Avatar from "@/components/avatar";
 import TweetForm from "@/components/forms/tweet-form";
 import Feed from "@/components/feeds/feed";
 
 export default function HomeFeed() {
   const { avatar_url } = useProfile();
-  const feed = useFeed({ type: "home" });
+  const feed = useFeed({ type: FeedType.Home });
 
   return (
     <>

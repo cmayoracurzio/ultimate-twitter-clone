@@ -17,6 +17,8 @@ The following project implements a full-stack Twitter clone with modern web deve
 
 ## TODO (ongoing):
 
+- Prevent modal focus on close
+
 - Make visible when a tweet is actually a reply
 - Allow changing profile avatar
 - Allow changing theme

@@ -16,12 +16,12 @@ import {
 import { FaBookmark, FaRegBookmark } from "react-icons/fa";
 import { HiOutlineEnvelope, HiEnvelope } from "react-icons/hi2";
 import { BsTwitter } from "react-icons/bs";
-import TooltipWrapper from "@/components/tooltip";
+import TooltipWrapper, { type TooltipSide } from "@/components/tooltip";
 
 export default function NavigationLinks({
-  tooltipPosition,
+  tooltipSide,
 }: {
-  tooltipPosition: "top" | "right";
+  tooltipSide: TooltipSide;
 }) {
   const pathname = usePathname();
   const { username } = useProfile();
@@ -80,7 +80,7 @@ export default function NavigationLinks({
           <TooltipWrapper
             key={link.label}
             tooltipText={link.label}
-            side={tooltipPosition}
+            side={tooltipSide}
             classNames="xl:hidden"
           >
             <Link
