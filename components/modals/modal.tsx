@@ -31,7 +31,7 @@ export default function Modal({
         </Transition.Child>
 
         <div
-          className={`fixed inset-0 flex items-center justify-center overflow-y-auto p-4 ${
+          className={`fixed inset-0 flex items-center justify-center ${
             isOpen && "sm:mr-[15px]"
           }`}
         >
