@@ -36,7 +36,7 @@ export default function TweetCard({
           <div className="-m-1 flex flex-1 items-center gap-2 overflow-hidden p-1 text-gray-400 ">
             <Link
               href={`/explore/${tweet.author.username}`}
-              className="truncate font-bold text-gray-50"
+              className="truncate font-bold text-gray-50 hover:underline"
             >
               {tweet.author.full_name}
             </Link>

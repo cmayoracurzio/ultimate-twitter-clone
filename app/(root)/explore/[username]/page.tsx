@@ -24,24 +24,37 @@ export default async function Page({
     notFound();
   }
 
+  // Helper function to get the correct singular/plural stat name
+  const getStatName = (name: string, count: number) => {
+    if (name === "reply") {
+      return count !== 1 ? "replies" : name;
+    } else {
+      return count !== 1 ? name + "s" : name;
+    }
+  };
+
+  // Format stats
+  const profileData = data[0];
+  const stats = [
+    { name: "tweet", count: profileData.tweets.length },
+    { name: "like", count: profileData.likes.length },
+    {
+      name: "reply",
+      count: profileData.tweets.filter((tweet) => tweet.reply_to_id !== null)
+        .length,
+    },
+    { name: "bookmark", count: profileData.bookmarks.length },
+  ].map((stat) => ({ ...stat, name: getStatName(stat.name, stat.count) }));
+
   // Format profile data
   const profile = {
-    avatar_url: data[0].avatar_url,
-    created_at: data[0].created_at,
-    full_name: data[0].full_name,
-    id: data[0].id,
-    updated_at: data[0].updated_at,
-    username: data[0].username,
-    stats: [
-      { name: "tweets", count: data[0].tweets.length },
-      { name: "likes", count: data[0].likes.length },
-      {
-        name: "replies",
-        count: data[0].tweets.filter((tweet) => tweet.reply_to_id !== null)
-          .length,
-      },
-      { name: "bookmarks", count: data[0].bookmarks.length },
-    ],
+    avatar_url: profileData.avatar_url,
+    created_at: profileData.created_at,
+    full_name: profileData.full_name,
+    id: profileData.id,
+    updated_at: profileData.updated_at,
+    username: profileData.username,
+    stats,
   };
 
   return (

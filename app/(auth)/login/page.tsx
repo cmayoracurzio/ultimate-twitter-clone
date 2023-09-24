@@ -22,7 +22,9 @@ export default async function Page() {
       <div className="text-primary">
         <BsTwitter size={64} />
       </div>
-      <h1 className="text-2xl font-bold sm:text-4xl">Ultimate Twitter Clone</h1>
+      <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
+        Ultimate Twitter Clone
+      </h1>
       <div className="flex flex-col gap-4">
         <SignIn provider="google" label="Google">
           <FcGoogle size={24} />
@@ -35,7 +37,7 @@ export default async function Page() {
         href={GITHUB_REPO_URL}
         target="_blank"
         rel="noopener noreferrer"
-        className="text-sm text-gray-400 underline-offset-2 hover:text-gray-200"
+        className="text-sm text-gray-400 hover:text-gray-200"
       >
         See the code on GitHub
       </a>
