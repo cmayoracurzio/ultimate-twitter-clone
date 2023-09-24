@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { getBaseUrl } from "@/lib/utils/getBaseUrl";
 
 // Url to GitHub repository with project code
 export const GITHUB_REPO_URL =
@@ -17,6 +18,7 @@ export const defaultMetadata: Metadata = {
   keywords: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Supabase"],
   authors: [{ name: "Carlos Mayora Curzio", url: GITHUB_REPO_URL }],
   colorScheme: "light",
+  metadataBase: new URL(getBaseUrl()),
   openGraph: {
     title: "Ultimate Twitter Clone",
     description:
