@@ -87,6 +87,7 @@ export default async function RightSidebar() {
             <Link
               key={link.label}
               href={link.url}
+              prefetch={false}
               className="w-fit hover:underline"
             >
               {link.label}
