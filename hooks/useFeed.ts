@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback, startTransition } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import { getURL } from "@/lib/utils/getURL";
+import { getBaseUrl } from "@/lib/utils/getBaseUrl";
 
 export enum FeedType {
   Home = "home",
@@ -158,7 +158,9 @@ export function useFeed({
 
   // Function for copy link button
   async function handleCopyUrl(tweet: TweetwithMetadata) {
-    const tweetUrl = `${getURL()}explore/${tweet.author.username}/${tweet.id}`;
+    const tweetUrl = `${getBaseUrl()}explore/${tweet.author.username}/${
+      tweet.id
+    }`;
     await navigator.clipboard.writeText(tweetUrl);
   }
 

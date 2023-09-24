@@ -3,7 +3,7 @@
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import type { Provider } from "@supabase/supabase-js";
 import { useCallback } from "react";
-import { getURL } from "@/lib/utils/getURL";
+import { getBaseUrl } from "@/lib/utils/getBaseUrl";
 import TextButton, {
   TextButtonVariant,
 } from "@/components/buttons/text-button";
@@ -16,7 +16,7 @@ export default function SignIn({ provider }: { provider: Provider }) {
   const handleSignIn = useCallback(async () => {
     await supabase.auth.signInWithOAuth({
       provider,
-      options: { redirectTo: `${getURL()}login/callback` },
+      options: { redirectTo: `${getBaseUrl()}login/callback` },
     });
   }, [provider, supabase]);
 

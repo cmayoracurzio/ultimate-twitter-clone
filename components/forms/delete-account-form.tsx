@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { DeleteAccountSchema } from "@/lib/validations/profile";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import { getURL } from "@/lib/utils/getURL";
+import { getBaseUrl } from "@/lib/utils/getBaseUrl";
 import TextButton, {
   TextButtonVariant,
 } from "@/components/buttons/text-button";
@@ -21,7 +21,7 @@ export default function AccountForm({ username }: { username: string }) {
   const supabase = createClientComponentClient<Database>();
 
   async function onSubmit(formValues: DeleteAccountSchema) {
-    const response = await fetch(`${getURL()}/api/profiles`, {
+    const response = await fetch(`${getBaseUrl()}/api/profiles`, {
       method: "DELETE",
       body: JSON.stringify(formValues),
       headers: { "Content-Type": "application/json" },

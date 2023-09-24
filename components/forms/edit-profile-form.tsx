@@ -7,7 +7,7 @@ import {
   editProfileValidator,
   type EditProfileSchema,
 } from "@/lib/validations/profile";
-import { getURL } from "@/lib/utils/getURL";
+import { getBaseUrl } from "@/lib/utils/getBaseUrl";
 import TextButton, {
   TextButtonVariant,
 } from "@/components/buttons/text-button";
@@ -34,7 +34,7 @@ export default function EditProfileForm({
   const router = useRouter();
 
   async function onSubmit(formValues: EditProfileSchema) {
-    const response = await fetch(`${getURL()}/api/profiles`, {
+    const response = await fetch(`${getBaseUrl()}/api/profiles`, {
       method: "POST",
       body: JSON.stringify(formValues),
       headers: { "Content-Type": "application/json" },

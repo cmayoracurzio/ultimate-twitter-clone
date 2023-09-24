@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { tweetValidator, type TweetFormSchema } from "@/lib/validations/tweet";
 import { useEffect, useRef } from "react";
-import { getURL } from "@/lib/utils/getURL";
+import { getBaseUrl } from "@/lib/utils/getBaseUrl";
 import TextButton, {
   TextButtonVariant,
 } from "@/components/buttons/text-button";
@@ -53,7 +53,7 @@ export default function TweetForm({
     if (replyToId) {
       payload.replyToId = replyToId;
     }
-    const response = await fetch(`${getURL()}/api/tweets`, {
+    const response = await fetch(`${getBaseUrl()}/api/tweets`, {
       method: "POST",
       body: JSON.stringify(payload),
       headers: { "Content-Type": "application/json" },
