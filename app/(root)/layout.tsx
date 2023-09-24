@@ -1,6 +1,7 @@
 import { cookies } from "next/headers";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { redirect } from "next/navigation";
+
 import ProfileProvider from "@/components/providers/profile-provider";
 import LeftSidebar from "@/components/sidebars/left-sidebar";
 import RightSidebar from "@/components/sidebars/right-sidebar";
@@ -16,17 +17,17 @@ export default async function RootLayout({
   const supabase = createServerComponentClient<Database>({ cookies });
 
   const {
-    data: { session },
-  } = await supabase.auth.getSession();
+    data: { user },
+  } = await supabase.auth.getUser();
 
-  if (!session) {
+  if (!user) {
     redirect("/login");
   }
 
   const { data: profileData } = await supabase
     .from("profiles")
     .select("*")
-    .eq("id", session.user.id);
+    .eq("id", user.id);
 
   if (!profileData || profileData.length === 0) {
     await supabase.auth.signOut();
