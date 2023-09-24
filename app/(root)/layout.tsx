@@ -1,7 +1,6 @@
 import { cookies } from "next/headers";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { redirect } from "next/navigation";
-
 import ProfileProvider from "@/components/providers/profile-provider";
 import LeftSidebar from "@/components/sidebars/left-sidebar";
 import RightSidebar from "@/components/sidebars/right-sidebar";
@@ -21,6 +20,7 @@ export default async function RootLayout({
   } = await supabase.auth.getUser();
 
   if (!user) {
+    console.log("No user");
     redirect("/login");
   }
 
@@ -30,6 +30,7 @@ export default async function RootLayout({
     .eq("id", user.id);
 
   if (!profileData || profileData.length === 0) {
+    console.log("No profile");
     await supabase.auth.signOut();
     redirect("/login");
   }
