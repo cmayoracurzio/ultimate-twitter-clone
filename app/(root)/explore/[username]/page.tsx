@@ -6,6 +6,8 @@ import Header from "@/components/header";
 import BackButton from "@/components/buttons/back-button";
 import ProfileFeed from "@/components/feeds/profile-feed";
 
+export const dynamic = "force-dynamic";
+
 export default async function Page({
   params,
 }: {

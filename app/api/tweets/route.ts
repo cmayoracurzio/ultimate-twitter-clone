@@ -3,6 +3,8 @@ import { tweetValidator, TweetFormSchema } from "@/lib/validations/tweet";
 import { cookies } from "next/headers";
 import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
 
+export const dynamic = "force-dynamic";
+
 // Post a new tweet
 export async function POST(request: NextRequest) {
   try {

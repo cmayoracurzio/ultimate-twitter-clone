@@ -6,6 +6,8 @@ import Header from "@/components/header";
 import BackButton from "@/components/buttons/back-button";
 import TweetFeed from "@/components/feeds/tweet-feed";
 
+export const dynamic = "force-dynamic";
+
 export default async function Page({
   params,
 }: {

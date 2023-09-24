@@ -6,6 +6,8 @@ import SignIn from "@/components/buttons/sign-in-button";
 
 import { GITHUB_REPO_URL } from "@/lib/constants";
 
+export const dynamic = "force-dynamic";
+
 export default async function Page() {
   const supabase = createServerComponentClient<Database>({ cookies });
   const {

@@ -7,6 +7,8 @@ import LeftSidebar from "@/components/sidebars/left-sidebar";
 import RightSidebar from "@/components/sidebars/right-sidebar";
 import BottomBar from "@/components/sidebars/bottom-bar";
 
+export const dynamic = "force-dynamic";
+
 export default async function RootLayout({
   children,
 }: {
