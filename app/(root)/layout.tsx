@@ -1,7 +1,6 @@
 import { cookies } from "next/headers";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { redirect } from "next/navigation";
-
 import ProfileProvider from "@/components/providers/profile-provider";
 import LeftSidebar from "@/components/sidebars/left-sidebar";
 import RightSidebar from "@/components/sidebars/right-sidebar";
