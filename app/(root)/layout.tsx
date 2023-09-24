@@ -16,17 +16,17 @@ export default async function RootLayout({
   const supabase = createServerComponentClient<Database>({ cookies });
 
   const {
-    data: { user },
-  } = await supabase.auth.getUser();
+    data: { session },
+  } = await supabase.auth.getSession();
 
-  if (!user) {
+  if (!session) {
     redirect("/login");
   }
 
   const { data: profileData } = await supabase
     .from("profiles")
     .select("*")
-    .eq("id", user.id);
+    .eq("id", session.user.id);
 
   if (!profileData || profileData.length === 0) {
     await supabase.auth.signOut();
