@@ -17,7 +17,6 @@ The following project implements a full-stack Twitter clone with modern web deve
 
 ## TODO (ongoing):
 
-- Fix route protection in production environment
 - Make visible when a tweet is actually a reply
 - Allow changing profile avatar
 - Allow changing theme

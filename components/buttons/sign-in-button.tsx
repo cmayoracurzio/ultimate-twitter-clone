@@ -12,16 +12,13 @@ import { BsGithub } from "react-icons/bs";
 
 export default function SignIn({ provider }: { provider: Provider }) {
   const supabase = createClientComponentClient<Database>();
-  const url = getBaseUrl();
 
-  console.log(url);
-
-  const handleSignIn = async () => {
+  const handleSignIn = useCallback(async () => {
     await supabase.auth.signInWithOAuth({
       provider,
-      options: { redirectTo: `${url}login/callback` },
+      options: { redirectTo: `${getBaseUrl()}login/callback` },
     });
-  };
+  }, [provider, supabase]);
 
   const icon =
     provider === "google" ? <FcGoogle size={24} /> : <BsGithub size={24} />;
