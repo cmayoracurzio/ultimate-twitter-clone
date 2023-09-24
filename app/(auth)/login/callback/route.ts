@@ -8,9 +8,13 @@ export async function GET(request: NextRequest) {
   const requestUrl = new URL(request.url);
   const code = requestUrl.searchParams.get("code");
 
+  console.log(`code: ${code}`);
   if (code) {
     const supabase = createRouteHandlerClient<Database>({ cookies });
-    await supabase.auth.exchangeCodeForSession(code);
+
+    const { data, error } = await supabase.auth.exchangeCodeForSession(code);
+    console.log(`data: ${data}`);
+    console.log(`error: ${error}`);
   }
 
   // URL to redirect to after sign in process completes
