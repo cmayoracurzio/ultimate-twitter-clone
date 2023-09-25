@@ -12,7 +12,7 @@ export default async function Layout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className="dark">
       <body className={inter.className}>
         <div className="h-full w-full bg-gray-900 text-gray-50">
           <AuthProvider>{children}</AuthProvider>

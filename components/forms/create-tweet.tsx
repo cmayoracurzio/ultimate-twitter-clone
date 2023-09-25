@@ -4,17 +4,21 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { tweetValidator, type TweetFormSchema } from "@/lib/validations/tweet";
 import { useEffect, useRef } from "react";
+import { useProfile } from "@/components/providers/profile-provider";
 import { getBaseUrl } from "@/lib/utils/getBaseUrl";
-import TextButton, {
-  TextButtonVariant,
-} from "@/components/buttons/text-button";
+import { cn } from "@/lib/utils/cn";
+import Avatar from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import Card from "@/components/ui/card";
 
-export default function TweetForm({
+export default function CreateTweet({
   replyToId = null,
-  addTweetToFeed,
+  className,
+  onFormSuccess,
 }: {
   replyToId?: string | null;
-  addTweetToFeed: (newTweet: TweetwithMetadata) => void;
+  className?: string;
+  onFormSuccess: (newTweet: TweetwithMetadata) => void;
 }) {
   const {
     register,
@@ -30,6 +34,7 @@ export default function TweetForm({
   const { ref, ...rest } = register(textAreaName);
   const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
   const currentText = watch(textAreaName);
+  const { avatar_url } = useProfile();
 
   async function handleRef(element: HTMLTextAreaElement) {
     ref(element);
@@ -66,37 +71,36 @@ export default function TweetForm({
         setError(textAreaName, { message: error });
       } else if (data) {
         reset();
-        addTweetToFeed(data);
+        onFormSuccess(data);
       }
     }
   }
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="flex w-full flex-col gap-8"
-    >
-      <textarea
-        {...rest}
-        ref={handleRef}
-        rows={1}
-        placeholder={replyToId ? "Tweet your reply" : "What's happening?!"}
-        className="mt-1.5 w-full resize-none border-none bg-transparent text-lg outline-none"
-      />
-      <div className="flex items-center justify-between gap-1">
-        <div className="text-md text-primary">
-          {errors[textAreaName] && errors[textAreaName].message}
+    <Card className={cn("flex items-start gap-3", className)}>
+      <Avatar src={avatar_url} />
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="flex w-full flex-col gap-8 text-gray-50"
+      >
+        <textarea
+          {...rest}
+          ref={handleRef}
+          rows={1}
+          placeholder={replyToId ? "Tweet your reply" : "What's happening?!"}
+          className="mt-1.5 w-full resize-none border-none bg-transparent text-lg outline-none"
+        />
+        <div className="flex items-center justify-between gap-1">
+          <div className="text-md text-primary">
+            {errors[textAreaName] && errors[textAreaName].message}
+          </div>
+          <div className="w-fit">
+            <Button type="submit" disabled={isSubmitting}>
+              {replyToId ? "Reply" : "Tweet"}
+            </Button>
+          </div>
         </div>
-        <div className="w-fit">
-          <TextButton
-            type="submit"
-            disabled={isSubmitting}
-            variant={TextButtonVariant.Primary}
-          >
-            {replyToId ? "Reply" : "Tweet"}
-          </TextButton>
-        </div>
-      </div>
-    </form>
+      </form>
+    </Card>
   );
 }

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { BsSearch, BsThreeDots } from "react-icons/bs";
-import { abbreviateNumber } from "@/lib/utils/numbers";
-import UserCard from "@/components/cards/user-card";
+import { formatNumber } from "@/lib/utils/numbers";
+import Avatar from "@/components/ui/avatar";
 
 const exampleTrends = [
   { name: "Bitcoin", category: "Trending", posts: 1241 },
@@ -15,6 +15,23 @@ const corporateLinks = [
   { label: "Cookie Policy", url: "/cookie-policy" },
   { label: "About Us", url: "/about" },
 ];
+
+function UserCard() {
+  return (
+    <div className="flex items-center justify-between px-4 py-3 text-sm hover:bg-gray-700">
+      <div className="flex gap-2">
+        <Avatar />
+        <div>
+          <p className="font-bold hover:underline">Full name</p>
+          <p className="text-gray-400">@username</p>
+        </div>
+      </div>
+      <button className="rounded-full bg-primary px-4 py-2 text-center font-semibold hover:bg-opacity-70">
+        Follow
+      </button>
+    </div>
+  );
+}
 
 export default async function RightSidebar() {
   const currentYear = new Date().getFullYear();
@@ -50,7 +67,7 @@ export default async function RightSidebar() {
               <div className="text-xs text-gray-400">{trend.category}</div>
               <div className="text-lg font-semibold">{trend.name}</div>
               <div className="text-xs text-gray-400">
-                {abbreviateNumber(trend.posts)} posts
+                {formatNumber(trend.posts)} posts
               </div>
             </div>
             <button className="rounded-full p-2 text-gray-400 hover:bg-primary/20 hover:text-primary">
@@ -69,9 +86,9 @@ export default async function RightSidebar() {
       {/* Who to follow */}
       <div className="flex flex-col rounded-2xl border border-gray-800 bg-gray-800">
         <h3 className="p-4 text-xl font-semibold">Who to follow</h3>
-        <UserCard className="hover:bg-gray-700" />
-        <UserCard className="hover:bg-gray-700" />
-        <UserCard className="hover:bg-gray-700" />
+        <UserCard />
+        <UserCard />
+        <UserCard />
         <Link
           href="/"
           className="rounded-b-xl p-4 text-sm text-primary hover:bg-gray-700"

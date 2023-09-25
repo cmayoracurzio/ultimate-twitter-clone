@@ -8,23 +8,21 @@ import {
   type EditProfileSchema,
 } from "@/lib/validations/profile";
 import { getBaseUrl } from "@/lib/utils/getBaseUrl";
-import TextButton, {
-  TextButtonVariant,
-} from "@/components/buttons/text-button";
+import { Button } from "@/components/ui/button";
 
-export default function EditProfileForm({
+export default function EditProfile({
   username,
   fullName,
-  closeModal,
+  onFormSuccess,
 }: {
   username: string;
   fullName: string;
-  closeModal: () => void;
+  onFormSuccess: () => void;
 }) {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting, isSubmitSuccessful },
+    formState: { errors, isSubmitting },
     setError,
   } = useForm<EditProfileSchema>({
     resolver: zodResolver(editProfileValidator),
@@ -47,7 +45,7 @@ export default function EditProfileForm({
         setError("username", { message: error });
       } else {
         router.push(`/explore/${formValues.username}`);
-        closeModal();
+        onFormSuccess();
       }
     }
   }
@@ -55,7 +53,7 @@ export default function EditProfileForm({
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex w-full flex-col gap-2"
+      className="flex w-full flex-col gap-2 text-gray-50"
     >
       {/* Username input */}
       <div className="flex items-center gap-2 rounded-full px-5 py-2 ring-1 ring-inset ring-gray-600 focus-within:ring-primary">
@@ -88,13 +86,9 @@ export default function EditProfileForm({
       </div>
 
       {/* Form submit button */}
-      <TextButton
-        type="submit"
-        disabled={isSubmitting}
-        variant={TextButtonVariant.Primary}
-      >
+      <Button type="submit" disabled={isSubmitting} width="full">
         Save changes
-      </TextButton>
+      </Button>
 
       {/* Error messages */}
       <div className="h-8 text-primary">

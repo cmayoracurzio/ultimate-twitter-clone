@@ -6,20 +6,19 @@ The following project implements a full-stack Twitter clone with modern web deve
 - **TypeScript** for type safety
 - **Next.js 13** as the React-based web framework
 - **Tailwind CSS** for styling
+- **Shadcn/ui** for components
 - **Supabase** for authentication and data persistence in PostgreSQL
 - **Utilities:**
   - Forms with `react-hook-form` and `zod`
   - Date formatting with `dayjs`
   - Icons with `react-icons`
-  - Modals with `@headlessui/react`
-  - Tooltips with `shadcn/ui`
+  - Tailwind CSS management with `clsx` and `tailwind-merge`
   - Tailwind CSS formatting with `prettier-plugin-tailwindcss`
 
 ## TODO (ongoing):
 
 - Make visible when a tweet is actually a reply
 - Allow changing profile avatar
-- Allow changing theme
 - Implement followed/followers
 - Add local development instructions
 - Add email and password authentication

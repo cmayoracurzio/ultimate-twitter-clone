@@ -1,20 +1,9 @@
 "use client";
 
-import { useFeed, FeedType } from "@/hooks/useFeed";
-import ProfileCard from "@/components/cards/profile-card";
+import { useFeed } from "@/hooks/useFeed";
 import Feed from "@/components/feeds/feed";
 
-export default function ProfileFeed({
-  profile,
-}: {
-  profile: ProfileWithMetadata;
-}) {
-  const feed = useFeed({ type: FeedType.Profile, profileId: profile.id });
-
-  return (
-    <>
-      <ProfileCard profile={profile} />
-      <Feed feed={feed} />
-    </>
-  );
+export default function ProfileFeed({ profileId }: { profileId: string }) {
+  const feed = useFeed({ type: "profile", profileId });
+  return <Feed feed={feed} />;
 }

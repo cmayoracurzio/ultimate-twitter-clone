@@ -6,7 +6,7 @@ export const GITHUB_REPO_URL =
   "https://github.com/cmayoracurzio/ultimate-twitter-clone";
 
 // Maximum number of characters shown in tweet card
-export const maxTweetCardTextLength = 300;
+export const maxTweetCardTextLength = 400;
 
 // Metadata
 export const defaultMetadata: Metadata = {

@@ -1,21 +1,15 @@
 "use client";
 
-import { useProfile } from "@/components/providers/profile-provider";
-import { useFeed, FeedType } from "@/hooks/useFeed";
-import Avatar from "@/components/avatar";
-import TweetForm from "@/components/forms/tweet-form";
+import { useFeed } from "@/hooks/useFeed";
+import CreateTweet from "@/components/forms/create-tweet";
 import Feed from "@/components/feeds/feed";
 
 export default function HomeFeed() {
-  const { avatar_url } = useProfile();
-  const feed = useFeed({ type: FeedType.Home });
+  const feed = useFeed({ type: "home" });
 
   return (
     <>
-      <div className="flex items-start gap-4 p-4">
-        <Avatar src={avatar_url} />
-        <TweetForm addTweetToFeed={feed.addTweetToFeed} />
-      </div>
+      <CreateTweet onFormSuccess={feed.addTweetToFeed} />
       <Feed feed={feed} />
     </>
   );

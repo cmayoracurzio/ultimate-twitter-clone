@@ -1,9 +1,8 @@
 import { cookies } from "next/headers";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { notFound } from "next/navigation";
-
-import Header from "@/components/header";
-import BackButton from "@/components/buttons/back-button";
+import Header from "@/components/ui/header";
+import Profile from "@/components/cards/profile";
 import ProfileFeed from "@/components/feeds/profile-feed";
 
 export const dynamic = "force-dynamic";
@@ -61,11 +60,9 @@ export default async function Page({
 
   return (
     <>
-      <Header>
-        <BackButton />
-        <p>Profile</p>
-      </Header>
-      <ProfileFeed profile={profile} />
+      <Header showGoBackButton>Profile</Header>
+      <Profile profile={profile} />
+      <ProfileFeed profileId={profile.id} />
     </>
   );
 }

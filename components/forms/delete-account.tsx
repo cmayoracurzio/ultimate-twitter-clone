@@ -5,11 +5,15 @@ import { useForm } from "react-hook-form";
 import { DeleteAccountSchema } from "@/lib/validations/profile";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { getBaseUrl } from "@/lib/utils/getBaseUrl";
-import TextButton, {
-  TextButtonVariant,
-} from "@/components/buttons/text-button";
+import { Button } from "@/components/ui/button";
 
-export default function AccountForm({ username }: { username: string }) {
+export default function DeleteAccount({
+  username,
+  onFormSuccess,
+}: {
+  username: string;
+  onFormSuccess: () => void;
+}) {
   const {
     register,
     handleSubmit,
@@ -35,6 +39,7 @@ export default function AccountForm({ username }: { username: string }) {
       } else {
         await supabase.auth.signOut();
         router.push("/login");
+        onFormSuccess();
       }
     }
   }
@@ -42,7 +47,7 @@ export default function AccountForm({ username }: { username: string }) {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex w-full flex-col gap-2"
+      className="flex w-full flex-col gap-2 text-gray-50"
     >
       {/* Confirm username input */}
       <div className="flex items-center gap-2 rounded-full px-5 py-2 ring-1 ring-inset ring-gray-600 focus-within:ring-primary">
@@ -67,13 +72,14 @@ export default function AccountForm({ username }: { username: string }) {
       </div>
 
       {/* Form submit button */}
-      <TextButton
+      <Button
         type="submit"
         disabled={isSubmitting}
-        variant={TextButtonVariant.Destructive}
+        variant="destructive"
+        width="full"
       >
         Delete account
-      </TextButton>
+      </Button>
 
       {/* Error messages */}
       <div className="h-8 text-primary">{errors.username?.message}</div>

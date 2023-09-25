@@ -2,7 +2,7 @@ import { cookies } from "next/headers";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { redirect } from "next/navigation";
 import { BsTwitter } from "react-icons/bs";
-import SignIn from "@/components/buttons/sign-in-button";
+import SignIn from "@/components/buttons/sign-in";
 import { GITHUB_REPO_URL } from "@/lib/constants";
 
 export const dynamic = "force-dynamic";

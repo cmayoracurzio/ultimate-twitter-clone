@@ -1,11 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { useProfile } from "@/components/providers/profile-provider";
-import { useFeed, FeedType } from "@/hooks/useFeed";
-import MainTweetCard from "@/components/cards/main-tweet-card";
-import Avatar from "@/components/avatar";
-import TweetForm from "@/components/forms/tweet-form";
+import { useFeed } from "@/hooks/useFeed";
+import Tweet from "@/components/cards/tweet";
+import CreateTweet from "@/components/forms/create-tweet";
 import Feed from "@/components/feeds/feed";
 
 export default function TweetFeed({
@@ -14,10 +12,9 @@ export default function TweetFeed({
   initialTweet: TweetwithMetadata;
 }) {
   const [mainTweet, setMainTweet] = useState<TweetwithMetadata>(initialTweet);
-  const { avatar_url } = useProfile();
-  const feed = useFeed({ type: FeedType.Replies, tweetId: mainTweet.id });
+  const feed = useFeed({ type: "replies", tweetId: mainTweet.id });
 
-  // Add reply to feed and update reply count in MainTweetCard
+  // Add reply to feed and update reply count in Tweet
   function addReplyToFeed(newTweet: TweetwithMetadata) {
     feed.addTweetToFeed(newTweet);
     const newMainTweet: TweetwithMetadata = {
@@ -29,18 +26,16 @@ export default function TweetFeed({
 
   return (
     <>
-      <MainTweetCard
+      <Tweet
         tweet={mainTweet}
+        size="large"
         handleLike={() => feed.handleLike(mainTweet, setMainTweet)}
         handleBookmark={() => feed.handleBookmark(mainTweet, setMainTweet)}
         handleShowMore={() => feed.handleShowMore(mainTweet)}
         handleCopyUrl={() => feed.handleCopyUrl(mainTweet)}
         handleDelete={() => feed.handleDelete(mainTweet)}
       />
-      <div className="flex items-start gap-4 p-4">
-        <Avatar src={avatar_url} />
-        <TweetForm replyToId={mainTweet.id} addTweetToFeed={addReplyToFeed} />
-      </div>
+      <CreateTweet replyToId={mainTweet.id} onFormSuccess={addReplyToFeed} />
       <Feed feed={feed} />
     </>
   );

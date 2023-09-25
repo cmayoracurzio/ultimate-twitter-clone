@@ -1,4 +1,4 @@
-export function abbreviateNumber(value: number): string {
+export function formatNumber(value: number): string {
   let newValue: number | string = value;
   if (value >= 1000) {
     const suffixes: string[] = ["", "k", "M", "B", "T"];
