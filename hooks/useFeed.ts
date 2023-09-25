@@ -118,40 +118,42 @@ export function useFeed({
   }, [fetchTweets]);
 
   function addTweetToFeed(tweetToAdd: TweetwithMetadata) {
-    setTweets([tweetToAdd, ...tweets]);
+    const newTweets = [tweetToAdd, ...tweets];
+    setTweets(newTweets);
   }
 
   function updateTweetInFeed(tweetToUpdate: TweetwithMetadata) {
+    const newTweets = [...tweets];
     const index = tweets.findIndex((tweet) => tweet.id === tweetToUpdate.id);
-    const updatedTweets = [...tweets];
-    updatedTweets[index] = tweetToUpdate;
-    setTweets(updatedTweets);
+    newTweets[index] = tweetToUpdate;
+    setTweets(newTweets);
   }
 
   function removeTweetFromFeed(tweetToRemove: TweetwithMetadata) {
     const index = tweets.findIndex((tweet) => tweet.id === tweetToRemove.id);
+    const newTweets = [...tweets.slice(0, index), ...tweets.slice(index + 1)];
 
-    if (index !== -1) {
-      const updatedTweets = [
-        ...tweets.slice(0, index),
-        ...tweets.slice(index + 1),
-      ];
-      setTweets(updatedTweets);
+    // If tweetToRemove has a parent in the same feed, decrease the parent tweet's reply count by one
+    if (tweetToRemove.reply_to_id) {
+      const parentIndex = newTweets.findIndex(
+        (tweet) => tweet.id === tweetToRemove.reply_to_id,
+      );
+      if (parentIndex !== -1 && newTweets[parentIndex].replies > 0) {
+        newTweets[parentIndex].replies = newTweets[parentIndex].replies - 1;
+      }
     }
+    setTweets(newTweets);
   }
 
-  // Function for refresh feed button
   function handleRefreshFeed() {
     window.scrollTo(0, 0);
     fetchTweets();
   }
 
-  // Function for reply button and show more button
   function handleShowMore(tweet: TweetwithMetadata) {
     router.push(`/explore/${tweet.author.username}/${tweet.id}`);
   }
 
-  // Function for copy link button
   async function handleCopyUrl(tweet: TweetwithMetadata) {
     const tweetUrl = `${getBaseUrl()}explore/${tweet.author.username}/${
       tweet.id
@@ -159,7 +161,6 @@ export function useFeed({
     await navigator.clipboard.writeText(tweetUrl);
   }
 
-  // Function for like button
   async function handleLike(
     tweet: TweetwithMetadata,
     updateTweetInFeed: (newTweet: TweetwithMetadata) => void,
@@ -191,7 +192,6 @@ export function useFeed({
     }
   }
 
-  // Function for bookmark button
   async function handleBookmark(
     tweet: TweetwithMetadata,
     updateTweetInFeed: (newTweet: TweetwithMetadata) => void,
@@ -221,7 +221,6 @@ export function useFeed({
     }
   }
 
-  // Function for delete tweet button
   async function handleDelete(tweet: TweetwithMetadata) {
     const {
       data: { user },

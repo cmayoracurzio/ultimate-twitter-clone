@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useFeed } from "@/hooks/useFeed";
+import { type UseFeedReturnType, useFeed } from "@/hooks/useFeed";
 import Tweet from "@/components/cards/tweet";
 import CreateTweet from "@/components/forms/create-tweet";
 import Feed from "@/components/feeds/feed";
@@ -14,7 +14,6 @@ export default function TweetFeed({
   const [mainTweet, setMainTweet] = useState<TweetwithMetadata>(initialTweet);
   const feed = useFeed({ type: "replies", tweetId: mainTweet.id });
 
-  // Add reply to feed and update reply count in Tweet
   function addReplyToFeed(newTweet: TweetwithMetadata) {
     feed.addTweetToFeed(newTweet);
     const newMainTweet: TweetwithMetadata = {
@@ -23,6 +22,20 @@ export default function TweetFeed({
     };
     setMainTweet(newMainTweet);
   }
+
+  function removeReplyFromFeed(tweetToRemove: TweetwithMetadata) {
+    feed.handleDelete(tweetToRemove);
+    const newMainTweet: TweetwithMetadata = {
+      ...mainTweet,
+      replies: mainTweet.replies - 1,
+    };
+    setMainTweet(newMainTweet);
+  }
+
+  const updatedFeed: UseFeedReturnType = {
+    ...feed,
+    handleDelete: removeReplyFromFeed,
+  };
 
   return (
     <>
@@ -36,7 +49,7 @@ export default function TweetFeed({
         handleDelete={() => feed.handleDelete(mainTweet)}
       />
       <CreateTweet replyToId={mainTweet.id} onFormSuccess={addReplyToFeed} />
-      <Feed feed={feed} />
+      <Feed feed={updatedFeed} />
     </>
   );
 }
