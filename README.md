@@ -17,12 +17,15 @@ The following project implements a full-stack Twitter clone with modern web deve
 
 ## TODO (ongoing):
 
+- Change form components to use `shadcn/ui`
+- Allow changing avatar in edit-profile form
 - Make visible when a tweet is actually a reply
-- Allow changing profile avatar
+- Allow changing themes
 - Implement followed/followers
 - Add local development instructions
-- Add email and password authentication
+- Allow different feeds inside profile (tweets, replies, likes, bookmarks)
 - Advanced feed (infinite scrolling, listen for updates, personalized based on user activity, etc.)
 - Finish other pages (explore, notifications, messages, bookmarks search and filtering)
 - Advanced tweet-form options (hashtags/trends, tag users, add media, schedule tweet, add poll, etc.)
 - Finish right-sidebar (search bar, trends for you, who to follow)
+- Add email and password authentication

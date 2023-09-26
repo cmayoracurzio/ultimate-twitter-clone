@@ -5,12 +5,13 @@ import { formatNumber } from "@/lib/utils/numbers";
 import Avatar from "@/components/ui/avatar";
 import { BiCalendar } from "react-icons/bi";
 import Card from "@/components/ui/card";
+import ProfileOptions from "@/components/menus/profile-options";
 
 export default function Profile({ profile }: { profile: ProfileWithMetadata }) {
   return (
     <Card className="flex flex-col gap-8">
       <div className="flex items-start justify-start gap-4 text-gray-400">
-        <Avatar src={profile.avatar_url} size={90} priority={true} />
+        <Avatar src={profile.avatar_url} size={90} alt={profile.username} />
         <div className="flex flex-1 flex-col gap-1.5 overflow-hidden">
           <p className="truncate text-2xl font-bold tracking-tight text-gray-50">
             {profile.full_name}
@@ -21,6 +22,7 @@ export default function Profile({ profile }: { profile: ProfileWithMetadata }) {
             <p>Joined {formatProfileDateTime(profile.created_at)}</p>
           </div>
         </div>
+        <ProfileOptions buttonSize="small" />
       </div>
       <div className="flex items-center justify-start gap-4 text-sm">
         {profile.stats.map((stat) => (

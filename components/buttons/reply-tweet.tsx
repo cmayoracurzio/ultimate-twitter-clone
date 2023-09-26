@@ -20,12 +20,7 @@ export default function Reply({
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger asChild>
-          <Button
-            onClick={handleReply}
-            className="p-0 hover:text-green-400"
-            size="icon"
-            variant="transparent"
-          >
+          <Button onClick={handleReply} size="none" variant="greenText">
             <div className="rounded-full p-2 group-hover:bg-green-400/20">
               <FaRegComment size={18} />
             </div>

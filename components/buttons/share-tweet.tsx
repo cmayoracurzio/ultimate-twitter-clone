@@ -18,12 +18,7 @@ export default function Share({
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger asChild>
-          <Button
-            onClick={handleCopyUrl}
-            className="hover:bg-yellow-400/20 hover:text-yellow-400"
-            size="icon"
-            variant="transparent"
-          >
+          <Button onClick={handleCopyUrl} size="icon" variant="yellow">
             <FiLink size={18} />
           </Button>
         </TooltipTrigger>

@@ -22,11 +22,9 @@ export default function Bookmark({
         <TooltipTrigger asChild>
           <Button
             onClick={handleBookmark}
-            className={`hover:bg-primary/20 hover:text-primary ${
-              active ? "text-primary" : ""
-            }`}
+            className={active ? "text-primary" : ""}
             size="icon"
-            variant="transparent"
+            variant="blue"
           >
             {active ? <FaBookmark size={18} /> : <FaRegBookmark size={18} />}
           </Button>

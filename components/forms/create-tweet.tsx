@@ -34,7 +34,7 @@ export default function CreateTweet({
   const { ref, ...rest } = register(textAreaName);
   const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
   const currentText = watch(textAreaName);
-  const { avatar_url } = useProfile();
+  const { username, avatar_url } = useProfile();
 
   async function handleRef(element: HTMLTextAreaElement) {
     ref(element);
@@ -78,7 +78,7 @@ export default function CreateTweet({
 
   return (
     <Card className={cn("flex items-start gap-3", className)}>
-      <Avatar src={avatar_url} />
+      <Avatar src={avatar_url} alt={username} />
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex w-full flex-col gap-8 text-gray-50"

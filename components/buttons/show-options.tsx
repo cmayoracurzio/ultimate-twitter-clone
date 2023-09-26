@@ -1,88 +1,70 @@
-"use client";
-
-import { useState } from "react";
-import { useProfile } from "@/components/providers/profile-provider";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import * as React from "react";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import Avatar from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 import { BsThreeDots } from "react-icons/bs";
-import SignOut from "@/components/buttons/sign-out";
-import EditProfile from "@/components/forms/edit-profile";
-import DeleteAccount from "@/components/forms/delete-account";
+import Avatar from "@/components/ui/avatar";
 
-export default function ShowOptions() {
-  const [isOpen, setIsOpen] = useState(false);
-  const { username, full_name, avatar_url } = useProfile();
+const ShowOptionsSmall = React.forwardRef<HTMLButtonElement>(
+  ({ ...props }, forwardedRef) => {
+    return (
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button {...props} ref={forwardedRef} variant="ghost" size="icon">
+              <BsThreeDots size={18} />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent side="bottom">Options</TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+    );
+  },
+);
+ShowOptionsSmall.displayName = "ShowOptionsSmall";
 
-  function closeModal() {
-    setIsOpen(false);
-  }
-
+const ShowOptionsLarge = React.forwardRef<
+  HTMLButtonElement,
+  { profile: Profile }
+>(({ profile, ...props }, forwardedRef) => {
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger asChild>
-        <div>
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <button className="flex items-center justify-between gap-3 rounded-full hover:bg-gray-800 xl:p-3">
-                  <div className="flex gap-2">
-                    <Avatar src={avatar_url} />
-                    <div className="overflow-hidden text-left text-sm max-xl:hidden">
-                      <div className="truncate font-semibold">{full_name}</div>
-                      <div className="truncate text-gray-400">@{username}</div>
-                    </div>
-                  </div>
-                  <div className="text-gray-400 max-xl:hidden">
-                    <BsThreeDots size={18} />
-                  </div>
-                </button>
-              </TooltipTrigger>
-              <TooltipContent side="right" className="xl:hidden">
-                Profile options
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-        </div>
-      </DialogTrigger>
-      <DialogContent onCloseAutoFocus={(e) => e.preventDefault()}>
-        <DialogHeader>
-          <DialogTitle>Account options</DialogTitle>
-        </DialogHeader>
-        {/* Sign out */}
-        <div className="flex flex-col gap-4">
-          <h4 className="font-medium text-gray-50">Sign out:</h4>
-          <DialogClose asChild>
-            <SignOut />
-          </DialogClose>
-        </div>
-        {/* Edit profile form */}
-        <div className="flex flex-col gap-4">
-          <h4 className="font-medium text-gray-50">Edit profile:</h4>
-          <EditProfile
-            username={username}
-            fullName={full_name}
-            onFormSuccess={closeModal}
-          />
-        </div>
-        {/* Delete account form */}
-        <div className="flex flex-col gap-4">
-          <h4 className="font-medium text-gray-50">Delete account:</h4>
-          <DeleteAccount username={username} onFormSuccess={closeModal} />
-        </div>
-      </DialogContent>
-    </Dialog>
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Button
+            {...props}
+            ref={forwardedRef}
+            variant="ghost"
+            size="icon"
+            className="max-xl:p-0"
+          >
+            <div className="flex items-center gap-3">
+              <div className="flex items-center gap-3">
+                <Avatar src={profile.avatar_url} alt={profile.username} />
+                <div className="overflow-hidden text-left text-sm max-xl:hidden">
+                  <p className="truncate font-semibold text-gray-50">
+                    {profile.full_name}
+                  </p>
+                  <p className="truncate text-gray-400">@{profile.username}</p>
+                </div>
+              </div>
+              <div className="mr-1 max-xl:hidden">
+                <BsThreeDots size={18} />
+              </div>
+            </div>
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent side="right" className="xl:hidden">
+          Options
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   );
-}
+});
+ShowOptionsLarge.displayName = "ShowOptionsLarge";
+
+export { ShowOptionsSmall, ShowOptionsLarge };

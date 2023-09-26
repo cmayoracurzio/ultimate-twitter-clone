@@ -35,18 +35,18 @@ export default function Tweet() {
           Tweet
         </Button>
       </DialogTrigger>
-      <DialogTrigger asChild>
-        <TooltipProvider>
-          <Tooltip>
+      <TooltipProvider>
+        <Tooltip>
+          <DialogTrigger asChild>
             <TooltipTrigger asChild>
               <Button className="p-3 xl:hidden">
                 <FaFeatherAlt size={24} />
               </Button>
             </TooltipTrigger>
-            <TooltipContent side="right">Tweet</TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
-      </DialogTrigger>
+          </DialogTrigger>
+          <TooltipContent side="right">Tweet</TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
       <DialogContent onCloseAutoFocus={(e) => e.preventDefault()}>
         <DialogHeader>
           <DialogTitle>New tweet</DialogTitle>

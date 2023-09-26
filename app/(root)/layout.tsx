@@ -2,9 +2,9 @@ import { cookies } from "next/headers";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { redirect } from "next/navigation";
 import ProfileProvider from "@/components/providers/profile-provider";
-import LeftSidebar from "@/components/sidebars/left-sidebar";
-import RightSidebar from "@/components/sidebars/right-sidebar";
-import BottomBar from "@/components/sidebars/bottom-bar";
+import LeftSidebar from "@/components/menus/left-sidebar";
+import RightSidebar from "@/components/menus/right-sidebar";
+import BottomBar from "@/components/menus/bottom-bar";
 
 export const dynamic = "force-dynamic";
 

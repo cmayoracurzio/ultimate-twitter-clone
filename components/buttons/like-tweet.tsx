@@ -24,9 +24,9 @@ export default function Like({
         <TooltipTrigger asChild>
           <Button
             onClick={handleLike}
-            className={`p-0 hover:text-red-400 ${active ? "text-red-400" : ""}`}
-            size="icon"
-            variant="transparent"
+            size="none"
+            variant="redText"
+            className={active ? "text-red-400" : ""}
           >
             <div className="rounded-full p-2 group-hover:bg-red-400/20">
               {active ? <FaHeart size={18} /> : <FaRegHeart size={18} />}

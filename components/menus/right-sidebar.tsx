@@ -20,7 +20,7 @@ function UserCard() {
   return (
     <div className="flex items-center justify-between px-4 py-3 text-sm hover:bg-gray-700">
       <div className="flex gap-2">
-        <Avatar />
+        <Avatar src={null} alt="avatar" />
         <div>
           <p className="font-bold hover:underline">Full name</p>
           <p className="text-gray-400">@username</p>

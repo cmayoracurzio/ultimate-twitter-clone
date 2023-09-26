@@ -12,8 +12,8 @@ import Avatar from "@/components/ui/avatar";
 import Delete from "@/components/buttons/delete-tweet";
 import Like from "@/components/buttons/like-tweet";
 import Reply from "@/components/buttons/reply-tweet";
-import Bookmark from "../buttons/bookmark-tweet";
-import Share from "../buttons/share-tweet";
+import Bookmark from "@/components/buttons/bookmark-tweet";
+import Share from "@/components/buttons/share-tweet";
 
 export default function Tweet({
   tweet,
@@ -79,7 +79,7 @@ export default function Tweet({
       {/* Tweet header */}
       <div className="flex items-center justify-between gap-4">
         <div className="-m-1 flex items-start justify-start gap-3 overflow-hidden p-1">
-          <Avatar src={tweet.author.avatar_url} />
+          <Avatar src={tweet.author.avatar_url} alt={tweet.author.username} />
           <div className="-m-1 overflow-hidden p-1 text-gray-400">
             <Link
               href={`/explore/${tweet.author.username}`}

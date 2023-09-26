@@ -18,16 +18,10 @@ export default function SignIn({ provider }: { provider: Provider }) {
     });
   }, [provider, supabase]);
 
-  const icon =
-    provider === "google" ? <FcGoogle size={24} /> : <BsGithub size={24} />;
-  const label = provider === "google" ? "Google" : "GitHub";
-
   return (
     <Button onClick={handleSignIn} variant="secondary">
-      <div className="flex items-center justify-center gap-2">
-        {icon}
-        <p>Sign in with {label}</p>
-      </div>
+      {provider === "google" ? <FcGoogle size={24} /> : <BsGithub size={24} />}
+      <span>Sign in with {provider === "google" ? "Google" : "GitHub"}</span>
     </Button>
   );
 }
