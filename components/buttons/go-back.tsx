@@ -25,7 +25,7 @@ export default function GoBack() {
             <FiArrowLeft size={24} />
           </Button>
         </TooltipTrigger>
-        <TooltipContent side="bottom">Go back</TooltipContent>
+        <TooltipContent side="bottom">Back</TooltipContent>
       </Tooltip>
     </TooltipProvider>
   );
