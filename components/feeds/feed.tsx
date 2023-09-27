@@ -7,7 +7,6 @@ import Tweet from "@/components/cards/tweet";
 
 export default function Feed({ feed }: { feed: ReturnType<typeof useFeed> }) {
   const {
-    type,
     isLoading,
     tweets,
     updateTweetInFeed,
@@ -31,15 +30,10 @@ export default function Feed({ feed }: { feed: ReturnType<typeof useFeed> }) {
     let bottomMessage;
     let bottomButton;
     if (tweets.length === 0) {
-      bottomMessage = `No ${
-        type === "bookmarks" || type === "replies" ? type : "tweets"
-      } found`;
-
+      bottomMessage = "No tweets found";
       bottomButton = <Button onClick={handleRefreshFeed}>Try again</Button>;
     } else {
-      bottomMessage = `No more ${
-        type === "bookmarks" || type === "replies" ? type : "tweets"
-      }`;
+      bottomMessage = "No more tweets";
       bottomButton = (
         <Button onClick={() => window.scrollTo(0, 0)}>Back to top</Button>
       );
@@ -62,7 +56,7 @@ export default function Feed({ feed }: { feed: ReturnType<typeof useFeed> }) {
           <p className="text-xl font-semibold tracking-tight">
             {bottomMessage}
           </p>
-          <div className="w-fit">{bottomButton}</div>
+          {bottomButton}
         </div>
       </>
     );

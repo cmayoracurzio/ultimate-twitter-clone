@@ -60,14 +60,14 @@ export default function Tweet({
       <div className="flex items-center justify-between gap-4">
         <div className="-m-1 flex items-start justify-start gap-3 overflow-hidden p-1">
           <Avatar src={tweet.author.avatar_url} alt={tweet.author.username} />
-          <div className="-m-1 overflow-hidden p-1 text-gray-400">
+          <div className="truncate">
             <Link
               href={`/explore/${tweet.author.username}`}
-              className="truncate font-bold text-gray-50 hover:underline"
+              className="truncate font-bold hover:underline"
             >
               {tweet.author.full_name}
             </Link>
-            <p className="truncate">@{tweet.author.username}</p>
+            <p className="truncate text-gray-400">@{tweet.author.username}</p>
           </div>
         </div>
         {tweet.createdByUser ? (

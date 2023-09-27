@@ -230,7 +230,6 @@ export function useFeed({
   }
 
   return {
-    type,
     tweets,
     isLoading,
     addTweetToFeed,
