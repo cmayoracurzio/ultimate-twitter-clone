@@ -1,6 +1,6 @@
 "use client";
 
-import { useFeed } from "@/hooks/useFeed";
+import { type useFeed } from "@/hooks/useFeed";
 import { CgSpinner } from "react-icons/cg";
 import { Button } from "@/components/ui/button";
 import Tweet from "@/components/cards/tweet";

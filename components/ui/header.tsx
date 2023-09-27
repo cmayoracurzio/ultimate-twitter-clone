@@ -1,4 +1,3 @@
-import Card from "@/components/ui/card";
 import GoBack from "@/components/buttons/go-back";
 
 export default async function Header({

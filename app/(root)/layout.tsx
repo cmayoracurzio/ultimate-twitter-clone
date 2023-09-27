@@ -3,6 +3,7 @@ import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { redirect } from "next/navigation";
 import LeftSidebar from "@/components/menus/left-sidebar";
 import RightSidebar from "@/components/menus/right-sidebar";
+import BottomBar from "@/components/menus/bottom-bar";
 
 export const dynamic = "force-dynamic";
 
@@ -40,6 +41,7 @@ export default async function RootLayout({
         {children}
       </main>
       <RightSidebar />
+      <BottomBar username={profile.username} />
     </div>
   );
 }

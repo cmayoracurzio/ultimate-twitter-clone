@@ -47,7 +47,7 @@ export default function CreateTweet({ profile }: { profile: Profile }) {
           <TooltipContent side="right">Tweet</TooltipContent>
         </Tooltip>
       </TooltipProvider>
-      <DialogContent onCloseAutoFocus={(e) => e.preventDefault()}>
+      <DialogContent onCloseAutoFocus={(event) => event.preventDefault()}>
         <DialogHeader>
           <DialogTitle>New tweet</DialogTitle>
         </DialogHeader>

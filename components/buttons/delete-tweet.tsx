@@ -33,7 +33,7 @@ export default function Delete({ handleDelete }: { handleDelete: () => void }) {
           <TooltipContent side="bottom">Delete</TooltipContent>
         </Tooltip>
       </TooltipProvider>
-      <DialogContent onCloseAutoFocus={(e) => e.preventDefault()}>
+      <DialogContent onCloseAutoFocus={(event) => event.preventDefault()}>
         <DialogHeader>
           <DialogTitle>Delete tweet</DialogTitle>
           <DialogDescription>

@@ -13,10 +13,10 @@ export default async function Layout({
 }) {
   return (
     <html lang="en" className="dark">
-      <body
-        className={`${inter.className} h-full w-full bg-gray-900 text-gray-50`}
-      >
-        <AuthProvider>{children}</AuthProvider>
+      <body className={inter.className}>
+        <div className="h-full w-full bg-gray-900 text-gray-50">
+          <AuthProvider>{children}</AuthProvider>
+        </div>
       </body>
     </html>
   );

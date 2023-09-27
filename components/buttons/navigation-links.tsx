@@ -20,16 +20,9 @@ import {
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-  type TooltipSide,
 } from "@/components/ui/tooltip";
 
-export default function NavigationLinks({
-  username,
-  tooltipSide,
-}: {
-  username: string;
-  tooltipSide: TooltipSide;
-}) {
+export default function NavigationLinks({ username }: { username: string }) {
   const pathname = usePathname();
 
   const navigationLinks = [
@@ -94,7 +87,7 @@ export default function NavigationLinks({
                   <p className="hidden xl:block">{link.label}</p>
                 </Link>
               </TooltipTrigger>
-              <TooltipContent side={tooltipSide} className="xl:hidden">
+              <TooltipContent side="right" className="max-sm:hidden xl:hidden">
                 {link.label}
               </TooltipContent>
             </Tooltip>

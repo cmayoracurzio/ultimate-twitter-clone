@@ -33,8 +33,8 @@ export default function ProfileOptions({
   const [isEditProfileOpen, setIsEditProfileOpen] = useState(false);
   const [isDeleteAccountOpen, setIsDeleteAccountOpen] = useState(false);
 
-  function preventAutoFocus(e: Event) {
-    e.preventDefault();
+  function preventAutoFocus(event: Event) {
+    event.preventDefault();
   }
 
   function openEditProfile() {
