@@ -56,7 +56,7 @@ export default function TweetFeed({
         replyToId={mainTweet.id}
         onFormSuccess={addReplyToFeed}
       />
-      <Feed feed={updatedFeed} />
+      <Feed {...updatedFeed} />
     </>
   );
 }

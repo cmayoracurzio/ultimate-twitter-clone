@@ -5,19 +5,17 @@ import { CgSpinner } from "react-icons/cg";
 import { Button } from "@/components/ui/button";
 import Tweet from "@/components/cards/tweet";
 
-export default function Feed({ feed }: { feed: ReturnType<typeof useFeed> }) {
-  const {
-    isLoading,
-    tweets,
-    updateTweetInFeed,
-    handleBookmark,
-    handleLike,
-    handleShowMore,
-    handleCopyUrl,
-    handleDelete,
-    handleRefreshFeed,
-  } = feed;
-
+export default function Feed({
+  isLoading,
+  tweets,
+  updateTweetInFeed,
+  handleBookmark,
+  handleLike,
+  handleShowMore,
+  handleCopyUrl,
+  handleDelete,
+  handleRefreshFeed,
+}: ReturnType<typeof useFeed>) {
   if (isLoading) {
     return (
       <div className="flex items-start justify-center py-12">

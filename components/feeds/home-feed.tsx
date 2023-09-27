@@ -10,7 +10,7 @@ export default function HomeFeed({ profile }: { profile: Profile }) {
   return (
     <>
       <CreateTweetForm profile={profile} onFormSuccess={feed.addTweetToFeed} />
-      <Feed feed={feed} />
+      <Feed {...feed} />
     </>
   );
 }
