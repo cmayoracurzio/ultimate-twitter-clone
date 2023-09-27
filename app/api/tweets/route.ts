@@ -1,5 +1,8 @@
 import { type NextRequest, NextResponse } from "next/server";
-import { tweetValidator, TweetFormSchema } from "@/lib/validations/tweet";
+import {
+  tweetValidator,
+  TweetFormSchema,
+} from "@/lib/validations/create-tweet";
 import { cookies } from "next/headers";
 import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
 
@@ -36,6 +39,7 @@ export async function POST(request: NextRequest) {
         : data[0].author,
       replies: 0,
       likes: 0,
+      createdByUser: true,
       likedByUser: false,
       bookmarkedByUser: false,
     };

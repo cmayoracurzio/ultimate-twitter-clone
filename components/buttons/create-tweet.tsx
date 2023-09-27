@@ -17,13 +17,13 @@ import {
 } from "@/components/ui/tooltip";
 import { Button } from "@/components/ui/button";
 import { FaFeatherAlt } from "react-icons/fa";
-import CreateTweet from "@/components/forms/create-tweet";
+import CreateTweetForm from "@/components/forms/create-tweet";
 
-export default function Tweet() {
+export default function CreateTweet({ profile }: { profile: Profile }) {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
 
-  function redirectToTweet(newTweet: TweetwithMetadata) {
+  function showTweetPage(newTweet: TweetwithMetadata) {
     setIsOpen(false);
     router.push(`/explore/${newTweet.author.username}/${newTweet.id}`);
   }
@@ -51,7 +51,11 @@ export default function Tweet() {
         <DialogHeader>
           <DialogTitle>New tweet</DialogTitle>
         </DialogHeader>
-        <CreateTweet onFormSuccess={redirectToTweet} className="-p-4" />
+        <CreateTweetForm
+          profile={profile}
+          onFormSuccess={showTweetPage}
+          className="-p-4"
+        />
       </DialogContent>
     </Dialog>
   );

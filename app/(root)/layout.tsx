@@ -1,7 +1,6 @@
 import { cookies } from "next/headers";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { redirect } from "next/navigation";
-import ProfileProvider from "@/components/providers/profile-provider";
 import LeftSidebar from "@/components/menus/left-sidebar";
 import RightSidebar from "@/components/menus/right-sidebar";
 import BottomBar from "@/components/menus/bottom-bar";
@@ -33,16 +32,18 @@ export default async function RootLayout({
     redirect("/login");
   }
 
+  const profile = profileData[0];
+
   return (
-    <ProfileProvider profile={profileData[0]}>
+    <>
       <div className="mx-auto flex w-full max-w-6xl justify-center">
-        <LeftSidebar />
+        <LeftSidebar profile={profile} />
         <main className="min-h-screen w-full min-w-0 divide-y divide-gray-600 border-x-0 border-gray-600 sm:border-x">
           {children}
         </main>
         <RightSidebar />
       </div>
-      <BottomBar />
-    </ProfileProvider>
+      <BottomBar profile={profile} />
+    </>
   );
 }

@@ -17,7 +17,6 @@ The following project implements a full-stack Twitter clone with modern web deve
 
 ## TODO (ongoing):
 
-- Change form components to use `shadcn/ui`
 - Allow changing avatar in edit-profile form
 - Make visible when a tweet is actually a reply
 - Allow changing themes

@@ -1,54 +1,61 @@
 "use client";
 
-import { useState } from "react";
-import { type UseFeedReturnType, useFeed } from "@/hooks/useFeed";
+import { useState, startTransition } from "react";
+import { useFeed } from "@/hooks/useFeed";
 import Tweet from "@/components/cards/tweet";
-import CreateTweet from "@/components/forms/create-tweet";
+import CreateTweetForm from "@/components/forms/create-tweet";
 import Feed from "@/components/feeds/feed";
 
 export default function TweetFeed({
   initialTweet,
+  profile,
 }: {
   initialTweet: TweetwithMetadata;
+  profile: Profile;
 }) {
   const [mainTweet, setMainTweet] = useState<TweetwithMetadata>(initialTweet);
   const feed = useFeed({ type: "replies", tweetId: mainTweet.id });
 
   function addReplyToFeed(newTweet: TweetwithMetadata) {
-    feed.addTweetToFeed(newTweet);
-    const newMainTweet: TweetwithMetadata = {
-      ...mainTweet,
-      replies: mainTweet.replies + 1,
-    };
-    setMainTweet(newMainTweet);
+    startTransition(() => {
+      feed.addTweetToFeed(newTweet);
+      const newMainTweet: TweetwithMetadata = {
+        ...mainTweet,
+        replies: mainTweet.replies + 1,
+      };
+      setMainTweet(newMainTweet);
+    });
   }
 
-  function removeReplyFromFeed(tweetToRemove: TweetwithMetadata) {
-    feed.handleDelete(tweetToRemove);
-    const newMainTweet: TweetwithMetadata = {
-      ...mainTweet,
-      replies: mainTweet.replies - 1,
-    };
-    setMainTweet(newMainTweet);
+  async function removeReplyFromFeed(tweetToRemove: TweetwithMetadata) {
+    startTransition(() => {
+      feed.handleDelete(tweetToRemove);
+      const newMainTweet: TweetwithMetadata = {
+        ...mainTweet,
+        replies: mainTweet.replies - 1,
+      };
+      setMainTweet(newMainTweet);
+    });
   }
 
-  const updatedFeed: UseFeedReturnType = {
-    ...feed,
-    handleDelete: removeReplyFromFeed,
-  };
+  const updatedFeed = { ...feed, handleDelete: removeReplyFromFeed };
 
   return (
     <>
       <Tweet
         tweet={mainTweet}
-        size="large"
+        mainTweet={true}
         handleLike={() => feed.handleLike(mainTweet, setMainTweet)}
         handleBookmark={() => feed.handleBookmark(mainTweet, setMainTweet)}
-        handleShowMore={() => feed.handleShowMore(mainTweet)}
+        handleShowMore={() => {}}
         handleCopyUrl={() => feed.handleCopyUrl(mainTweet)}
         handleDelete={() => feed.handleDelete(mainTweet)}
       />
-      <CreateTweet replyToId={mainTweet.id} onFormSuccess={addReplyToFeed} />
+      <CreateTweetForm
+        profile={profile}
+        replyToId={mainTweet.id}
+        onFormSuccess={addReplyToFeed}
+      />
       <Feed feed={updatedFeed} />
     </>
   );

@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, startTransition } from "react";
-import { useProfile } from "@/components/providers/profile-provider";
 import {
   Popover,
   PopoverContent,
@@ -25,11 +24,12 @@ import EditProfileForm from "@/components/forms/edit-profile";
 import DeleteAccountForm from "@/components/forms/delete-account";
 
 export default function ProfileOptions({
+  profile,
   buttonSize,
 }: {
+  profile: Profile;
   buttonSize: "small" | "large";
 }) {
-  const profile = useProfile();
   const [isEditProfileOpen, setIsEditProfileOpen] = useState(false);
   const [isDeleteAccountOpen, setIsDeleteAccountOpen] = useState(false);
 
@@ -73,7 +73,7 @@ export default function ProfileOptions({
           side="right"
           sideOffset={24}
           onCloseAutoFocus={preventAutoFocus}
-          className="flex flex-col gap-4"
+          className="space-y-4"
         >
           <PopoverClose asChild>
             <SignOut />
@@ -103,6 +103,9 @@ export default function ProfileOptions({
         >
           <DialogHeader>
             <DialogTitle>Edit profile</DialogTitle>
+            <DialogDescription>
+              Update your username, full name and avatar here.
+            </DialogDescription>
           </DialogHeader>
           <EditProfileForm
             username={profile.username}
@@ -121,8 +124,8 @@ export default function ProfileOptions({
           <DialogHeader>
             <DialogTitle>Delete account</DialogTitle>
             <DialogDescription>
-              Are you sure you want to delete your account? This action cannot
-              be undone.
+              Are you sure you want to delete your account? This action will
+              delete all your data, and cannot be undone.
             </DialogDescription>
           </DialogHeader>
           <DeleteAccountForm

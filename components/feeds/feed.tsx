@@ -1,11 +1,11 @@
 "use client";
 
-import { type UseFeedReturnType } from "@/hooks/useFeed";
+import { useFeed } from "@/hooks/useFeed";
 import { CgSpinner } from "react-icons/cg";
 import { Button } from "@/components/ui/button";
-import Tweet from "../cards/tweet";
+import Tweet from "@/components/cards/tweet";
 
-export default function Feed({ feed }: { feed: UseFeedReturnType }) {
+export default function Feed({ feed }: { feed: ReturnType<typeof useFeed> }) {
   const {
     type,
     isLoading,
@@ -34,6 +34,7 @@ export default function Feed({ feed }: { feed: UseFeedReturnType }) {
       bottomMessage = `No ${
         type === "bookmarks" || type === "replies" ? type : "tweets"
       } found`;
+
       bottomButton = <Button onClick={handleRefreshFeed}>Try again</Button>;
     } else {
       bottomMessage = `No more ${

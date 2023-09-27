@@ -14,12 +14,8 @@ export const editProfileValidator = z.object({
   fullName: z
     .string()
     .trim()
-    .min(3, "Display name must be at least 3 characters long")
-    .max(50, "Display name must be at most 50 characters long"),
+    .min(3, "Full name must be at least 3 characters long")
+    .max(50, "Full name must be at most 50 characters long"),
 });
 
 export type EditProfileSchema = z.infer<typeof editProfileValidator>;
-
-export type DeleteAccountSchema = {
-  username: string;
-};

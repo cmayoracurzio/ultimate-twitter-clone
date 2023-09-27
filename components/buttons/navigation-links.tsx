@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useProfile } from "@/components/providers/profile-provider";
 import {
   BiHomeCircle,
   BiSolidHomeCircle,
@@ -25,12 +24,13 @@ import {
 } from "@/components/ui/tooltip";
 
 export default function NavigationLinks({
+  username,
   tooltipSide,
 }: {
+  username: string;
   tooltipSide: TooltipSide;
 }) {
   const pathname = usePathname();
-  const { username } = useProfile();
 
   const navigationLinks = [
     {

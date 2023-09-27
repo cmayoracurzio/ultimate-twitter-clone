@@ -13,14 +13,15 @@ declare global {
     author: Profile;
     replies: number;
     likes: number;
+    createdByUser: boolean;
     likedByUser: boolean;
     bookmarkedByUser: boolean;
   };
 
-  type ProfileWithMetadata = Profile & {
-    stats: {
-      name: string;
-      count: number;
-    }[];
+  type ProfileStats = {
+    tweets: number;
+    likes: number;
+    replies: number;
+    bookmarks: number;
   };
 }

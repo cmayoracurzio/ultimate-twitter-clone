@@ -5,38 +5,15 @@ import { usePathname, useRouter } from "next/navigation";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { getBaseUrl } from "@/lib/utils/getBaseUrl";
 
-type FeedType = "home" | "bookmarks" | "profile" | "replies";
-
-export type UseFeedReturnType = {
-  type: FeedType;
-  tweets: TweetwithMetadata[];
-  isLoading: boolean;
-  fetchTweets: () => void;
-  addTweetToFeed: (newTweet: TweetwithMetadata) => void;
-  updateTweetInFeed: (newTweet: TweetwithMetadata) => void;
-  handleLike: (
-    tweet: TweetwithMetadata,
-    updateTweetInFeed: (newTweet: TweetwithMetadata) => void,
-  ) => Promise<void>;
-  handleBookmark: (
-    tweet: TweetwithMetadata,
-    updateTweetInFeed: (newTweet: TweetwithMetadata) => void,
-  ) => Promise<void>;
-  handleShowMore: (tweet: TweetwithMetadata) => void;
-  handleCopyUrl: (tweet: TweetwithMetadata) => Promise<void>;
-  handleDelete: (tweet: TweetwithMetadata) => void;
-  handleRefreshFeed: () => void;
-};
-
 export function useFeed({
   type,
   profileId,
   tweetId,
 }: {
-  type: FeedType;
+  type: "home" | "bookmarks" | "profile" | "replies";
   profileId?: string;
   tweetId?: string;
-}): UseFeedReturnType {
+}) {
   const [tweets, setTweets] = useState<TweetwithMetadata[]>([]);
   const [isLoading, setLoading] = useState(true);
   const router = useRouter();
@@ -45,7 +22,6 @@ export function useFeed({
 
   const fetchTweets = useCallback(async () => {
     setLoading(true);
-    router.refresh();
     let freshTweets: TweetwithMetadata[] = [];
 
     const {
@@ -98,6 +74,7 @@ export function useFeed({
               : tweet.author,
             replies: tweet.replies.length,
             likes: tweet.likes.length,
+            createdByUser: tweet.author?.id === user.id,
             likedByUser: tweet.likes.some(
               (like) => like.profile_id === user.id,
             ),
@@ -111,43 +88,49 @@ export function useFeed({
       setTweets(freshTweets);
       setLoading(false);
     });
-  }, [router, supabase, type, profileId, tweetId]);
+  }, [supabase, type, profileId, tweetId]);
 
   useEffect(() => {
     fetchTweets();
   }, [fetchTweets]);
 
   function addTweetToFeed(tweetToAdd: TweetwithMetadata) {
-    const newTweets = [tweetToAdd, ...tweets];
-    setTweets(newTweets);
+    setTweets((prevTweets) => [tweetToAdd, ...prevTweets]);
   }
 
   function updateTweetInFeed(tweetToUpdate: TweetwithMetadata) {
-    const newTweets = [...tweets];
-    const index = tweets.findIndex((tweet) => tweet.id === tweetToUpdate.id);
-    newTweets[index] = tweetToUpdate;
-    setTweets(newTweets);
+    setTweets((prevTweets) => {
+      const newTweets = [...prevTweets];
+      const index = prevTweets.findIndex(
+        (tweet) => tweet.id === tweetToUpdate.id,
+      );
+      newTweets[index] = tweetToUpdate;
+      return newTweets;
+    });
   }
 
   function removeTweetFromFeed(tweetToRemove: TweetwithMetadata) {
-    const index = tweets.findIndex((tweet) => tweet.id === tweetToRemove.id);
-    const newTweets = [...tweets.slice(0, index), ...tweets.slice(index + 1)];
-
-    // If tweetToRemove has a parent in the same feed, decrease the parent tweet's reply count by one
-    if (tweetToRemove.reply_to_id) {
-      const parentIndex = newTweets.findIndex(
-        (tweet) => tweet.id === tweetToRemove.reply_to_id,
+    setTweets((prevTweets) => {
+      // Remove tweetToRemove from previous tweets
+      const index = prevTweets.findIndex(
+        (tweet) => tweet.id === tweetToRemove.id,
       );
-      if (parentIndex !== -1 && newTweets[parentIndex].replies > 0) {
-        newTweets[parentIndex].replies = newTweets[parentIndex].replies - 1;
-      }
-    }
-    setTweets(newTweets);
-  }
+      const newTweets = [
+        ...prevTweets.slice(0, index),
+        ...prevTweets.slice(index + 1),
+      ];
 
-  function handleRefreshFeed() {
-    window.scrollTo(0, 0);
-    fetchTweets();
+      // Check if tweetToRemove has parent tweet in feed, and decrease the parent tweet replies by one
+      if (tweetToRemove.reply_to_id) {
+        const parentIndex = newTweets.findIndex(
+          (tweet) => tweet.id === tweetToRemove.reply_to_id,
+        );
+        if (parentIndex !== -1 && newTweets[parentIndex].replies > 0) {
+          newTweets[parentIndex].replies = newTweets[parentIndex].replies - 1;
+        }
+      }
+      return newTweets;
+    });
   }
 
   function handleShowMore(tweet: TweetwithMetadata) {
@@ -168,6 +151,7 @@ export function useFeed({
     const {
       data: { user },
     } = await supabase.auth.getUser();
+
     if (user) {
       if (tweet.likedByUser) {
         updateTweetInFeed({
@@ -199,7 +183,8 @@ export function useFeed({
     const {
       data: { user },
     } = await supabase.auth.getUser();
-    if (user !== null) {
+
+    if (user) {
       if (tweet.bookmarkedByUser) {
         updateTweetInFeed({
           ...tweet,
@@ -225,6 +210,7 @@ export function useFeed({
     const {
       data: { user },
     } = await supabase.auth.getUser();
+
     if (user) {
       await supabase
         .from("tweets")
@@ -238,11 +224,15 @@ export function useFeed({
     }
   }
 
+  function handleRefreshFeed() {
+    window.scrollTo(0, 0);
+    fetchTweets();
+  }
+
   return {
     type,
     tweets,
     isLoading,
-    fetchTweets,
     addTweetToFeed,
     updateTweetInFeed,
     handleLike,

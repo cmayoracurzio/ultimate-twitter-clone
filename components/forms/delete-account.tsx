@@ -1,10 +1,20 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { z } from "zod";
 import { useForm } from "react-hook-form";
-import { DeleteAccountSchema } from "@/lib/validations/profile";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { useRouter } from "next/navigation";
 import { getBaseUrl } from "@/lib/utils/getBaseUrl";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
 export default function DeleteAccount({
@@ -14,15 +24,23 @@ export default function DeleteAccount({
   username: string;
   onFormSuccess: () => void;
 }) {
-  const {
-    register,
-    handleSubmit,
-    setError,
-    formState: { errors, isSubmitting },
-  } = useForm<DeleteAccountSchema>();
-
-  const router = useRouter();
   const supabase = createClientComponentClient<Database>();
+  const router = useRouter();
+
+  // Validation schema depends on username prop
+  const deleteAccountValidator = z.object({
+    confirmUsername: z
+      .string({ required_error: "Username confirmation is incorrect" })
+      .refine((data) => data === username, {
+        message: "Username confirmation is incorrect",
+      }),
+  });
+
+  type DeleteAccountSchema = z.infer<typeof deleteAccountValidator>;
+
+  const form = useForm<DeleteAccountSchema>({
+    resolver: zodResolver(deleteAccountValidator),
+  });
 
   async function onSubmit(formValues: DeleteAccountSchema) {
     const response = await fetch(`${getBaseUrl()}/api/profiles`, {
@@ -31,11 +49,13 @@ export default function DeleteAccount({
       headers: { "Content-Type": "application/json" },
     });
     if (!response.ok) {
-      setError("username", { message: "Something unexpected happened" });
+      form.setError("confirmUsername", {
+        message: "Something unexpected happened",
+      });
     } else {
       const { error } = await response.json();
       if (error) {
-        setError("username", { message: error });
+        form.setError("confirmUsername", { message: error });
       } else {
         await supabase.auth.signOut();
         router.push("/login");
@@ -45,44 +65,34 @@ export default function DeleteAccount({
   }
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="flex w-full flex-col gap-2 text-gray-50"
-    >
-      {/* Confirm username input */}
-      <div className="flex items-center gap-2 rounded-full px-5 py-2 ring-1 ring-inset ring-gray-600 focus-within:ring-primary">
-        <input
-          {...register("username", {
-            validate: (fieldValue: string) => {
-              return (
-                fieldValue === username ||
-                "Error: Username confirmation is incorrect"
-              );
-            },
-          })}
-          type="text"
-          className="peer order-last w-full bg-transparent outline-none placeholder:text-gray-400"
-        />
-        <label
-          htmlFor="username"
-          className="whitespace-nowrap text-sm text-gray-600 peer-focus-within:text-primary"
-        >
-          Confirm username:
-        </label>
-      </div>
-
-      {/* Form submit button */}
-      <Button
-        type="submit"
-        disabled={isSubmitting}
-        variant="destructive"
-        width="full"
+    <Form {...form}>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="space-y-4 text-gray-50"
       >
-        Delete account
-      </Button>
+        <FormField
+          control={form.control}
+          name="confirmUsername"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Confirm your username</FormLabel>
+              <FormControl>
+                <Input placeholder={username} {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-      {/* Error messages */}
-      <div className="h-8 text-primary">{errors.username?.message}</div>
-    </form>
+        <Button
+          type="submit"
+          disabled={form.formState.isSubmitting}
+          variant="destructive"
+          width="full"
+        >
+          Delete account
+        </Button>
+      </form>
+    </Form>
   );
 }

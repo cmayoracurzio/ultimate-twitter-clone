@@ -1,8 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo } from "react";
-import { useProfile } from "@/components/providers/profile-provider";
 import { truncateText } from "@/lib/utils/text";
 import { maxTweetCardTextLength } from "@/lib/constants";
 import { formatTweetDateTime } from "@/lib/utils/date";
@@ -17,7 +15,7 @@ import Share from "@/components/buttons/share-tweet";
 
 export default function Tweet({
   tweet,
-  size = "small",
+  mainTweet = false,
   handleLike,
   handleBookmark,
   handleShowMore,
@@ -25,57 +23,39 @@ export default function Tweet({
   handleDelete,
 }: {
   tweet: TweetwithMetadata;
-  size?: "small" | "large";
+  mainTweet?: boolean;
   handleLike: () => void;
   handleBookmark: () => void;
   handleShowMore: () => void;
   handleCopyUrl: () => void;
   handleDelete: () => void;
 }) {
-  const { id: profileId } = useProfile();
+  const formattedDateTime = formatTweetDateTime(tweet.created_at);
+  const formattedLikes = formatNumber(tweet.likes);
+  const formattedReplies = formatNumber(tweet.replies);
 
-  const { formattedText, formattedDateTime, formattedLikes, formattedReplies } =
-    useMemo(() => {
-      const formattedDateTime = formatTweetDateTime(tweet.created_at);
-      const formattedLikes = formatNumber(tweet.likes);
-      const formattedReplies = formatNumber(tweet.replies);
-
-      let formattedText;
-      if (size === "large") {
-        formattedText = <span className="text-base">{tweet.text}</span>;
-      } else if (tweet.text.length > maxTweetCardTextLength) {
-        formattedText = (
-          <span>
-            {truncateText(tweet.text, maxTweetCardTextLength)}
-            <span
-              onClick={handleShowMore}
-              className="cursor-pointer text-primary hover:underline"
-            >
-              Show more
-            </span>
-          </span>
-        );
-      } else {
-        formattedText = <span className="text-sm">{tweet.text}</span>;
-      }
-
-      return {
-        formattedText,
-        formattedDateTime,
-        formattedLikes,
-        formattedReplies,
-      };
-    }, [
-      size,
-      tweet.text,
-      tweet.created_at,
-      tweet.likes,
-      tweet.replies,
-      handleShowMore,
-    ]);
+  // Format tweet text
+  let formattedText;
+  if (mainTweet) {
+    formattedText = <span className="text-base">{tweet.text}</span>;
+  } else if (tweet.text.length > maxTweetCardTextLength) {
+    formattedText = (
+      <span>
+        {truncateText(tweet.text, maxTweetCardTextLength)}
+        <span
+          onClick={handleShowMore}
+          className="cursor-pointer text-primary hover:underline"
+        >
+          Show more
+        </span>
+      </span>
+    );
+  } else {
+    formattedText = <span className="text-sm">{tweet.text}</span>;
+  }
 
   return (
-    <Card className="flex flex-col justify-start gap-4 text-sm">
+    <Card className="space-y-4 text-sm">
       {/* Tweet header */}
       <div className="flex items-center justify-between gap-4">
         <div className="-m-1 flex items-start justify-start gap-3 overflow-hidden p-1">
@@ -90,7 +70,7 @@ export default function Tweet({
             <p className="truncate">@{tweet.author.username}</p>
           </div>
         </div>
-        {profileId === tweet.author.id ? (
+        {tweet.createdByUser ? (
           <div className="self-start">
             <Delete handleDelete={handleDelete} />
           </div>

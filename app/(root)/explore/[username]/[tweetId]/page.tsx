@@ -18,25 +18,41 @@ export default async function Page({
     data: { user },
   } = await supabase.auth.getUser();
 
+  if (!user) {
+    notFound();
+  }
+
+  // Fetch profile
+  const { data: profileData } = await supabase
+    .from("profiles")
+    .select("*")
+    .eq("id", user.id);
+
+  if (!profileData || profileData.length === 0) {
+    notFound();
+  }
+
+  const profile = profileData[0];
+
   // Fetch tweet data
-  const { data } = await supabase
+  const { data: tweetData } = await supabase
     .from("tweets")
     .select(
       "*, author: profiles(*), likes(profile_id), bookmarks(profile_id), replies: tweets!reply_to_id(profile_id)",
     )
     .eq("id", params.tweetId);
 
-  // Throw error if user or data not found
-  if (!user || !data || data.length === 0) {
+  if (!tweetData || tweetData.length === 0) {
     notFound();
   }
 
   // Format tweet data
-  const tweet = data.map((tweet) => ({
+  const tweet = tweetData.map((tweet) => ({
     ...tweet,
     author: Array.isArray(tweet.author) ? tweet.author[0] : tweet.author,
     replies: tweet.replies.length,
     likes: tweet.likes.length,
+    createdByUser: tweet.author?.id === profile.id,
     likedByUser: tweet.likes.some((like) => like.profile_id === user.id),
     bookmarkedByUser: tweet.bookmarks.some(
       (bookmark) => bookmark.profile_id === user.id,
@@ -46,7 +62,7 @@ export default async function Page({
   return (
     <>
       <Header showGoBackButton>Tweet</Header>
-      <TweetFeed initialTweet={tweet} />
+      <TweetFeed profile={profile} initialTweet={tweet} />
     </>
   );
 }

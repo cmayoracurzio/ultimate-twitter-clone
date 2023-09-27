@@ -2,8 +2,7 @@ import { type NextRequest, NextResponse } from "next/server";
 import {
   editProfileValidator,
   EditProfileSchema,
-  DeleteAccountSchema,
-} from "@/lib/validations/profile";
+} from "@/lib/validations/edit-profile";
 import { cookies } from "next/headers";
 import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
 
@@ -25,7 +24,7 @@ export async function POST(request: NextRequest) {
       data: { user },
     } = await supabase.auth.getUser();
     if (!user) {
-      throw new Error("Profile could not be updated");
+      return NextResponse.json({ error: "Profile could not be updated" });
     }
 
     // Get profile and check if username is already taken
@@ -35,9 +34,11 @@ export async function POST(request: NextRequest) {
       .eq("username", result.data.username)
       .neq("id", user.id);
     if (!data) {
-      throw new Error("Profile could not be updated");
+      return NextResponse.json({ error: "Profile could not be updated" });
     } else if (data.length > 0) {
-      throw new Error("The chosen username is already taken");
+      return NextResponse.json({
+        error: "The chosen username is already taken",
+      });
     }
 
     // Update profile in database
@@ -49,19 +50,21 @@ export async function POST(request: NextRequest) {
       })
       .eq("id", user.id);
     if (error) {
-      throw new Error("Profile could not be updated");
+      return NextResponse.json({ error: "Profile could not be updated" });
     }
 
     return NextResponse.json({ error: null });
   } catch (error) {
     console.error(error);
-    return NextResponse.json({ error: String(error) });
+    return NextResponse.json({ error: "Something unexpected happened" });
   }
 }
 
 export async function DELETE(request: NextRequest) {
   try {
-    const formValues: DeleteAccountSchema = await request.json();
+    const formValues: {
+      confirmUsername: string;
+    } = await request.json();
     const supabase = createRouteHandlerClient<Database>({ cookies });
 
     // Get current user
@@ -69,15 +72,15 @@ export async function DELETE(request: NextRequest) {
       data: { user },
     } = await supabase.auth.getUser();
 
-    // Get profile for the username
+    // Get profile for confirmUsername
     const { data } = await supabase
       .from("profiles")
       .select("*")
-      .eq("username", formValues.username);
+      .eq("username", formValues.confirmUsername);
 
     // Compare current user id and profile id
     if (!user || !data || data[0].id !== user.id) {
-      throw new Error("Account could not be deleted");
+      return NextResponse.json({ error: "Account could not be deleted" });
     }
 
     // Delete profile (via RPC call to database function that handles this)
@@ -85,12 +88,12 @@ export async function DELETE(request: NextRequest) {
     // log deletion event, save anonymized data as backup, etc.
     const { error } = await supabase.rpc("delete_user");
     if (error) {
-      throw new Error("Account could not be deleted");
+      return NextResponse.json({ error: "Account could not be deleted" });
     }
 
     return NextResponse.json({ error: null });
   } catch (error) {
     console.error(error);
-    return NextResponse.json({ error: String(error) });
+    return NextResponse.json({ error: "Something unexpected happened" });
   }
 }

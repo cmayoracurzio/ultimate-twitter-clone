@@ -25,7 +25,7 @@ export default async function Page() {
       <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
         Ultimate Twitter Clone
       </h1>
-      <div className="flex flex-col gap-4">
+      <div className="space-y-4">
         <SignIn provider="google" />
         <SignIn provider="github" />
       </div>

@@ -6,8 +6,17 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
   editProfileValidator,
   type EditProfileSchema,
-} from "@/lib/validations/profile";
+} from "@/lib/validations/edit-profile";
 import { getBaseUrl } from "@/lib/utils/getBaseUrl";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
 export default function EditProfile({
@@ -19,17 +28,11 @@ export default function EditProfile({
   fullName: string;
   onFormSuccess: () => void;
 }) {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-    setError,
-  } = useForm<EditProfileSchema>({
+  const router = useRouter();
+  const form = useForm<EditProfileSchema>({
     resolver: zodResolver(editProfileValidator),
     defaultValues: { username, fullName },
   });
-
-  const router = useRouter();
 
   async function onSubmit(formValues: EditProfileSchema) {
     const response = await fetch(`${getBaseUrl()}/api/profiles`, {
@@ -38,11 +41,11 @@ export default function EditProfile({
       headers: { "Content-Type": "application/json" },
     });
     if (!response.ok) {
-      setError("username", { message: "Something unexpected happened" });
+      form.setError("username", { message: "Something unexpected happened" });
     } else {
       const { error } = await response.json();
       if (error) {
-        setError("username", { message: error });
+        form.setError("username", { message: error });
       } else {
         router.push(`/explore/${formValues.username}`);
         onFormSuccess();
@@ -51,49 +54,46 @@ export default function EditProfile({
   }
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="flex w-full flex-col gap-2 text-gray-50"
-    >
-      {/* Username input */}
-      <div className="flex items-center gap-2 rounded-full px-5 py-2 ring-1 ring-inset ring-gray-600 focus-within:ring-primary">
-        <input
-          {...register("username")}
-          type="text"
-          className="peer order-last w-full bg-transparent outline-none placeholder:text-gray-400"
+    <Form {...form}>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="space-y-4 text-gray-50"
+      >
+        <FormField
+          control={form.control}
+          name="username"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Username</FormLabel>
+              <FormControl>
+                <Input placeholder={username} {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
         />
-        <label
-          htmlFor="username"
-          className="whitespace-nowrap text-sm text-gray-600 peer-focus-within:text-primary "
-        >
-          Username:
-        </label>
-      </div>
-
-      {/* Full name input */}
-      <div className="flex items-center gap-2 rounded-full px-5 py-2 ring-1 ring-inset ring-gray-600 focus-within:ring-primary">
-        <input
-          {...register("fullName")}
-          type="text"
-          className="peer order-last w-full bg-transparent outline-none placeholder:text-gray-400"
+        <FormField
+          control={form.control}
+          name="fullName"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Full name</FormLabel>
+              <FormControl>
+                <Input placeholder={fullName} {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
         />
-        <label
-          htmlFor="fullName"
-          className="whitespace-nowrap text-sm text-gray-600 peer-focus-within:text-primary"
+        <Button
+          type="submit"
+          disabled={form.formState.isSubmitting}
+          variant="default"
+          width="full"
         >
-          Full name:
-        </label>
-      </div>
-
-      {/* Form submit button */}
-      <Button type="submit" disabled={isSubmitting} width="full">
-        Save changes
-      </Button>
-
-      {/* Error messages */}
-      <div className="h-8 text-primary">
-        {errors.username?.message || errors.fullName?.message}
-      </div>
-    </form>
+          Save changes
+        </Button>
+      </form>
+    </Form>
   );
 }

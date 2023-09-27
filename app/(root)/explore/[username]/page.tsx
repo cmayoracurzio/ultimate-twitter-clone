@@ -14,6 +14,15 @@ export default async function Page({
 }) {
   const supabase = createServerComponentClient<Database>({ cookies });
 
+  // Fetch current user
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    notFound();
+  }
+
   // Fetch profile data
   const { data } = await supabase
     .from("profiles")
@@ -25,43 +34,23 @@ export default async function Page({
     notFound();
   }
 
-  // Helper function to get the correct singular/plural stat name
-  const getStatName = (name: string, count: number) => {
-    if (name === "reply") {
-      return count !== 1 ? "replies" : name;
-    } else {
-      return count !== 1 ? name + "s" : name;
-    }
+  // Format inputs
+  const profile = data[0];
+
+  const stats: ProfileStats = {
+    tweets: profile.tweets.length,
+    likes: profile.likes.length,
+    replies: profile.tweets.filter((tweet) => tweet.reply_to_id !== null)
+      .length,
+    bookmarks: profile.bookmarks.length,
   };
 
-  // Format stats
-  const profileData = data[0];
-  const stats = [
-    { name: "tweet", count: profileData.tweets.length },
-    { name: "like", count: profileData.likes.length },
-    {
-      name: "reply",
-      count: profileData.tweets.filter((tweet) => tweet.reply_to_id !== null)
-        .length,
-    },
-    { name: "bookmark", count: profileData.bookmarks.length },
-  ].map((stat) => ({ ...stat, name: getStatName(stat.name, stat.count) }));
-
-  // Format profile data
-  const profile = {
-    avatar_url: profileData.avatar_url,
-    created_at: profileData.created_at,
-    full_name: profileData.full_name,
-    id: profileData.id,
-    updated_at: profileData.updated_at,
-    username: profileData.username,
-    stats,
-  };
+  const showOptions = profile.id === user.id;
 
   return (
     <>
       <Header showGoBackButton>Profile</Header>
-      <Profile profile={profile} />
+      <Profile profile={profile} stats={stats} showOptions={showOptions} />
       <ProfileFeed profileId={profile.id} />
     </>
   );
