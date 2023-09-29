@@ -35,9 +35,7 @@ export default function Profile({
             <p>Joined {formatProfileDateTime(profile.created_at)}</p>
           </div>
         </div>
-        {showOptions ? (
-          <ProfileOptions profile={profile} buttonSize="small" />
-        ) : null}
+        {showOptions ? <ProfileOptions buttonSize="small" /> : null}
       </div>
       <div className="flex items-center justify-start gap-4 text-sm">
         {Object.entries(stats).map(([key, value]) => (

@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useProfile } from "@/components/providers/profile-provider";
 import { usePathname } from "next/navigation";
 import {
   BiHomeCircle,
@@ -22,7 +23,8 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
-export default function NavigationLinks({ username }: { username: string }) {
+export default function NavigationLinks() {
+  const { username } = useProfile();
   const pathname = usePathname();
 
   const navigationLinks = [

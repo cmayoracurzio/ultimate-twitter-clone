@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, startTransition } from "react";
+import { useProfile } from "@/components/providers/profile-provider";
 import {
   Popover,
   PopoverContent,
@@ -24,14 +25,13 @@ import EditProfileForm from "@/components/forms/edit-profile";
 import DeleteAccountForm from "@/components/forms/delete-account";
 
 export default function ProfileOptions({
-  profile,
   buttonSize,
 }: {
-  profile: Profile;
   buttonSize: "small" | "large";
 }) {
   const [isEditProfileOpen, setIsEditProfileOpen] = useState(false);
   const [isDeleteAccountOpen, setIsDeleteAccountOpen] = useState(false);
+  const profile = useProfile();
 
   function preventAutoFocus(event: Event) {
     event.preventDefault();

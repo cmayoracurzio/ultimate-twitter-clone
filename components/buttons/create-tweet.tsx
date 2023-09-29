@@ -19,7 +19,7 @@ import { Button } from "@/components/ui/button";
 import { FaFeatherAlt } from "react-icons/fa";
 import CreateTweetForm from "@/components/forms/create-tweet";
 
-export default function CreateTweet({ profile }: { profile: Profile }) {
+export default function CreateTweet() {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
 
@@ -51,11 +51,7 @@ export default function CreateTweet({ profile }: { profile: Profile }) {
         <DialogHeader>
           <DialogTitle>New tweet</DialogTitle>
         </DialogHeader>
-        <CreateTweetForm
-          profile={profile}
-          onFormSuccess={showTweetPage}
-          className="-p-4"
-        />
+        <CreateTweetForm onFormSuccess={showTweetPage} className="-p-4" />
       </DialogContent>
     </Dialog>
   );

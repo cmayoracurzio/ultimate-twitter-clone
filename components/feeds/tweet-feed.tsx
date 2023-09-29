@@ -8,10 +8,8 @@ import Feed from "@/components/feeds/feed";
 
 export default function TweetFeed({
   initialTweet,
-  profile,
 }: {
   initialTweet: TweetwithMetadata;
-  profile: Profile;
 }) {
   const [mainTweet, setMainTweet] = useState<TweetwithMetadata>(initialTweet);
   const feed = useFeed({ type: "replies", tweetId: mainTweet.id });
@@ -52,7 +50,6 @@ export default function TweetFeed({
         handleDelete={() => feed.handleDelete(mainTweet)}
       />
       <CreateTweetForm
-        profile={profile}
         replyToId={mainTweet.id}
         onFormSuccess={addReplyToFeed}
       />

@@ -22,18 +22,6 @@ export default async function Page({
     notFound();
   }
 
-  // Fetch profile
-  const { data: profileData } = await supabase
-    .from("profiles")
-    .select("*")
-    .eq("id", user.id);
-
-  if (!profileData || profileData.length === 0) {
-    notFound();
-  }
-
-  const profile = profileData[0];
-
   // Fetch tweet data
   const { data: tweetData } = await supabase
     .from("tweets")
@@ -52,7 +40,7 @@ export default async function Page({
     author: Array.isArray(tweet.author) ? tweet.author[0] : tweet.author,
     replies: tweet.replies.length,
     likes: tweet.likes.length,
-    createdByUser: tweet.author?.id === profile.id,
+    createdByUser: tweet.author?.id === user.id,
     likedByUser: tweet.likes.some((like) => like.profile_id === user.id),
     bookmarkedByUser: tweet.bookmarks.some(
       (bookmark) => bookmark.profile_id === user.id,
@@ -62,7 +50,7 @@ export default async function Page({
   return (
     <>
       <Header showGoBackButton>Tweet</Header>
-      <TweetFeed profile={profile} initialTweet={tweet} />
+      <TweetFeed initialTweet={tweet} />
     </>
   );
 }

@@ -1,5 +1,6 @@
 "use client";
 
+import { useProfile } from "@/components/providers/profile-provider";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { tweetValidator, type CreateTweetSchema } from "@/lib/validators/tweet";
@@ -11,12 +12,10 @@ import { Button } from "@/components/ui/button";
 import Card from "@/components/ui/card";
 
 export default function CreateTweetForm({
-  profile,
   replyToId = null,
   className,
   onFormSuccess,
 }: {
-  profile: Profile;
   replyToId?: string | null;
   className?: string;
   onFormSuccess: (newTweet: TweetwithMetadata) => void;
@@ -31,6 +30,7 @@ export default function CreateTweetForm({
   } = useForm<CreateTweetSchema>({
     resolver: zodResolver(tweetValidator),
   });
+  const { username, avatar_url } = useProfile();
   const textAreaName = "text";
   const { ref, ...rest } = register(textAreaName);
   const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
@@ -79,7 +79,7 @@ export default function CreateTweetForm({
 
   return (
     <Card className={cn("flex items-start gap-3", className)}>
-      <Avatar src={profile.avatar_url} alt={profile.username} />
+      <Avatar src={avatar_url} alt={username} />
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex w-full flex-col gap-8 text-gray-50"
