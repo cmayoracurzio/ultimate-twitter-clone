@@ -7,10 +7,10 @@ import { Button } from "@/components/ui/button";
 import { FcGoogle } from "react-icons/fc";
 import { BsGithub } from "react-icons/bs";
 
-export default function SignIn({ provider }: { provider: Provider }) {
+export default function SignIn() {
   const supabase = createClientComponentClient<Database>();
 
-  async function handleSignIn() {
+  async function handleSignIn(provider: Provider) {
     await supabase.auth.signInWithOAuth({
       provider,
       options: { redirectTo: `${getBaseUrl()}login/callback` },
@@ -18,9 +18,25 @@ export default function SignIn({ provider }: { provider: Provider }) {
   }
 
   return (
-    <Button onClick={handleSignIn} variant="secondary">
-      {provider === "google" ? <FcGoogle size={24} /> : <BsGithub size={24} />}
-      <span>Sign in with {provider === "google" ? "Google" : "GitHub"}</span>
-    </Button>
+    <div className="space-y-4">
+      <Button
+        onClick={() => handleSignIn("google")}
+        variant="secondary"
+        size="lg"
+        className="gap-2"
+      >
+        <FcGoogle size={24} />
+        <span>Sign in with Google</span>
+      </Button>
+      <Button
+        onClick={() => handleSignIn("github")}
+        variant="secondary"
+        size="lg"
+        className="gap-2"
+      >
+        <BsGithub size={24} />
+        <span>Sign in with GitHub</span>
+      </Button>
+    </div>
   );
 }

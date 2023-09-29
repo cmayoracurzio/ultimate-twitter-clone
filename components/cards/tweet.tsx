@@ -7,11 +7,11 @@ import { formatTweetDateTime } from "@/lib/utils/date";
 import { formatNumber } from "@/lib/utils/numbers";
 import Card from "@/components/ui/card";
 import Avatar from "@/components/ui/avatar";
-import Delete from "@/components/buttons/delete-tweet";
-import Like from "@/components/buttons/like-tweet";
-import Reply from "@/components/buttons/reply-tweet";
-import Bookmark from "@/components/buttons/bookmark-tweet";
-import Share from "@/components/buttons/share-tweet";
+import Delete from "@/components/buttons/delete";
+import Like from "@/components/buttons/like";
+import Reply from "@/components/buttons/reply";
+import Bookmark from "@/components/buttons/bookmark";
+import Share from "@/components/buttons/share";
 
 export default function Tweet({
   tweet,
@@ -94,7 +94,7 @@ export default function Tweet({
         </div>
         <div className="flex-1">
           <Reply
-            handleReply={handleShowMore}
+            handleShowMore={handleShowMore}
             formattedCount={formattedReplies}
           />
         </div>

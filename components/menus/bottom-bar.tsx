@@ -1,4 +1,4 @@
-import NavigationLinks from "@/components/buttons/navigation-links";
+import NavigationLinks from "@/components/menus/navigation-links";
 
 export default async function BottomBar({ username }: { username: string }) {
   return (

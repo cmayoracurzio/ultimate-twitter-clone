@@ -2,10 +2,7 @@
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  tweetValidator,
-  type TweetFormSchema,
-} from "@/lib/validations/create-tweet";
+import { tweetValidator, type CreateTweetSchema } from "@/lib/validators/tweet";
 import { useEffect, useRef } from "react";
 import { getBaseUrl } from "@/lib/utils/getBaseUrl";
 import { cn } from "@/lib/utils/cn";
@@ -31,7 +28,7 @@ export default function CreateTweetForm({
     reset,
     watch,
     setError,
-  } = useForm<TweetFormSchema>({
+  } = useForm<CreateTweetSchema>({
     resolver: zodResolver(tweetValidator),
   });
   const textAreaName = "text";
@@ -39,7 +36,7 @@ export default function CreateTweetForm({
   const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
   const currentText = watch(textAreaName);
 
-  async function handleRef(element: HTMLTextAreaElement) {
+  function handleRef(element: HTMLTextAreaElement) {
     ref(element);
     textAreaRef.current = element;
   }
@@ -53,7 +50,7 @@ export default function CreateTweetForm({
     }
   }, [textAreaRef, currentText]);
 
-  async function onSubmit(newTweet: TweetFormSchema) {
+  async function onSubmit(newTweet: CreateTweetSchema) {
     const payload: any = {
       newTweet,
     };
@@ -67,12 +64,13 @@ export default function CreateTweetForm({
       headers: { "Content-Type": "application/json" },
     });
     if (!response.ok) {
-      setError(textAreaName, { message: "Something unexpected happened" });
+      const { error } = await response.json();
+      setError(textAreaName, {
+        message: error || "Something unexpected happened",
+      });
     } else {
-      const { data, error } = await response.json();
-      if (error) {
-        setError(textAreaName, { message: error });
-      } else if (data) {
+      const { data } = await response.json();
+      if (data) {
         reset();
         onFormSuccess(data);
       }
@@ -97,11 +95,9 @@ export default function CreateTweetForm({
           <div className="text-md text-primary">
             {errors[textAreaName] && errors[textAreaName].message}
           </div>
-          <div className="w-fit">
-            <Button type="submit" disabled={isSubmitting}>
-              {replyToId ? "Reply" : "Tweet"}
-            </Button>
-          </div>
+          <Button type="submit" disabled={isSubmitting}>
+            {replyToId ? "Reply" : "Tweet"}
+          </Button>
         </div>
       </form>
     </Card>

@@ -10,4 +10,4 @@ export const tweetValidator = z.object({
     }),
 });
 
-export type TweetFormSchema = z.infer<typeof tweetValidator>;
+export type CreateTweetSchema = z.infer<typeof tweetValidator>;

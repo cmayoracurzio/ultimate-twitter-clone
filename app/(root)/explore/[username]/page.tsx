@@ -37,7 +37,7 @@ export default async function Page({
   // Format inputs
   const profile = data[0];
 
-  const stats: ProfileStats = {
+  const stats = {
     tweets: profile.tweets.length,
     likes: profile.likes.length,
     replies: profile.tweets.filter((tweet) => tweet.reply_to_id !== null)

@@ -100,12 +100,17 @@ export function useFeed({
 
   function updateTweetInFeed(tweetToUpdate: TweetwithMetadata) {
     setTweets((prevTweets) => {
-      const newTweets = [...prevTweets];
       const index = prevTweets.findIndex(
         (tweet) => tweet.id === tweetToUpdate.id,
       );
-      newTweets[index] = tweetToUpdate;
-      return newTweets;
+      if (index !== -1) {
+        return [
+          ...prevTweets.slice(0, index),
+          tweetToUpdate,
+          ...prevTweets.slice(index + 1),
+        ];
+      }
+      return prevTweets; // Return the original array if no tweet is updated.
     });
   }
 
@@ -146,7 +151,7 @@ export function useFeed({
 
   async function handleLike(
     tweet: TweetwithMetadata,
-    updateTweetInFeed: (newTweet: TweetwithMetadata) => void,
+    updateTweet: (tweetToUpdate: TweetwithMetadata) => void = updateTweetInFeed,
   ) {
     const {
       data: { user },
@@ -154,7 +159,7 @@ export function useFeed({
 
     if (user) {
       if (tweet.likedByUser) {
-        updateTweetInFeed({
+        updateTweet({
           ...tweet,
           likes: tweet.likes - 1,
           likedByUser: !tweet.likedByUser,
@@ -164,7 +169,7 @@ export function useFeed({
           .delete()
           .match({ profile_id: user.id, tweet_id: tweet.id });
       } else {
-        updateTweetInFeed({
+        updateTweet({
           ...tweet,
           likes: tweet.likes + 1,
           likedByUser: !tweet.likedByUser,
@@ -178,7 +183,7 @@ export function useFeed({
 
   async function handleBookmark(
     tweet: TweetwithMetadata,
-    updateTweetInFeed: (newTweet: TweetwithMetadata) => void,
+    updateTweet: (tweetToUpdate: TweetwithMetadata) => void = updateTweetInFeed,
   ) {
     const {
       data: { user },
@@ -186,7 +191,7 @@ export function useFeed({
 
     if (user) {
       if (tweet.bookmarkedByUser) {
-        updateTweetInFeed({
+        updateTweet({
           ...tweet,
           bookmarkedByUser: !tweet.bookmarkedByUser,
         });
@@ -195,7 +200,7 @@ export function useFeed({
           .delete()
           .match({ profile_id: user.id, tweet_id: tweet.id });
       } else {
-        updateTweetInFeed({
+        updateTweet({
           ...tweet,
           bookmarkedByUser: !tweet.bookmarkedByUser,
         });
@@ -233,7 +238,6 @@ export function useFeed({
     tweets,
     isLoading,
     addTweetToFeed,
-    updateTweetInFeed,
     handleLike,
     handleBookmark,
     handleShowMore,

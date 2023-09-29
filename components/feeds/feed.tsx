@@ -8,9 +8,8 @@ import Tweet from "@/components/cards/tweet";
 export default function Feed({
   isLoading,
   tweets,
-  updateTweetInFeed,
-  handleBookmark,
   handleLike,
+  handleBookmark,
   handleShowMore,
   handleCopyUrl,
   handleDelete,
@@ -43,8 +42,8 @@ export default function Feed({
           <Tweet
             key={tweet.id}
             tweet={tweet}
-            handleLike={() => handleLike(tweet, updateTweetInFeed)}
-            handleBookmark={() => handleBookmark(tweet, updateTweetInFeed)}
+            handleLike={() => handleLike(tweet)}
+            handleBookmark={() => handleBookmark(tweet)}
             handleShowMore={() => handleShowMore(tweet)}
             handleCopyUrl={() => handleCopyUrl(tweet)}
             handleDelete={() => handleDelete(tweet)}

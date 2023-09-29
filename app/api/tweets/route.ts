@@ -1,8 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server";
-import {
-  tweetValidator,
-  TweetFormSchema,
-} from "@/lib/validations/create-tweet";
+import { tweetValidator, CreateTweetSchema } from "@/lib/validators/tweet";
 import { cookies } from "next/headers";
 import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
 
@@ -12,13 +9,17 @@ export const dynamic = "force-dynamic";
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const formValues: TweetFormSchema = body.newTweet;
+    const formValues: CreateTweetSchema = body.newTweet;
     const replyToId: string | null = body?.replyToId;
 
     // Validate form schema on the server
     const result = tweetValidator.safeParse(formValues);
+
     if (!result.success) {
-      throw new Error(result.error.issues[0].message);
+      return NextResponse.json(
+        { error: result.error.issues[0].message },
+        { status: 409 },
+      );
     }
 
     // Insert tweet in database and return inserted data
@@ -27,8 +28,9 @@ export async function POST(request: NextRequest) {
       .from("tweets")
       .insert({ text: result.data.text, reply_to_id: replyToId })
       .select("*, author: profiles(*)");
+
     if (error) {
-      throw new Error("Tweet could not be saved to database");
+      throw new Error();
     }
 
     // Format the new tweet before returning it
@@ -43,10 +45,12 @@ export async function POST(request: NextRequest) {
       likedByUser: false,
       bookmarkedByUser: false,
     };
-
-    return NextResponse.json({ data: newTweet, error: null });
+    return NextResponse.json({ data: newTweet }, { status: 200 });
   } catch (error) {
     console.error(error);
-    return NextResponse.json({ data: null, error: String(error) });
+    return NextResponse.json(
+      { error: "Tweet could not be posted" },
+      { status: 500 },
+    );
   }
 }

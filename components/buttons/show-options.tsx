@@ -42,21 +42,20 @@ const ShowOptionsLarge = React.forwardRef<
             ref={forwardedRef}
             variant="ghost"
             size="icon"
+            width="full"
             className="max-xl:p-0"
           >
-            <div className="flex items-center gap-3">
-              <div className="flex items-center gap-3">
-                <Avatar src={profile.avatar_url} alt={profile.username} />
-                <div className="overflow-hidden text-left text-sm max-xl:hidden">
-                  <p className="truncate font-semibold text-gray-50">
-                    {profile.full_name}
-                  </p>
-                  <p className="truncate text-gray-400">@{profile.username}</p>
-                </div>
+            <div className="flex items-center gap-2 overflow-hidden">
+              <Avatar src={profile.avatar_url} alt={profile.username} />
+              <div className="overflow-hidden text-left text-sm max-xl:hidden">
+                <p className="truncate font-semibold text-gray-50">
+                  {profile.full_name}
+                </p>
+                <p className="truncate text-gray-400">@{profile.username}</p>
               </div>
-              <div className="mr-1 max-xl:hidden">
-                <BsThreeDots size={18} />
-              </div>
+            </div>
+            <div className="mr-1 max-xl:hidden">
+              <BsThreeDots size={18} />
             </div>
           </Button>
         </TooltipTrigger>

@@ -11,16 +11,16 @@ import { FaRegComment } from "react-icons/fa";
 
 export default function Reply({
   formattedCount,
-  handleReply,
+  handleShowMore,
 }: {
   formattedCount: string;
-  handleReply: () => void;
+  handleShowMore: () => void;
 }) {
   return (
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger asChild>
-          <Button onClick={handleReply} size="none" variant="greenText">
+          <Button onClick={handleShowMore} size="none" variant="greenText">
             <div className="rounded-full p-2 group-hover:bg-green-400/20">
               <FaRegComment size={18} />
             </div>

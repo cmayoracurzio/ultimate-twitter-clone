@@ -17,11 +17,4 @@ declare global {
     likedByUser: boolean;
     bookmarkedByUser: boolean;
   };
-
-  type ProfileStats = {
-    tweets: number;
-    likes: number;
-    replies: number;
-    bookmarks: number;
-  };
 }

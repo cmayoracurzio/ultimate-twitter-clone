@@ -6,7 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
   editProfileValidator,
   type EditProfileSchema,
-} from "@/lib/validations/edit-profile";
+} from "@/lib/validators/profile";
 import { getBaseUrl } from "@/lib/utils/getBaseUrl";
 import {
   Form,
@@ -41,15 +41,14 @@ export default function EditProfile({
       headers: { "Content-Type": "application/json" },
     });
     if (!response.ok) {
-      form.setError("username", { message: "Something unexpected happened" });
-    } else {
       const { error } = await response.json();
-      if (error) {
-        form.setError("username", { message: error });
-      } else {
-        router.push(`/explore/${formValues.username}`);
-        onFormSuccess();
-      }
+      form.setError("username", {
+        message: error || "Something unexpected happened",
+      });
+    } else {
+      router.refresh();
+      router.push(`/explore/${formValues.username}`);
+      onFormSuccess();
     }
   }
 

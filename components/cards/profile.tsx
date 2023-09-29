@@ -5,6 +5,13 @@ import { BiCalendar } from "react-icons/bi";
 import Card from "@/components/ui/card";
 import ProfileOptions from "@/components/menus/profile-options";
 
+type ProfileStats = {
+  tweets: number;
+  likes: number;
+  replies: number;
+  bookmarks: number;
+};
+
 export default function Profile({
   profile,
   stats,
