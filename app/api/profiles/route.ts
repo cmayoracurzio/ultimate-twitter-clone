@@ -15,9 +15,16 @@ export async function POST(request: NextRequest) {
 
     // Validate form schema on the server
     const result = editProfileValidator.safeParse(formValues);
+
     if (!result.success) {
+      const fieldErrors = result.error.flatten().fieldErrors;
       return NextResponse.json(
-        { error: result.error.issues[0].message },
+        {
+          error: {
+            username: fieldErrors.username?.[0],
+            fullName: fieldErrors.fullName?.[0],
+          },
+        },
         { status: 409 },
       );
     }
@@ -42,7 +49,12 @@ export async function POST(request: NextRequest) {
       throw new Error();
     } else if (data.length > 0) {
       return NextResponse.json(
-        { error: "The chosen username is already taken" },
+        {
+          error: {
+            username: "The chosen username is already taken",
+            fullName: null,
+          },
+        },
         { status: 409 },
       );
     }
@@ -64,7 +76,12 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error(error);
     return NextResponse.json(
-      { error: "Profile could not be updated" },
+      {
+        error: {
+          username: "Profile could not be updated",
+          fullName: "Profile could not be updated",
+        },
+      },
       { status: 500 },
     );
   }

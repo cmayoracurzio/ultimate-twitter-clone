@@ -42,9 +42,12 @@ export default function EditProfile({
     });
     if (!response.ok) {
       const { error } = await response.json();
-      form.setError("username", {
-        message: error || "Something unexpected happened",
-      });
+      if (error.username) {
+        form.setError("username", { message: error.username });
+      }
+      if (error.fullName) {
+        form.setError("fullName", { message: error.fullName });
+      }
     } else {
       router.refresh();
       router.push(`/explore/${formValues.username}`);
