@@ -37,11 +37,11 @@ export default async function RootLayout({
 
   return (
     <ProfileProvider profile={profile}>
-      <div className="mx-auto flex w-full max-w-6xl">
+      <div className="mx-auto flex max-w-6xl">
         <LeftSidebar />
-        <main className="min-h-screen w-full min-w-0 divide-y divide-gray-600 border-x-0 border-gray-600 sm:border-x">
+        <section className="min-h-screen w-full min-w-0 divide-y divide-gray-300 border-x-0 border-gray-300 dark:divide-gray-600 dark:border-gray-600 sm:border-x">
           {children}
-        </main>
+        </section>
         <RightSidebar />
         <BottomBar />
       </div>

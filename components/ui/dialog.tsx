@@ -3,10 +3,8 @@
 import * as React from "react";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 
-import { cn } from "@/lib/utils/cn";
-
-import { Button } from "@/components/ui/button";
 import { BsXLg } from "react-icons/bs";
+import { cn } from "@/lib/utils/cn";
 
 const Dialog = DialogPrimitive.Root;
 const DialogTrigger = DialogPrimitive.Trigger;
@@ -44,20 +42,16 @@ const DialogContent = React.forwardRef<
       <DialogPrimitive.Content
         ref={ref}
         className={cn(
-          "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] fixed left-[50%] top-[50%] z-50 grid w-full max-w-md translate-x-[-50%] translate-y-[-50%] gap-4 border border-gray-800 bg-white p-6 shadow-lg shadow-gray-600/50 duration-200 dark:border-gray-600 dark:bg-gray-800 sm:rounded-xl",
+          "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] fixed left-[50%] top-[50%] z-50 grid w-full max-w-md translate-x-[-50%] translate-y-[-50%] gap-4 border border-gray-400 bg-gray-50 p-6 shadow-lg shadow-gray-600/50 duration-200 dark:border-gray-600 dark:bg-gray-800 sm:rounded-xl",
           className,
         )}
         {...props}
       >
         {children}
         <DialogPrimitive.Close asChild>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="absolute right-4 top-4"
-          >
+          <button className="absolute right-4 top-4 rounded-full p-2 text-gray-500 hover:bg-gray-200 hover:text-gray-900 disabled:pointer-events-none disabled:opacity-50 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-50">
             <BsXLg size={18} />
-          </Button>
+          </button>
         </DialogPrimitive.Close>
       </DialogPrimitive.Content>
     </DialogOverlay>

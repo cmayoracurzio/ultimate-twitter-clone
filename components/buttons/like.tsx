@@ -11,11 +11,9 @@ import { FaHeart, FaRegHeart } from "react-icons/fa";
 
 export default function Like({
   active,
-  formattedCount,
   handleLike,
 }: {
   active: boolean;
-  formattedCount: string;
   handleLike: () => void;
 }) {
   return (
@@ -23,15 +21,12 @@ export default function Like({
       <Tooltip>
         <TooltipTrigger asChild>
           <Button
+            variant="red"
+            size="icon"
             onClick={handleLike}
-            size="none"
-            variant="redText"
-            className={active ? "text-red-400" : ""}
+            className={active ? "text-red-500 dark:text-red-500" : ""}
           >
-            <div className="rounded-full p-2 group-hover:bg-red-400/20">
-              {active ? <FaHeart size={18} /> : <FaRegHeart size={18} />}
-            </div>
-            <span>{formattedCount}</span>
+            {active ? <FaHeart size={18} /> : <FaRegHeart size={18} />}
           </Button>
         </TooltipTrigger>
         <TooltipContent side="bottom">Like</TooltipContent>

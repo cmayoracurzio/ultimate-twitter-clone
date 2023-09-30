@@ -18,11 +18,11 @@ export default function Share({
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger asChild>
-          <Button onClick={handleCopyUrl} size="icon" variant="yellow">
+          <Button variant="yellow" size="icon" onClick={handleCopyUrl}>
             <FiLink size={18} />
           </Button>
         </TooltipTrigger>
-        <TooltipContent side="bottom">Copy URL</TooltipContent>
+        <TooltipContent side="bottom">Bookmark</TooltipContent>
       </Tooltip>
     </TooltipProvider>
   );

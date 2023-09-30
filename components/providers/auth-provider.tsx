@@ -16,7 +16,7 @@ export default function AuthProvider({
     const {
       data: { subscription: authListener },
     } = supabase.auth.onAuthStateChange((event, session) => {
-      // Exclude INITIAL_SESSION event from refreshing the router, to avoid infinite loops when a redirect happens
+      // Exclude INITIAL_SESSION event from refreshing the router
       if (event !== "INITIAL_SESSION") {
         router.refresh();
       }

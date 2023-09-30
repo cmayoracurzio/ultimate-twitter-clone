@@ -5,7 +5,6 @@ import { truncateText } from "@/lib/utils/text";
 import { maxTweetCardTextLength } from "@/lib/constants";
 import { formatTweetDateTime } from "@/lib/utils/date";
 import { formatNumber } from "@/lib/utils/numbers";
-import Card from "@/components/ui/card";
 import Avatar from "@/components/ui/avatar";
 import Delete from "@/components/buttons/delete";
 import Like from "@/components/buttons/like";
@@ -15,7 +14,7 @@ import Share from "@/components/buttons/share";
 
 export default function Tweet({
   tweet,
-  mainTweet = false,
+  mainTweet,
   handleLike,
   handleBookmark,
   handleShowMore,
@@ -40,7 +39,7 @@ export default function Tweet({
     formattedText = <span className="text-base">{tweet.text}</span>;
   } else if (tweet.text.length > maxTweetCardTextLength) {
     formattedText = (
-      <span>
+      <span className="text-sm">
         {truncateText(tweet.text, maxTweetCardTextLength)}
         <span
           onClick={handleShowMore}
@@ -55,23 +54,25 @@ export default function Tweet({
   }
 
   return (
-    <Card className="space-y-4 text-sm">
+    <article className="space-y-4 p-4">
       {/* Tweet header */}
       <div className="flex items-center justify-between gap-4">
-        <div className="-m-1 flex items-start justify-start gap-3 overflow-hidden p-1">
+        <div className="flex items-center justify-start gap-2 overflow-hidden">
           <Avatar src={tweet.author.avatar_url} alt={tweet.author.username} />
           <div className="truncate">
             <Link
               href={`/explore/${tweet.author.username}`}
-              className="truncate font-bold hover:underline"
+              className="-px-1 mx-1 truncate text-sm font-bold hover:underline"
             >
               {tweet.author.full_name}
             </Link>
-            <p className="truncate text-gray-400">@{tweet.author.username}</p>
+            <p className="truncate text-sm text-gray-500 dark:text-gray-400">
+              @{tweet.author.username}
+            </p>
           </div>
         </div>
         {tweet.createdByUser ? (
-          <div className="self-start">
+          <div className="self-start text-gray-500 dark:text-gray-400">
             <Delete handleDelete={handleDelete} />
           </div>
         ) : null}
@@ -81,22 +82,19 @@ export default function Tweet({
       <p className="whitespace-break-spaces">{formattedText}</p>
 
       {/* Tweet creation date */}
-      <div className="my-1 text-gray-400">{formattedDateTime}</div>
+      <p className="my-1 text-sm text-gray-400 dark:text-gray-500">
+        {formattedDateTime}
+      </p>
 
       {/* Tweet Buttons */}
-      <div className="flex items-center justify-between text-gray-400">
-        <div className="flex-1">
-          <Like
-            active={tweet.likedByUser}
-            handleLike={handleLike}
-            formattedCount={formattedLikes}
-          />
+      <div className="flex items-center justify-between text-gray-500 dark:text-gray-400">
+        <div className="flex flex-1 items-center gap-1">
+          <Like active={tweet.likedByUser} handleLike={handleLike} />
+          <span className="text-sm">{formattedLikes}</span>
         </div>
-        <div className="flex-1">
-          <Reply
-            handleShowMore={handleShowMore}
-            formattedCount={formattedReplies}
-          />
+        <div className="flex flex-1 items-center gap-1">
+          <Reply handleShowMore={handleShowMore} />
+          <span className="text-sm">{formattedReplies}</span>
         </div>
         <div className="flex-1">
           <Bookmark
@@ -106,6 +104,6 @@ export default function Tweet({
         </div>
         <Share handleCopyUrl={handleCopyUrl} />
       </div>
-    </Card>
+    </article>
   );
 }

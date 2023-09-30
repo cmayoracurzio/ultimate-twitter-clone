@@ -16,7 +16,7 @@ export default function Avatar({
       height={size}
       priority={true}
       alt={alt}
-      className="shrink-0 rounded-full"
+      className="rounded-full"
     />
   );
 }

@@ -6,18 +6,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { tweetValidator, type CreateTweetSchema } from "@/lib/validators/tweet";
 import { useEffect, useRef } from "react";
 import { getBaseUrl } from "@/lib/utils/getBaseUrl";
-import { cn } from "@/lib/utils/cn";
 import Avatar from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import Card from "@/components/ui/card";
 
 export default function CreateTweetForm({
   replyToId = null,
-  className,
   onFormSuccess,
 }: {
   replyToId?: string | null;
-  className?: string;
   onFormSuccess: (newTweet: TweetwithMetadata) => void;
 }) {
   const {
@@ -78,18 +74,18 @@ export default function CreateTweetForm({
   }
 
   return (
-    <Card className={cn("flex items-start gap-3", className)}>
+    <article className="flex items-start gap-3 p-4">
       <Avatar src={avatar_url} alt={username} />
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex w-full flex-col gap-8 text-gray-50"
+        className="flex w-full flex-col gap-8"
       >
         <textarea
           {...rest}
           ref={handleRef}
           rows={1}
           placeholder={replyToId ? "Tweet your reply" : "What's happening?!"}
-          className="mt-1.5 w-full resize-none border-none bg-transparent text-lg outline-none"
+          className="mt-1.5 w-full resize-none border-none bg-transparent text-lg outline-none placeholder:text-gray-500"
         />
         <div className="flex items-center justify-between gap-1">
           <div className="text-md text-primary">
@@ -100,6 +96,6 @@ export default function CreateTweetForm({
           </Button>
         </div>
       </form>
-    </Card>
+    </article>
   );
 }

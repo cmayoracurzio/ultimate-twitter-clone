@@ -5,26 +5,28 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils/cn";
 
 const buttonVariants = cva(
-  "rounded-full group flex items-center gap-1 justify-center transition-colors disabled:pointer-events-none disabled:opacity-50",
+  "flex items-center justify-center gap-2 rounded-full disabled:pointer-events-none disabled:opacity-50 font-semibold",
   {
     variants: {
       variant: {
-        default: "bg-primary text-gray-50 hover:bg-primary/80",
-        destructive: "bg-red-500 text-gray-50 hover:bg-red-600 ",
-        secondary: "bg-gray-100 text-gray-900 hover:bg-gray-100/80",
+        primary: "bg-primary text-gray-50 hover:bg-primary/80",
+        destructive:
+          "bg-red-500 text-gray-50 hover:bg-red-600 dark:bg-red-500 dark:text-gray-50 dark:hover:bg-red-600",
+        clear:
+          "bg-gray-100 text-gray-900 hover:bg-gray-200 dark:bg-gray-100 dark:text-gray-900 dark:hover:bg-gray-300 border border-gray-400 dark:border-gray-300",
         ghost:
-          "bg-transparent text-gray-400 hover:bg-gray-800 hover:text-gray-50",
-        transparent: "bg-transparent text-gray-400",
-        yellow: "hover:bg-yellow-400/20 hover:text-yellow-400",
-        blue: "hover:bg-primary/20 hover:text-primary",
-        greenText: "hover:text-green-400",
-        redText: "hover:text-red-400",
+          "hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-800 dark:hover:text-gray-50 text-gray-500 dark:text-gray-400",
+        blue: "hover:bg-primary/20 hover:text-primary dark:hover:bg-primary/200 dark:hover:text-primary text-gray-500 dark:text-gray-400",
+        yellow:
+          "hover:bg-yellow-500/20 hover:text-yellow-500 dark:hover:bg-yellow-500/20 dark:hover:text-yellow-500 text-gray-500 dark:text-gray-400",
+        red: "hover:bg-red-500/20 hover:text-red-500 dark:hover:bg-red-500/20 dark:hover:text-red-500 text-gray-500 dark:text-gray-400",
+        green:
+          "hover:bg-green-500/20 hover:text-green-500 dark:hover:bg-green-500/20 dark:hover:text-green-500 text-gray-500 dark:text-gray-400",
       },
       size: {
-        default: "px-5 py-2 font-semibold",
-        lg: "text-xl py-3 px-6 font-semibold",
-        icon: "p-2 font-normal",
-        none: "p-0 font-normal",
+        default: "px-5 py-2",
+        lg: "text-xl py-3 px-6",
+        icon: "p-2",
       },
       width: {
         default: "w-fit",
@@ -32,7 +34,7 @@ const buttonVariants = cva(
       },
     },
     defaultVariants: {
-      variant: "default",
+      variant: "primary",
       size: "default",
       width: "default",
     },

@@ -17,7 +17,7 @@ const ShowOptionsSmall = React.forwardRef<HTMLButtonElement>(
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger asChild>
-            <Button {...props} ref={forwardedRef} variant="ghost" size="icon">
+            <Button variant="ghost" size="icon" {...props} ref={forwardedRef}>
               <BsThreeDots size={18} />
             </Button>
           </TooltipTrigger>
@@ -27,6 +27,7 @@ const ShowOptionsSmall = React.forwardRef<HTMLButtonElement>(
     );
   },
 );
+
 ShowOptionsSmall.displayName = "ShowOptionsSmall";
 
 const ShowOptionsLarge = React.forwardRef<
@@ -38,20 +39,21 @@ const ShowOptionsLarge = React.forwardRef<
       <Tooltip>
         <TooltipTrigger asChild>
           <Button
-            {...props}
-            ref={forwardedRef}
             variant="ghost"
             size="icon"
-            width="full"
-            className="max-xl:p-0"
+            {...props}
+            ref={forwardedRef}
+            className="flex items-center justify-center gap-3 max-xl:p-0 xl:w-full"
           >
             <div className="flex items-center gap-2 overflow-hidden">
               <Avatar src={profile.avatar_url} alt={profile.username} />
               <div className="overflow-hidden text-left text-sm max-xl:hidden">
-                <p className="truncate font-semibold text-gray-50">
+                <p className="truncate font-semibold text-gray-900 dark:text-gray-50">
                   {profile.full_name}
                 </p>
-                <p className="truncate text-gray-400">@{profile.username}</p>
+                <p className="truncate font-normal text-gray-500 dark:text-gray-400">
+                  @{profile.username}
+                </p>
               </div>
             </div>
             <div className="mr-1 max-xl:hidden">

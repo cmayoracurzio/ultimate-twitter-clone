@@ -13,7 +13,7 @@ import {
   BiUser,
   BiSolidUser,
 } from "react-icons/bi";
-import { FaBookmark, FaRegBookmark } from "react-icons/fa";
+import { GoBookmark, GoBookmarkFill } from "react-icons/go";
 import { HiOutlineEnvelope, HiEnvelope } from "react-icons/hi2";
 import { BsTwitter } from "react-icons/bs";
 import {
@@ -55,8 +55,8 @@ export default function NavigationLinks() {
     {
       label: "Bookmarks",
       url: "/bookmarks",
-      icon: FaRegBookmark,
-      currentPathIcon: FaBookmark,
+      icon: GoBookmark,
+      currentPathIcon: GoBookmarkFill,
     },
     {
       label: "Profile",
@@ -67,26 +67,30 @@ export default function NavigationLinks() {
   ];
 
   return (
-    <div className="flex items-center justify-evenly text-xl sm:flex-col sm:gap-2 xl:items-start">
+    <nav className="flex items-center justify-evenly text-xl sm:flex-col sm:gap-2 xl:items-start">
       <Link
         href="/"
-        className="w-fit rounded-full p-3 hover:bg-gray-800 max-sm:hidden xl:ml-2"
+        className="rounded-full p-3 hover:bg-gray-200 dark:hover:bg-gray-800 max-sm:hidden xl:ml-2"
       >
-        <BsTwitter />
+        <BsTwitter size={24} />
       </Link>
       {navigationLinks.map((link) => {
         const IconComponent =
           link.url === pathname ? link.currentPathIcon : link.icon;
+        const labelClassName = `hidden xl:block ${
+          link.url === pathname ? "font-bold" : "font-normal"
+        }`;
+
         return (
           <TooltipProvider key={link.label}>
             <Tooltip>
               <TooltipTrigger asChild>
                 <Link
                   href={link.url}
-                  className="flex w-fit items-center justify-start gap-4 rounded-full p-3 sm:hover:bg-gray-800 xl:px-5"
+                  className="flex items-center gap-4 rounded-full p-3 max-sm:text-gray-50 sm:hover:bg-gray-200 dark:sm:hover:bg-gray-800 xl:px-5"
                 >
                   <IconComponent size={24} />
-                  <p className="hidden xl:block">{link.label}</p>
+                  <p className={labelClassName}>{link.label}</p>
                 </Link>
               </TooltipTrigger>
               <TooltipContent side="right" className="max-sm:hidden xl:hidden">
@@ -96,6 +100,6 @@ export default function NavigationLinks() {
           </TooltipProvider>
         );
       })}
-    </div>
+    </nav>
   );
 }

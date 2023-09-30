@@ -18,22 +18,20 @@ export default async function Page() {
   }
 
   return (
-    <main className="flex h-screen flex-col items-center justify-center gap-8 p-4 text-center">
+    <div className="flex h-screen flex-col items-center justify-center gap-8 p-4 text-center">
       <div className="text-primary">
         <BsTwitter size={64} />
       </div>
-      <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
-        Ultimate Twitter Clone
-      </h1>
+      <h1 className="text-3xl font-bold sm:text-4xl">Ultimate Twitter Clone</h1>
       <SignIn />
       <a
         href={GITHUB_REPO_URL}
         target="_blank"
         rel="noopener noreferrer"
-        className="text-sm text-gray-400 hover:text-gray-200"
+        className="text-sm text-gray-500 hover:text-gray-400 dark:text-gray-400 dark:hover:text-gray-300"
       >
         See the code on GitHub
       </a>
-    </main>
+    </div>
   );
 }

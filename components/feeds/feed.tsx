@@ -50,9 +50,7 @@ export default function Feed({
           />
         ))}
         <div className="flex flex-col items-center gap-6 py-12 max-sm:mb-24">
-          <p className="text-xl font-semibold tracking-tight">
-            {bottomMessage}
-          </p>
+          <p className="text-xl font-semibold">{bottomMessage}</p>
           {bottomButton}
         </div>
       </>

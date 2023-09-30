@@ -1,12 +1,12 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { FiArrowLeft } from "react-icons/fi";
 
@@ -21,7 +21,7 @@ export default function GoBack() {
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger asChild>
-          <Button onClick={handleGoBack} variant="ghost" size="icon">
+          <Button variant="ghost" size="icon" onClick={handleGoBack}>
             <FiArrowLeft size={24} />
           </Button>
         </TooltipTrigger>

@@ -7,24 +7,22 @@ The following project implements a full-stack Twitter clone with modern web deve
 - **Next.js 13** as the React-based web framework
 - **Tailwind CSS** for styling
 - **Shadcn/ui** for components
-- **Supabase** for authentication and data persistence in PostgreSQL
+- **Supabase** for authentication (OAuth) and data persistence in PostgreSQL
 - **Utilities:**
   - Forms with `react-hook-form` and `zod`
   - Date formatting with `dayjs`
   - Icons with `react-icons`
-  - Tailwind CSS management with `clsx` and `tailwind-merge`
+  - Tailwind CSS management with `clsx`, `tailwind-merge` and `class-variance-authority`
   - Tailwind CSS formatting with `prettier-plugin-tailwindcss`
 
 ## TODO (ongoing):
 
-- Allow changing avatar in edit-profile form
-- Make visible when a tweet is actually a reply
-- Allow changing themes
 - Implement followed/followers
+- Make visible when a tweet is actually a reply
 - Add local development instructions
-- Allow different feeds inside profile (tweets, replies, likes, bookmarks)
+- Allow changing avatar in edit-profile form
 - Advanced feed (infinite scrolling, listen for updates, personalized based on user activity, etc.)
-- Finish other pages (explore, notifications, messages, bookmarks search and filtering)
-- Advanced tweet-form options (hashtags/trends, tag users, add media, schedule tweet, add poll, etc.)
 - Finish right-sidebar (search bar, trends for you, who to follow)
+- Finish other pages (explore, notifications, messages, bookmarks search and filtering)
+- Advanced create-tweet options (hashtags/trends, tag users, add media, schedule tweet, add poll, etc.)
 - Add email and password authentication

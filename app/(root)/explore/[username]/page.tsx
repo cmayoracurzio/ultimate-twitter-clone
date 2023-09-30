@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { notFound } from "next/navigation";
-import Header from "@/components/ui/header";
+import Header from "@/components/cards/header";
 import Profile from "@/components/cards/profile";
 import ProfileFeed from "@/components/feeds/profile-feed";
 

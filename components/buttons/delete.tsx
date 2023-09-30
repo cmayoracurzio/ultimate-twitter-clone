@@ -1,6 +1,12 @@
 "use client";
 
 import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import {
   Dialog,
   DialogContent,
   DialogDescription,
@@ -9,12 +15,6 @@ import {
   DialogTrigger,
   DialogClose,
 } from "@/components/ui/dialog";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 import { Button } from "@/components/ui/button";
 import { BsXLg } from "react-icons/bs";
 
@@ -23,13 +23,13 @@ export default function Delete({ handleDelete }: { handleDelete: () => void }) {
     <Dialog>
       <TooltipProvider>
         <Tooltip>
-          <TooltipTrigger asChild>
-            <DialogTrigger asChild>
-              <Button size="icon" variant="ghost">
+          <DialogTrigger asChild>
+            <TooltipTrigger asChild>
+              <Button variant="ghost" size="icon">
                 <BsXLg size={18} />
               </Button>
-            </DialogTrigger>
-          </TooltipTrigger>
+            </TooltipTrigger>
+          </DialogTrigger>
           <TooltipContent side="bottom">Delete</TooltipContent>
         </Tooltip>
       </TooltipProvider>

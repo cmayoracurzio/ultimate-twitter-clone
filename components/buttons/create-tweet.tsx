@@ -51,7 +51,9 @@ export default function CreateTweet() {
         <DialogHeader>
           <DialogTitle>New tweet</DialogTitle>
         </DialogHeader>
-        <CreateTweetForm onFormSuccess={showTweetPage} className="-p-4" />
+        <div className="-mx-4">
+          <CreateTweetForm onFormSuccess={showTweetPage} />
+        </div>
       </DialogContent>
     </Dialog>
   );

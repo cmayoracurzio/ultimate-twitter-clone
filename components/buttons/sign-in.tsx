@@ -18,22 +18,12 @@ export default function SignIn() {
   }
 
   return (
-    <div className="space-y-4">
-      <Button
-        onClick={() => handleSignIn("google")}
-        variant="secondary"
-        size="lg"
-        className="gap-2"
-      >
+    <div className="flex flex-col space-y-4">
+      <Button onClick={() => handleSignIn("google")} variant="clear" size="lg">
         <FcGoogle size={24} />
         <span>Sign in with Google</span>
       </Button>
-      <Button
-        onClick={() => handleSignIn("github")}
-        variant="secondary"
-        size="lg"
-        className="gap-2"
-      >
+      <Button onClick={() => handleSignIn("github")} variant="clear" size="lg">
         <BsGithub size={24} />
         <span>Sign in with GitHub</span>
       </Button>
