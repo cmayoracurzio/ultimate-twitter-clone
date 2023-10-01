@@ -3,25 +3,17 @@ import { formatNumber } from "@/lib/utils/numbers";
 import Avatar from "@/components/ui/avatar";
 import { BiCalendar } from "react-icons/bi";
 import ProfileOptions from "@/components/menus/profile-options";
-
-type ProfileStats = {
-  tweets: number;
-  likes: number;
-  replies: number;
-  bookmarks: number;
-};
+import Follow from "@/components/buttons/follow";
 
 export default function Profile({
   profile,
-  stats,
   showOptions,
 }: {
-  profile: Profile;
-  stats: ProfileStats;
+  profile: ProfilewithMetadata;
   showOptions: boolean;
 }) {
   return (
-    <article className="space-y-8 p-4">
+    <article className="space-y-6 p-4">
       <div className="flex items-start justify-start gap-4">
         <Avatar src={profile.avatar_url} size={90} alt={profile.username} />
         <div className="flex flex-1 flex-col justify-center gap-1.5 overflow-hidden">
@@ -34,11 +26,18 @@ export default function Profile({
             <p>Joined {formatProfileDateTime(profile.created_at)}</p>
           </div>
         </div>
-        {showOptions ? <ProfileOptions buttonSize="small" /> : null}
+        {showOptions ? (
+          <ProfileOptions buttonSize="small" />
+        ) : (
+          <Follow
+            profileId={profile.id}
+            followedByUser={profile.followedByUser}
+          />
+        )}
       </div>
-      <div className="flex items-center justify-start gap-4 text-sm">
-        {Object.entries(stats).map(([key, value]) => (
-          <div key={key} className="flex-1">
+      <div className="grid grid-cols-3 gap-3 text-sm">
+        {Object.entries(profile.stats).map(([key, value]) => (
+          <div key={key}>
             <span className="font-bold">{formatNumber(value)}</span>
             <span className="ml-1.5 text-gray-500 dark:text-gray-400">
               {key}

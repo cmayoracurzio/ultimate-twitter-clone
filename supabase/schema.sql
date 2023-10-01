@@ -93,6 +93,15 @@ CREATE TABLE IF NOT EXISTS "public"."bookmarks" (
 
 ALTER TABLE "public"."bookmarks" OWNER TO "postgres";
 
+CREATE TABLE IF NOT EXISTS "public"."followers" (
+    "follower_id" "uuid" NOT NULL,
+    "following_id" "uuid" NOT NULL,
+    "id" "uuid" DEFAULT "gen_random_uuid"() NOT NULL,
+    "created_at" timestamp with time zone DEFAULT ("now"() AT TIME ZONE 'utc'::"text") NOT NULL
+);
+
+ALTER TABLE "public"."followers" OWNER TO "postgres";
+
 CREATE TABLE IF NOT EXISTS "public"."hashtags" (
     "id" "uuid" DEFAULT "gen_random_uuid"() NOT NULL,
     "name" "text" NOT NULL
@@ -145,6 +154,9 @@ ALTER TABLE ONLY "public"."bookmarks"
 ALTER TABLE ONLY "public"."bookmarks"
     ADD CONSTRAINT "bookmarks_pkey" PRIMARY KEY ("id");
 
+ALTER TABLE ONLY "public"."followers"
+    ADD CONSTRAINT "followers_pkey" PRIMARY KEY ("id");
+
 ALTER TABLE ONLY "public"."hashtags"
     ADD CONSTRAINT "hashtags_pkey" PRIMARY KEY ("id");
 
@@ -173,6 +185,12 @@ ALTER TABLE ONLY "public"."bookmarks"
 
 ALTER TABLE ONLY "public"."bookmarks"
     ADD CONSTRAINT "bookmarks_tweet_id_fkey" FOREIGN KEY ("tweet_id") REFERENCES "public"."tweets"("id") ON DELETE CASCADE;
+
+ALTER TABLE ONLY "public"."followers"
+    ADD CONSTRAINT "followers_follower_id_fkey" FOREIGN KEY ("follower_id") REFERENCES "public"."profiles"("id") ON DELETE CASCADE;
+
+ALTER TABLE ONLY "public"."followers"
+    ADD CONSTRAINT "followers_following_id_fkey" FOREIGN KEY ("following_id") REFERENCES "public"."profiles"("id") ON DELETE CASCADE;
 
 ALTER TABLE ONLY "public"."likes"
     ADD CONSTRAINT "likes_profile_id_fkey" FOREIGN KEY ("profile_id") REFERENCES "public"."profiles"("id") ON DELETE CASCADE;
@@ -205,11 +223,17 @@ CREATE POLICY "Authenticated users can delete their own tweets" ON "public"."twe
 
 CREATE POLICY "Authenticated users can insert their own bookmarks" ON "public"."bookmarks" FOR INSERT TO "authenticated" WITH CHECK (("auth"."uid"() = "profile_id"));
 
+CREATE POLICY "Authenticated users can insert their own follows" ON "public"."followers" FOR INSERT TO "authenticated" WITH CHECK (("auth"."uid"() = "follower_id"));
+
 CREATE POLICY "Authenticated users can insert their own likes" ON "public"."likes" FOR INSERT TO "authenticated" WITH CHECK (("auth"."uid"() = "profile_id"));
 
 CREATE POLICY "Authenticated users can insert their own profile" ON "public"."profiles" FOR INSERT TO "authenticated" WITH CHECK (("auth"."uid"() = "id"));
 
 CREATE POLICY "Authenticated users can insert their own tweets" ON "public"."tweets" FOR INSERT TO "authenticated" WITH CHECK (("auth"."uid"() = "profile_id"));
+
+CREATE POLICY "Authenticated users can remove their own follows" ON "public"."followers" FOR DELETE TO "authenticated" USING (("auth"."uid"() = "follower_id"));
+
+CREATE POLICY "Authenticated users can see all follows" ON "public"."followers" FOR SELECT TO "authenticated" USING (true);
 
 CREATE POLICY "Authenticated users can see all likes" ON "public"."likes" FOR SELECT TO "authenticated" USING (true);
 
@@ -222,6 +246,8 @@ CREATE POLICY "Authenticated users can see their own bookmarks" ON "public"."boo
 CREATE POLICY "Authenticated users can update their own profile" ON "public"."profiles" FOR UPDATE TO "authenticated" USING (("auth"."uid"() = "id"));
 
 ALTER TABLE "public"."bookmarks" ENABLE ROW LEVEL SECURITY;
+
+ALTER TABLE "public"."followers" ENABLE ROW LEVEL SECURITY;
 
 ALTER TABLE "public"."hashtags" ENABLE ROW LEVEL SECURITY;
 
@@ -253,6 +279,10 @@ GRANT ALL ON FUNCTION "public"."handle_updated_at"() TO "service_role";
 GRANT ALL ON TABLE "public"."bookmarks" TO "anon";
 GRANT ALL ON TABLE "public"."bookmarks" TO "authenticated";
 GRANT ALL ON TABLE "public"."bookmarks" TO "service_role";
+
+GRANT ALL ON TABLE "public"."followers" TO "anon";
+GRANT ALL ON TABLE "public"."followers" TO "authenticated";
+GRANT ALL ON TABLE "public"."followers" TO "service_role";
 
 GRANT ALL ON TABLE "public"."hashtags" TO "anon";
 GRANT ALL ON TABLE "public"."hashtags" TO "authenticated";

@@ -62,7 +62,7 @@ export default function Tweet({
           <div className="truncate">
             <Link
               href={`/explore/${tweet.author.username}`}
-              className="-px-1 mx-1 truncate text-sm font-bold hover:underline"
+              className="truncate text-sm font-bold hover:underline"
             >
               {tweet.author.full_name}
             </Link>

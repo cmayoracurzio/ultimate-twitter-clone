@@ -17,10 +17,9 @@ The following project implements a full-stack Twitter clone with modern web deve
 
 ## TODO (ongoing):
 
-- Implement followed/followers
 - Make visible when a tweet is actually a reply
-- Add local development instructions
 - Allow changing avatar in edit-profile form
+- Add local development instructions
 - Advanced feed (infinite scrolling, listen for updates, personalized based on user activity, etc.)
 - Finish right-sidebar (search bar, trends for you, who to follow)
 - Finish other pages (explore, notifications, messages, bookmarks search and filtering)

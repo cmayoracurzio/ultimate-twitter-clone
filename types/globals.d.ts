@@ -17,4 +17,16 @@ declare global {
     likedByUser: boolean;
     bookmarkedByUser: boolean;
   };
+
+  type ProfilewithMetadata = Profile & {
+    followedByUser: boolean;
+    stats: {
+      tweets: number;
+      likes: number;
+      replies: number;
+      bookmarks: number;
+      followers: number;
+      following: number;
+    };
+  };
 }

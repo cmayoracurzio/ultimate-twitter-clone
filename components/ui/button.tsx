@@ -9,34 +9,40 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        primary: "bg-primary text-gray-50 hover:bg-primary/80",
+        default:
+          "bg-primary text-gray-50 hover:bg-primary/80 border-primary dark:border-primary",
         destructive:
           "bg-red-500 text-gray-50 hover:bg-red-600 dark:bg-red-500 dark:text-gray-50 dark:hover:bg-red-600",
         clear:
-          "bg-gray-100 text-gray-900 hover:bg-gray-200 dark:bg-gray-100 dark:text-gray-900 dark:hover:bg-gray-300 border border-gray-400 dark:border-gray-300",
+          "bg-gray-100 text-gray-900 hover:bg-gray-200 dark:bg-gray-100 dark:text-gray-900 dark:hover:bg-gray-300 border-gray-300 dark:border-gray-300",
         ghost:
-          "hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-800 dark:hover:text-gray-50 text-gray-500 dark:text-gray-400",
+          "hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-800 dark:hover:text-gray-50 text-gray-500 dark:text-gray-400 border-gray-400 dark:border-gray-400",
         blue: "hover:bg-primary/20 hover:text-primary dark:hover:bg-primary/200 dark:hover:text-primary text-gray-500 dark:text-gray-400",
         yellow:
           "hover:bg-yellow-500/20 hover:text-yellow-500 dark:hover:bg-yellow-500/20 dark:hover:text-yellow-500 text-gray-500 dark:text-gray-400",
-        red: "hover:bg-red-500/20 hover:text-red-500 dark:hover:bg-red-500/20 dark:hover:text-red-500 text-gray-500 dark:text-gray-400",
+        red: "hover:bg-red-500/20 hover:text-red-500 dark:hover:bg-red-500/20 dark:hover:text-red-500 text-gray-500 dark:text-gray-400 border-red-500 dark:border-red-500",
         green:
           "hover:bg-green-500/20 hover:text-green-500 dark:hover:bg-green-500/20 dark:hover:text-green-500 text-gray-500 dark:text-gray-400",
       },
       size: {
-        default: "px-5 py-2",
-        lg: "text-xl py-3 px-6",
-        icon: "p-2",
+        default: "px-5 py-2 text-base",
+        lg: "px-6 py-3 text-xl",
+        icon: "p-2 text-sm",
       },
       width: {
         default: "w-fit",
         full: "w-full",
       },
+      border: {
+        default: "border",
+        none: "border-none",
+      },
     },
     defaultVariants: {
-      variant: "primary",
+      variant: "default",
       size: "default",
       width: "default",
+      border: "none",
     },
   },
 );
@@ -48,11 +54,16 @@ export interface ButtonProps
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, width, asChild = false, ...props }, ref) => {
+  (
+    { className, variant, size, width, border, asChild = false, ...props },
+    ref,
+  ) => {
     const Comp = asChild ? Slot : "button";
     return (
       <Comp
-        className={cn(buttonVariants({ variant, size, width, className }))}
+        className={cn(
+          buttonVariants({ variant, size, width, border, className }),
+        )}
         ref={ref}
         {...props}
       />
