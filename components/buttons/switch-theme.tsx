@@ -1,15 +1,24 @@
 "use client";
 
-import { BsSun, BsMoon } from "react-icons/bs";
-import { useTheme } from "../providers/theme-provider";
+import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
+import { BsSun, BsMoon } from "react-icons/bs";
 
 export default function SwitchTheme() {
-  const { darkMode, switchMode } = useTheme();
+  const { theme, setTheme } = useTheme();
+
+  function switchMode() {
+    setTheme(theme === "light" ? "dark" : "light");
+  }
 
   return (
     <Button variant="ghost" size="icon" onClick={switchMode}>
-      {darkMode ? <BsMoon size={18} /> : <BsSun size={18} />}
+      <div className="block dark:hidden">
+        <BsSun size={18} />
+      </div>
+      <div className="hidden dark:block">
+        <BsMoon size={18} />
+      </div>
     </Button>
   );
 }

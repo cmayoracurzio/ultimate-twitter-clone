@@ -13,13 +13,13 @@ export default async function Layout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body
-        className={`${inter.className} bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50`}
-      >
+    <html lang="en" suppressHydrationWarning>
+      <body className={inter.className}>
         <ThemeProvider>
           <AuthProvider>
-            <div className="h-full w-full">{children}</div>
+            <div className="h-full w-full bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50">
+              {children}
+            </div>
           </AuthProvider>
         </ThemeProvider>
       </body>
