@@ -10,11 +10,11 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-primary text-gray-50 hover:bg-primary/80 border-primary dark:border-primary",
+          "bg-primary text-gray-50 border-primary hover:bg-primary/80 hover:border-primary/80 dark:bg-primary dark:border-primary dark:hover:bg-primary/80 dark:hover:border-primary/80",
         destructive:
           "bg-red-500 text-gray-50 hover:bg-red-600 dark:bg-red-500 dark:text-gray-50 dark:hover:bg-red-600",
         clear:
-          "bg-gray-100 text-gray-900 hover:bg-gray-200 dark:bg-gray-100 dark:text-gray-900 dark:hover:bg-gray-300 border-gray-300 dark:border-gray-300",
+          "bg-gray-200 text-gray-900 hover:bg-gray-300 dark:bg-gray-100 dark:text-gray-900 dark:hover:bg-gray-300 border-gray-300 dark:border-gray-300",
         ghost:
           "hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-800 dark:hover:text-gray-50 text-gray-500 dark:text-gray-400 border-gray-400 dark:border-gray-400",
         blue: "hover:bg-primary/20 hover:text-primary dark:hover:bg-primary/200 dark:hover:text-primary text-gray-500 dark:text-gray-400",

@@ -41,7 +41,7 @@ export default function Follow({
 
   return (
     <Button
-      variant={isFollowed ? (isHovered ? "red" : "ghost") : "default"}
+      variant={isFollowed ? (isHovered ? "red" : "clear") : "default"}
       border="default"
       size="icon"
       onMouseEnter={() => setIsHovered(true)}

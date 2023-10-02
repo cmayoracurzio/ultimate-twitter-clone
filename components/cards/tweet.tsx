@@ -33,9 +33,11 @@ export default function Tweet({
   const formattedLikes = formatNumber(tweet.likes);
   const formattedReplies = formatNumber(tweet.replies);
 
-  // Format tweet text
+  // Format tweet text and card
   let formattedText;
+  let hoverClassName = "hover:bg-gray-100 dark:hover:bg-gray-800";
   if (mainTweet) {
+    hoverClassName = "";
     formattedText = <span className="text-base">{tweet.text}</span>;
   } else if (tweet.text.length > maxTweetCardTextLength) {
     formattedText = (
@@ -54,7 +56,7 @@ export default function Tweet({
   }
 
   return (
-    <article className="space-y-4 p-4">
+    <article className={`space-y-4 p-4 ${hoverClassName}`}>
       {/* Tweet header */}
       <div className="flex items-center justify-between gap-4">
         <div className="flex items-center justify-start gap-2 overflow-hidden">
