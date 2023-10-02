@@ -14,6 +14,7 @@ The following project implements a full-stack Twitter clone with modern web deve
   - Icons with `react-icons`
   - Tailwind CSS management with `clsx`, `tailwind-merge` and `class-variance-authority`
   - Tailwind CSS formatting with `prettier-plugin-tailwindcss`
+  - Theme management with `next-themes`
 
 ## TODO (ongoing):
 
