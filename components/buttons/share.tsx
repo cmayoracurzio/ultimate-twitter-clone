@@ -22,7 +22,7 @@ export default function Share({
             <FiLink size={18} />
           </Button>
         </TooltipTrigger>
-        <TooltipContent side="bottom">Bookmark</TooltipContent>
+        <TooltipContent side="bottom">Copy URL</TooltipContent>
       </Tooltip>
     </TooltipProvider>
   );
